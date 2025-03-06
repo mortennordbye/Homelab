@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: reflector
+  namespace: argo-cd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kube-system
+  sources:
+    - chart: reflector
+      repoURL: "https://emberstack.github.io/helm-charts"
+      targetRevision: "7.1.288"
+      helm:
+        valueFiles:
+          - k8s/clusters/k3sa/helm-values/reflector-values.yaml
+
+    - repoURL: "https://github.com/mortennordbye/homelab.git"
+      path: k8s/clusters/k3sa/manifests/reflector
+      targetRevision: main
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: "5s"
+        factor: 2
+        maxDuration: "3m"
