@@ -1,8 +1,0 @@
-apiVersion: v1
-data:
-  key1: config1
-  key2: config2
-kind: ConfigMap
-metadata:
-  creationTimestamp: null
-  name: my-config
