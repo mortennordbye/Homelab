@@ -1,3 +1,2 @@
-reflector:
-  serviceAccount:
-    create: true
+serviceAccount:
+  create: true
