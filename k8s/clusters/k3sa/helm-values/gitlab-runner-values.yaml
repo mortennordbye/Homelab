@@ -1,0 +1,5 @@
+gitlabUrl: https://gitlab.bigd.no
+rbac:
+  create: true
+runners:
+  secret: gitlab-runner-secret
