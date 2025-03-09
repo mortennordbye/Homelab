@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: portfolio-envs
+  namespace: argo-cd
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/mortennordbye/portfolio.git
+        revision: main
+        directories:
+          - path: manifests/*
+  template:
+    metadata:
+      name: "{{path.basename}}-portfolio"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/mortennordbye/portfolio.git
+        targetRevision: main
+        path: "{{path}}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{path.basename}}-portfolio"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
