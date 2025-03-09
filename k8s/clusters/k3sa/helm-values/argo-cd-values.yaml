@@ -4,67 +4,71 @@ server:
     loadBalancerIP: 10.0.0.59
 
 configs:
-  # Define your credential template(s) as a multi-line string
-  credentialTemplates: |
-    - name: gitlab-bigd
-      url: "https://gitlab.bigd.no/*"
-      usernameSecret:
-        name: argocd-gitlab-creds
+  credentialTemplates:
+    gitlab.bigd.no:
+      url: https://gitlab.bigd.no
+      usernameFromSecret:
+        name: argo-cd-gitlab-user
         key: username
-      passwordSecret:
-        name: argocd-gitlab-creds
+      passwordFromSecret:
+        name: argo-cd-gitlab-user
+        key: password
+    10.0.0.36:
+      url: http://10.0.0.36
+      usernameFromSecret:
+        name: argo-cd-gitlab-user
+        key: username
+      passwordFromSecret:
+        name: argo-cd-gitlab-user
         key: password
 
-    - name: local-ip
-      url: "http://10.0.0.36/*"
-      usernameSecret:
-        name: argocd-gitlab-creds
-        key: username
-      passwordSecret:
-        name: argocd-gitlab-creds
-        key: password
-
-  # Define your repositories as a multi-line string
-  repositories: |
-    - url: https://gitlab.bigd.no
-      type: git
-    - url: http://10.0.0.36/homelab/k8s/k3sa/app-config/traefik.git
-      type: git
-    - url: https://gitlab.bigd.no/homelab/k8s/k3sa/app-config/cert-manager.git
-      type: git
-    - url: https://gitlab.bigd.no/homelab/k8s/k3sa/app-config/argocd.git
-      type: git
-    - url: https://gitlab.bigd.no/homelab/k8s/k3sa/app-config/portfolio.git
-      type: git
-    - url: https://gitlab.bigd.no/homelab/k8s/k3sa/app-config/gatus.git
-      type: git
-    - url: https://gitlab.bigd.no/homelab/k8s/k3sa/app-config/kube-prometheus-stack.git
-      type: git
-
-    - url: https://traefik.github.io/charts
+  repositories:
+    traefik-helm:
+      url: https://traefik.github.io/charts
       name: traefik
       type: helm
-    - url: https://charts.jetstack.io
+    cert-manager-helm:
+      url: https://charts.jetstack.io
       name: cert-manager
       type: helm
-    - url: https://argoproj.github.io/argo-helm
+    argocd-helm:
+      url: https://argoproj.github.io/argo-helm
       name: argocd
       type: helm
-    - url: https://charts.gitlab.io/
+    gitlab-runner-helm:
+      url: https://charts.gitlab.io/
       name: gitlab-runner
       type: helm
-    - url: https://emberstack.github.io/helm-charts
+    reflector-helm:
+      url: https://emberstack.github.io/helm-charts
       name: reflector
       type: helm
-    - url: https://twin.github.io/helm-charts
+    gatus-helm:
+      url: https://twin.github.io/helm-charts
       name: gatus
       type: helm
-    - url: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
+    nfs-subdir-external-provisioner-helm:
+      url: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
       name: nfs-subdir-external-provisioner
       type: helm
-    - url: https://charts.bitnami.com/bitnami
+    metallb-helm:
+      url: https://charts.bitnami.com/bitnami
       name: metallb
       type: helm
-    - url: https://prometheus-community.github.io/helm-charts
+    kube-prometheus-stack-helm:
+      url: https://prometheus-community.github.io/helm-charts
       name: kube-prometheus-stack
       type: helm
+
+    cert-manager-git:
+      url: https://gitlab.bigd.no/homelab/k8s/k3sa/app-config/cert-manager.git
+    traefik-git:
+      url: http://10.0.0.36/homelab/k8s/k3sa/app-config/traefik.git
+    argocd-git:
+      url: https://gitlab.bigd.no/homelab/k8s/k3sa/app-config/argocd.git
+    portfolio-git:
+      url: https://gitlab.bigd.no/homelab/k8s/k3sa/app-config/portfolio.git
+    gatus-git:
+      url: https://gitlab.bigd.no/homelab/k8s/k3sa/app-config/gatus.git
+    kube-prometheus-stack-git:
+      url: https://gitlab.bigd.no/homelab/k8s/k3sa/app-config/kube-prometheus-stack.git
