@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metallb
+  namespace: metallb-system
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kube-system
+  sources:
+    - repoURL: "https://metallb.github.io/metallb"
+      chart: metallb
+      targetRevision: "0.14.9"
+      helm:
+        valueFiles:
+          - $values/k8s/clusters/k3sa/helm-values/metallb-values.yaml
+    - repoURL: "https://github.com/mortennordbye/Homelab.git"
+      targetRevision: main
+      ref: values
+      path: k8s/clusters/k3sa/manifests/metallb
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

@@ -1,4 +1,4 @@
-# kubectl create secret generic bw-auth-token -n <YOUR_NAMESPACE> --from-literal=token="<TOKEN_HERE>"
+# kubectl create secret generic bw-auth-token -n sm-operator-system --from-literal=token="TOKEN" --dry-run=client -o yaml | kubectl annotate --local -f - reflector.v1.k8s.emberstack.com/reflection-allowed=true reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces=.* reflector.v1.k8s.emberstack.com/reflection-auto-enabled=true -o yaml | kubectl apply -f -
 settings:
   bwSecretsManagerRefreshInterval: 300
   cloudRegion: US
