@@ -7,7 +7,7 @@ spec:
   project: default
   destination:
     server: https://kubernetes.default.svc
-    namespace: kube-system
+    namespace: sm-operator-system
   sources:
     - repoURL: "https://charts.bitwarden.com/"
       chart: sm-operator

@@ -1,3 +1,4 @@
+# kubectl create secret generic bw-auth-token -n <YOUR_NAMESPACE> --from-literal=token="<TOKEN_HERE>"
 settings:
   bwSecretsManagerRefreshInterval: 300
   cloudRegion: EU
