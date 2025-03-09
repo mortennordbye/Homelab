@@ -4,25 +4,29 @@ server:
     loadBalancerIP: 10.0.0.59
 
 configs:
-  credentialTemplates:
-    gitlab.bigd.no:
-      url: https://gitlab.bigd.no
-      usernameFromSecret:
-        name: argo-cd-gitlab-user
-        key: username
-      passwordFromSecret:
-        name: argo-cd-gitlab-user
-        key: password
-    10.0.0.36:
-      url: http://10.0.0.36
-      usernameFromSecret:
-        name: argo-cd-gitlab-user
-        key: username
-      passwordFromSecret:
-        name: argo-cd-gitlab-user
-        key: password
-
   repositories:
+    gitlab:
+      url: https://gitlab.bigd.no
+      type: git
+      secretName: argocd-gitlab-creds
+    traefik-git:
+      url: http://10.0.0.36/homelab/k8s/k3sa/app-config/traefik.git
+      secretName: argocd-gitlab-creds
+    cert-manager-git:
+      url: https://gitlab.bigd.no/homelab/k8s/k3sa/app-config/cert-manager.git
+      secretName: argocd-gitlab-creds
+    argocd-git:
+      url: https://gitlab.bigd.no/homelab/k8s/k3sa/app-config/argocd.git
+      secretName: argocd-gitlab-creds
+    portfolio-git:
+      url: https://gitlab.bigd.no/homelab/k8s/k3sa/app-config/portfolio.git
+      secretName: argocd-gitlab-creds
+    gatus-git:
+      url: https://gitlab.bigd.no/homelab/k8s/k3sa/app-config/gatus.git
+      secretName: argocd-gitlab-creds
+    kube-prometheus-stack-git:
+      url: https://gitlab.bigd.no/homelab/k8s/k3sa/app-config/kube-prometheus-stack.git
+      secretName: argocd-gitlab-creds
     traefik-helm:
       url: https://traefik.github.io/charts
       name: traefik
@@ -59,16 +63,3 @@ configs:
       url: https://prometheus-community.github.io/helm-charts
       name: kube-prometheus-stack
       type: helm
-
-    cert-manager-git:
-      url: https://gitlab.bigd.no/homelab/k8s/k3sa/app-config/cert-manager.git
-    traefik-git:
-      url: http://10.0.0.36/homelab/k8s/k3sa/app-config/traefik.git
-    argocd-git:
-      url: https://gitlab.bigd.no/homelab/k8s/k3sa/app-config/argocd.git
-    portfolio-git:
-      url: https://gitlab.bigd.no/homelab/k8s/k3sa/app-config/portfolio.git
-    gatus-git:
-      url: https://gitlab.bigd.no/homelab/k8s/k3sa/app-config/gatus.git
-    kube-prometheus-stack-git:
-      url: https://gitlab.bigd.no/homelab/k8s/k3sa/app-config/kube-prometheus-stack.git
