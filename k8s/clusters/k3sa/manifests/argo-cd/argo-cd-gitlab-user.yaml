@@ -1,0 +1,16 @@
+apiVersion: k8s.bitwarden.com/v1
+kind: BitwardenSecret
+metadata:
+  name: argo-cd-gitlab-user
+  namespace: argo-cd
+spec:
+  organizationId: "1a1f473f-c6a3-47af-a106-b29800f5ca1f"
+  secretName: "argo-cd-gitlab-user"
+  map:
+    - bwSecretId: "c351bc74-4e12-4fe1-9e71-b29b011366be"
+      secretKeyName: "username"
+    - bwSecretId: "4f45655c-5aa0-40dd-9b88-b29b0113bf72"
+      secretKeyName: "password"
+  authToken:
+    secretName: bw-auth-token
+    secretKey: token
