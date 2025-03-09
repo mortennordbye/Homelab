@@ -1,0 +1,5 @@
+nfs-subdir-external-provisioner:
+  replicaCount: 1
+  nfs:
+    server: 10.0.0.39
+    path: /srv/nfs/k3sa
