@@ -9,7 +9,7 @@ spec:
   map:
     - bwSecretId: "c351bc74-4e12-4fe1-9e71-b29b011366be"
       secretKeyName: "username"
-    - bwSecretId: "4f45655c-5aa0-40dd-9b88-b29b0113bf72"
+    - bwSecretId: "bebf5412-f1bb-40d3-8c2c-b29b014a9fb4"
       secretKeyName: "password"
   authToken:
     secretName: bw-auth-token
