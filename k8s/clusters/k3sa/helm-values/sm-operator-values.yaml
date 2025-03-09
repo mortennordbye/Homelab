@@ -1,0 +1,35 @@
+settings:
+  bwSecretsManagerRefreshInterval: 300
+  cloudRegion: EU
+  replicas: 1
+containers:
+  manager:
+    image:
+      repository: ghcr.io/bitwarden/sm-operator
+    resources:
+      limits:
+        cpu: 500m
+        memory: 128Mi
+      requests:
+        cpu: 10m
+        memory: 64Mi
+  kubeRbacProxy:
+    image:
+      repository: gcr.io/kubebuilder/kube-rbac-proxy
+    resources:
+      limits:
+        cpu: 500m
+        memory: 128Mi
+      requests:
+        cpu: 5m
+        memory: 64Mi
+  serviceAccount:
+    annotations: {}
+  enableSeccompProfileRuntimeDefault: true
+metricsService:
+  ports:
+  - name: https
+    port: 8443
+    protocol: TCP
+    targetPort: https
+  type: ClusterIP
