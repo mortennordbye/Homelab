@@ -7,7 +7,7 @@ spec:
   project: default
   destination:
     server: https://kubernetes.default.svc
-    namespace: kube-system
+    namespace: gitlab-runner
   sources:
     - repoURL: "https://charts.gitlab.io/"
       chart: gitlab-runner
