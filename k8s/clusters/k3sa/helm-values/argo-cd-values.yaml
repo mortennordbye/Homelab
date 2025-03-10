@@ -7,20 +7,12 @@ configs:
   credentialTemplates:
     gitlab.bigd.no:
       url: https://gitlab.bigd.no
-      usernameFromSecret:
-        name: argocd-gitlab-creds
-        key: username
-      passwordFromSecret:
-        name: argocd-gitlab-creds
-        key: password
+      username: "$argocd-gitlab-creds:username"
+      password: "$argocd-gitlab-creds:password"
     10.0.0.36:
       url: http://10.0.0.36
-      usernameFromSecret:
-        name: argocd-gitlab-creds
-        key: username
-      passwordFromSecret:
-        name: argocd-gitlab-creds
-        key: password
+      username: "$argocd-gitlab-creds:username"
+      password: "$argocd-gitlab-creds:password"
 
   repositories:
     traefik-helm:

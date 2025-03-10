@@ -3,6 +3,8 @@ kind: BitwardenSecret
 metadata:
   name: argocd-gitlab-creds
   namespace: argo-cd
+  labels:
+    app.kubernetes.io/part-of: argocd
 spec:
   organizationId: "1a1f473f-c6a3-47af-a106-b29800f5ca1f"
   secretName: "argocd-gitlab-creds"
