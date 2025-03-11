@@ -51,6 +51,10 @@ configs:
       url: https://prometheus-community.github.io/helm-charts
       name: kube-prometheus-stack
       type: helm
+    external-secrets-operator:
+      url: https://charts.external-secrets.io/
+      name: external-secrets-operator
+      type: helm
 
     cert-manager-git:
       url: https://gitlab.bigd.no/homelab/k8s/k3sa/app-config/cert-manager.git
