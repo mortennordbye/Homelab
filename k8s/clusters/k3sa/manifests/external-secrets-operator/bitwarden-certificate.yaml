@@ -2,7 +2,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: bitwarden-tls-certs
-  namespace: default
+  namespace: external-secrets
 spec:
   secretName: bitwarden-tls-certs
   dnsNames:
