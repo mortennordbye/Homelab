@@ -25,10 +25,6 @@ configs:
       url: https://emberstack.github.io/helm-charts
       name: reflector
       type: helm
-    gatus-helm:
-      url: https://twin.github.io/helm-charts
-      name: gatus
-      type: helm
     nfs-subdir-external-provisioner-helm:
       url: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
       name: nfs-subdir-external-provisioner
