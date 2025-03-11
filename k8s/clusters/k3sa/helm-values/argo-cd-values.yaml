@@ -9,10 +9,6 @@ configs:
       url: https://gitlab.bigd.no/homelab/k8s/k3sa/app-config/cert-manager.git
     traefik-git:
       url: http://10.0.0.36/homelab/k8s/k3sa/app-config/traefik.git
-    argocd-git:
-      url: https://gitlab.bigd.no/homelab/k8s/k3sa/app-config/argocd.git
-    portfolio-git:
-      url: https://gitlab.bigd.no/homelab/k8s/k3sa/app-config/portfolio.git
     gatus-git:
       url: https://gitlab.bigd.no/homelab/k8s/k3sa/app-config/gatus.git
     kube-prometheus-stack-git:
