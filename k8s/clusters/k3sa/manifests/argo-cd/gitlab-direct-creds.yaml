@@ -19,7 +19,7 @@ spec:
   data:
     - secretKey: url
       remoteRef:
-        key: "361262dc-a479-481c-b3dc-b29d013a0d38"
+        key: "d3d1a8ce-bb1e-4d32-b2eb-b29d0139e0aa"
     - secretKey: username
       remoteRef:
         key: "c351bc74-4e12-4fe1-9e71-b29b011366be"
