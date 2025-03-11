@@ -5,43 +5,6 @@ server:
 
 configs:
   repositories:
-    traefik-helm:
-      url: https://traefik.github.io/charts
-      name: traefik
-      type: helm
-    cert-manager-helm:
-      url: https://charts.jetstack.io
-      name: cert-manager
-      type: helm
-    argocd-helm:
-      url: https://argoproj.github.io/argo-helm
-      name: argocd
-      type: helm
-    gitlab-runner-helm:
-      url: https://charts.gitlab.io/
-      name: gitlab-runner
-      type: helm
-    reflector-helm:
-      url: https://emberstack.github.io/helm-charts
-      name: reflector
-      type: helm
-    nfs-subdir-external-provisioner-helm:
-      url: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
-      name: nfs-subdir-external-provisioner
-      type: helm
-    metallb-helm:
-      url: https://charts.bitnami.com/bitnami
-      name: metallb
-      type: helm
-    kube-prometheus-stack-helm:
-      url: https://prometheus-community.github.io/helm-charts
-      name: kube-prometheus-stack
-      type: helm
-    external-secrets-operator:
-      url: https://charts.external-secrets.io/
-      name: external-secrets-operator
-      type: helm
-
     cert-manager-git:
       url: https://gitlab.bigd.no/homelab/k8s/k3sa/app-config/cert-manager.git
     traefik-git:
