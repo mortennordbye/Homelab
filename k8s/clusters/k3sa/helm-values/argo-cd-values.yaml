@@ -4,16 +4,6 @@ server:
     loadBalancerIP: 10.0.0.59
 
 configs:
-  credentialTemplates:
-    gitlab.bigd.no:
-      url: https://gitlab.bigd.no
-      username: "$argocd-gitlab-creds:username"
-      password: "$argocd-gitlab-creds:password"
-    10.0.0.36:
-      url: http://10.0.0.36
-      username: "$argocd-gitlab-creds:username"
-      password: "$argocd-gitlab-creds:password"
-
   repositories:
     traefik-helm:
       url: https://traefik.github.io/charts
