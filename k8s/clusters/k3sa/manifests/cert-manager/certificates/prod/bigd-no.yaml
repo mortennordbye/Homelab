@@ -1,0 +1,23 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: bigd-no
+  namespace: cert-manager
+  annotations:
+    argocd.argoproj.io/sync-wave: "201"
+spec:
+  secretName: bigd-no-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: "*.bigd.no"
+  dnsNames:
+    - "bigd.no"
+    - "*.bigd.no"
+    - "registry.gitlab.bigd.no"
+  secretTemplate:
+    annotations:
+      reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+      reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: ".*"
+      reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
+      reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: ".*"
