@@ -20,7 +20,8 @@ spec:
       ref: values
       path: k8s/clusters/k3sa/manifests/cert-manager
       directory:
-        
+        recurse: true
+
   syncPolicy:
     automated:
       prune: true
