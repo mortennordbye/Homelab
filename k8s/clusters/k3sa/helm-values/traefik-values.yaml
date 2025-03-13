@@ -1,0 +1,78 @@
+globalArguments:
+  - "--global.sendanonymoususage=false"
+  - "--global.checknewversion=false"
+
+additionalArguments:
+  - "--serversTransport.insecureSkipVerify=true"
+  - "--log.level=INFO"
+  - "--providers.kubernetescrd.allowCrossNamespace=true"
+
+deployment:
+  enabled: true
+  replicas: 3
+  annotations: {}
+  podAnnotations: {}
+  additionalContainers: []
+  initContainers: []
+
+ports:
+  web:
+    redirectTo:
+      port: websecure
+      priority: 10
+    exposedPort: 8080
+  websecure:
+    port: 8443
+    http3:
+      enabled: true
+    advertisedPort: 8443
+    exposedPort: 8443
+    tls:
+      enabled: true
+  ssh:
+    port: 2222
+    expose:
+      default: true
+    exposedPort: 2222
+    protocol: TCP
+
+ingressRoute:
+  dashboard:
+    enabled: false
+
+metrics:
+  prometheus:
+    entryPoint: metrics
+    service:
+      enabled: true
+      labels: {}
+      annotations: {}
+    serviceMonitor:
+      enabled: true
+      interval: 30s
+      additionalLabels: {}
+
+providers:
+  kubernetesCRD:
+    enabled: true
+    ingressClass: traefik
+    allowExternalNameServices: true
+    allowCrossNamespace: true
+  kubernetesIngress:
+    enabled: true
+    allowExternalNameServices: true
+    publishedService:
+      enabled: false
+
+rbac:
+  enabled: true
+
+service:
+  enabled: true
+  type: LoadBalancer
+  annotations: {}
+  labels: {}
+  spec:
+    loadBalancerIP: 10.0.0.58
+  loadBalancerSourceRanges: []
+  externalIPs: []

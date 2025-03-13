@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: overseerr-service
+  namespace: traefik
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 5055
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: overseerr-service
+  namespace: traefik
+subsets:
+  - addresses:
+      - ip: 10.0.0.28
+    ports:
+      - name: http
+        port: 5055
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: overseerr-ingress
+  namespace: traefik
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`overseerr.bigd.no`)
+      kind: Rule
+      middlewares:
+        - name: default-headers
+          namespace: traefik
+      services:
+        - name: overseerr-service
+          port: 80
+  tls:
+    secretName: bigd-no-tls

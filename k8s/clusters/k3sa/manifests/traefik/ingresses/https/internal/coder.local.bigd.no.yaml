@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: code-server-service
+  namespace: traefik
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: code-server-service
+  namespace: traefik
+subsets:
+  - addresses:
+      - ip: 10.0.0.25
+    ports:
+      - name: http
+        port: 8080
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: code-server-ingress
+  namespace: traefik
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`coder.local.bigd.no`)
+      kind: Rule
+      middlewares:
+        - name: default-headers
+          namespace: traefik
+      services:
+        - name: code-server-service
+          port: 80
+  tls:
+    secretName: local-bigd-no-tls

@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: traefik
+  namespace: argo-cd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: traefik
+  sources:
+    - repoURL: "https://traefik.github.io/charts"
+      chart: traefik
+      targetRevision: "34.4.1"
+      helm:
+        valueFiles:
+          - $values/k8s/clusters/k3sa/helm-values/traefik-values.yaml
+    - repoURL: "https://github.com/mortennordbye/Homelab.git"
+      targetRevision: main
+      ref: values
+      path: k8s/clusters/k3sa/manifests/traefik
+      directory:
+        recurse: true
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
