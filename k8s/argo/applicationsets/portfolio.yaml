@@ -6,17 +6,17 @@ metadata:
 spec:
   generators:
     - git:
-        repoURL: https://github.com/mortennordbye/portfolio.git
+        repoURL: https://github.com/mortennordbye/Homelab.git
         revision: main
         directories:
-          - path: manifests/*
+          - path: k8s/clusters/k3sa/manifests/portfolio/*
   template:
     metadata:
       name: "{{path.basename}}-portfolio"
     spec:
       project: default
       source:
-        repoURL: https://github.com/mortennordbye/portfolio.git
+        repoURL: https://github.com/mortennordbye/Homelab.git
         targetRevision: main
         path: "{{path}}"
       destination:
