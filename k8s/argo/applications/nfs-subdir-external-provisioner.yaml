@@ -4,7 +4,7 @@ metadata:
   name: nfs-subdir-external-provisioner
   namespace: argo-cd
 spec:
-  project: default
+  project: homelab
   destination:
     server: https://kubernetes.default.svc
     namespace: kube-system

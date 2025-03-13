@@ -4,7 +4,7 @@ metadata:
   name: argo-cd
   namespace: argo-cd
 spec:
-  project: default
+  project: homelab
   destination:
     server: https://kubernetes.default.svc
     namespace: argo-cd
