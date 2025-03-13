@@ -7,7 +7,7 @@ spec:
   project: homelab
   destination:
     server: https://kubernetes.default.svc
-    namespace: kube-system
+    namespace: reflector
   sources:
     - repoURL: "https://emberstack.github.io/helm-charts"
       chart: reflector
