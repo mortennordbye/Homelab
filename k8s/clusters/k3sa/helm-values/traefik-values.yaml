@@ -15,11 +15,30 @@ deployment:
   additionalContainers: []
   initContainers: []
 
+entryPoints:
+  web:
+    address: ":8080"
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+          priority: 10
+
+  websecure:
+    address: ":8443"
+    http3:
+      enabled: true
+    forwardedHeaders:
+      insecure: true
+    tls:
+      enabled: true
+
+  ssh:
+    address: ":2222"
+
 ports:
   web:
-    redirectTo:
-      port: websecure
-      priority: 10
     exposedPort: 8080
   websecure:
     port: 8443
