@@ -162,6 +162,11 @@ config:
     - name: Argo
       <<: *internal-http-defaults
       url: "https://10.0.0.59"
+    - name: Traefik
+      <<: *internal-http-defaults
+      url: "https://traefik.local.bigd.no/dashboard/#"
+      headers:
+        Authorization: "Basic ${TRAEFIK_BASIC_AUTH}"
     - name: Home Assistant
       <<: *internal-http-defaults
       url: "http://10.0.0.38:8123"
