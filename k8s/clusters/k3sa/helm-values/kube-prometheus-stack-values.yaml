@@ -36,7 +36,7 @@ defaultRules:
     prometheusOperator: true
 # Node exporter
 nodeExporter:
-  enabled: true
+  enabled: false
 # Alertmanager configuration
 alertmanager:
   enabled: true
