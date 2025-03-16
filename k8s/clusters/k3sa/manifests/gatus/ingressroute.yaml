@@ -1,0 +1,21 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: gatus-ingress
+  namespace: gatus
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`uptime.local.bigd.no`)
+      kind: Rule
+      middlewares:
+        - name: default-headers
+          namespace: traefik
+      services:
+        - name: gatus
+          port: 80
+  tls:
+    secretName: local-bigd-no-tls
