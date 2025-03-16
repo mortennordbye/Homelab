@@ -34,9 +34,11 @@ defaultRules:
     nodeExporterRecording: true
     prometheus: true
     prometheusOperator: true
+    
 # Node exporter
 nodeExporter:
   enabled: false
+
 # Alertmanager configuration
 alertmanager:
   enabled: true
@@ -55,17 +57,15 @@ alertmanager:
             requests:
               storage: 5Gi
 
-    extraSecretMounts:
-      - name: alertmanager-discord-webhook-secret
-        secretName: alertmanager-discord-webhook-secret
-        mountPath: /etc/alertmanager/secrets
-        readOnly: true
+    # Simpler way to include your secret
+    secrets:
+      - alertmanager-discord-webhook-secret
 
   config:
     global:
       resolve_timeout: 5m
     route:
-      receiver: "null"  # Default receiver does nothing
+      receiver: "null"
       group_by: ['namespace', 'alertname']
       group_wait: 30s
       group_interval: 5m
@@ -77,12 +77,11 @@ alertmanager:
     receivers:
       - name: "discord"
         discord_configs:
-          - webhook_url_file: /etc/alertmanager/secrets/webhook_url
+          - webhook_url_file: "/etc/alertmanager/secrets/alertmanager-discord-webhook-secret/webhook_url"
       - name: "null"
 
   templates:
     - '/etc/alertmanager/config/*.tmpl'
-
 
 
 # Grafana configuration
