@@ -1,9 +1,9 @@
 # Kube-Prometheus-Stack configuration
 fullnameOverride: prometheus
 
-# Disable CRD management
+# enable CRD management
 crds:
-  enabled: false
+  enabled: true
 
 # Default alerting rules configuration
 defaultRules:
@@ -34,7 +34,7 @@ defaultRules:
     nodeExporterRecording: true
     prometheus: true
     prometheusOperator: true
-    
+
 # Node exporter
 nodeExporter:
   enabled: false
