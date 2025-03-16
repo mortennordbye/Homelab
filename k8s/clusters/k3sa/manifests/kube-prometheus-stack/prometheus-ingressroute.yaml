@@ -1,0 +1,24 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: prometheus-ingress
+  namespace: kube-prometheus-stack
+  annotations: 
+    kubernetes.io/ingress.class: traefik 
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`prometheus.local.bigd.no`)
+      kind: Rule
+      services:
+        - name: prometheus-prometheus
+          port: 9090
+          sticky:
+            cookie:
+              httpOnly: true
+              name: prometheus
+              secure: true
+              sameSite: none
+  tls:
+    secretName: local-bigd-no-tls

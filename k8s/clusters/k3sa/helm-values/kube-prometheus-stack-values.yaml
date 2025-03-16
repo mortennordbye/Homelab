@@ -1,0 +1,245 @@
+# Kube-Prometheus-Stack configuration
+fullnameOverride: prometheus
+
+# Disable CRD management
+crds:
+  enabled: false
+
+# Default alerting rules configuration
+defaultRules:
+  create: true
+  rules:
+    alertmanager: true
+    etcd: true
+    configReloaders: true
+    general: true
+    k8s: true
+    kubeApiserverAvailability: true
+    kubeApiserverBurnrate: true
+    kubeApiserverHistogram: true
+    kubeApiserverSlos: true
+    kubelet: true
+    kubeProxy: false
+    kubePrometheusGeneral: true
+    kubePrometheusNodeRecording: true
+    kubernetesApps: true
+    kubernetesResources: true
+    kubernetesStorage: true
+    kubernetesSystem: true
+    kubeScheduler: true
+    kubeStateMetrics: true
+    network: true
+    node: true
+    nodeExporterAlerting: true
+    nodeExporterRecording: true
+    prometheus: true
+    prometheusOperator: true
+
+# Alertmanager configuration
+alertmanager:
+  enabled: true
+  fullnameOverride: alertmanager
+  ingress:
+    enabled: false
+
+  alertmanagerSpec:
+    logLevel: debug
+    storage:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: "nfs-client"
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 5Gi
+
+    extraSecretMounts:
+      - name: alertmanager-discord-webhook-secret
+        secretName: alertmanager-discord-webhook-secret
+        mountPath: /etc/alertmanager/secrets
+        readOnly: true
+
+  config:
+    global:
+      resolve_timeout: 5m
+    route:
+      receiver: "null"  # Default receiver does nothing
+      group_by: ['namespace', 'alertname']
+      group_wait: 30s
+      group_interval: 5m
+      repeat_interval: 12h
+      routes:
+        - receiver: "discord"
+          matchers:
+            - alertname =~ "DiskUsage.*"
+    receivers:
+      - name: "discord"
+        discord_configs:
+          - webhook_url_file: /etc/alertmanager/secrets/webhook_url
+      - name: "null"
+
+  templates:
+    - '/etc/alertmanager/config/*.tmpl'
+
+
+
+# Grafana configuration
+grafana:
+  enabled: true
+  fullnameOverride: grafana
+  forceDeployDatasources: false
+  forceDeployDashboards: false
+  defaultDashboardsEnabled: true
+  defaultDashboardsTimezone: utc
+  serviceMonitor:
+    enabled: true
+  admin:
+    existingSecret: grafana-admin-credentials
+    userKey: admin-user
+    passwordKey: admin-password
+  persistence:
+    enabled: true
+    storageClassName: "nfs-client"
+    accessModes: ["ReadWriteOnce"]
+    size: 5Gi
+
+# Core Kubernetes component configurations
+kubeApiServer:
+  enabled: true
+
+kubelet:
+  enabled: true
+  serviceMonitor:
+    metricRelabelings:
+      - action: replace
+        sourceLabels:
+          - node
+        targetLabel: instance
+
+kubeControllerManager:
+  enabled: true
+  endpoints:
+    - 10.0.0.51
+    - 10.0.0.52
+    - 10.0.0.53
+
+kubeEtcd:
+  enabled: true
+  endpoints:
+    - 10.0.0.51
+    - 10.0.0.52
+    - 10.0.0.53
+  service:
+    enabled: true
+    port: 2381
+    targetPort: 2381
+
+kubeScheduler:
+  enabled: true
+  endpoints:
+    - 10.0.0.51
+    - 10.0.0.52
+    - 10.0.0.53
+
+kubeStateMetrics:
+  enabled: true
+
+# Prometheus configuration
+prometheus:
+  enabled: true
+  prometheusSpec:
+    replicas: 1
+    retention: 6h
+    enableAdminAPI: true
+    walCompression: true
+    scrapeInterval: 30s
+    evaluationInterval: 30s
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: "nfs-client"
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 10Gi
+    additionalScrapeConfigs:
+      - job_name: 'external-node-exporter'
+        static_configs:
+          - targets: ['10.0.0.21:9100']
+            labels:
+              instance: 'adguard'
+          - targets: ['10.0.0.22:9100']
+            labels:
+              instance: 'bind'
+          - targets: ['10.0.0.25:9100']
+            labels:
+              instance: 'linbast'
+          - targets: ['10.0.0.27:9100']
+            labels:
+              instance: 'docker-utility'
+          - targets: ['10.0.0.28:9100']
+            labels:
+              instance: 'docker-piracy'
+          - targets: ['10.0.0.29:9100']
+            labels:
+              instance: 'qbittorrent'
+          - targets: ['10.0.0.31:9100']
+            labels:
+              instance: 'plex'
+          - targets: ['10.0.0.32:9100']
+            labels:
+              instance: 'docker-nextcloud'
+          - targets: ['10.0.0.36:9100']
+            labels:
+              instance: 'gitlab'
+          - targets: ['10.0.0.39:9100']
+            labels:
+              instance: 'nfs'
+          - targets: ['10.0.0.51:9100']
+            labels:
+              instance: 'k3sam1'
+          - targets: ['10.0.0.52:9100']
+            labels:
+              instance: 'k3sam2'
+          - targets: ['10.0.0.53:9100']
+            labels:
+              instance: 'k3sam3'
+          - targets: ['10.0.0.54:9100']
+            labels:
+              instance: 'k3saca1'
+          - targets: ['10.0.0.55:9100']
+            labels:
+              instance: 'k3saca2'
+          - targets: ['10.0.0.56:9100']
+            labels:
+              instance: 'k3saca3'
+          - targets: ['10.0.0.80:9100']
+            labels:
+              instance: 'test-vm'
+
+# Custom Prometheus Rules
+additionalPrometheusRulesMap:
+  disk-usage-alerts:
+    groups:
+      - name: disk-usage.rules
+        rules:
+          - alert: DiskUsageCritical
+            expr: (node_filesystem_avail_bytes{fstype!~"tmpfs|overlay", mountpoint="/"} / node_filesystem_size_bytes{fstype!~"tmpfs|overlay", mountpoint="/"}) * 100 < 10
+            for: 1m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Root disk usage is critically high on instance {{ $labels.instance }}"
+              description: "Root disk usage is above 90% on {{ $labels.instance }}."
+          - alert: DiskUsageWarning
+            expr: (node_filesystem_avail_bytes{fstype!~"tmpfs|overlay", mountpoint="/"} / node_filesystem_size_bytes{fstype!~"tmpfs|overlay", mountpoint="/"}) * 100 < 20
+            for: 1m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Root disk usage is high on instance {{ $labels.instance }}"
+              description: "Root disk usage is above 80% on {{ $labels.instance }}."
+
+# ThanosRuler disabled
+thanosRuler:
+  enabled: false
