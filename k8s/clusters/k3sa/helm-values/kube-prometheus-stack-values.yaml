@@ -34,7 +34,9 @@ defaultRules:
     nodeExporterRecording: true
     prometheus: true
     prometheusOperator: true
-
+# Node exporter
+nodeExporter:
+  enabled: true
 # Alertmanager configuration
 alertmanager:
   enabled: true
