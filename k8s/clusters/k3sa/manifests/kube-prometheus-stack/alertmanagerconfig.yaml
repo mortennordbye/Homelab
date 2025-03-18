@@ -5,15 +5,11 @@ metadata:
   namespace: kube-prometheus-stack
 spec:
   route:
-    groupBy: ['namespace', 'alertname']
-    groupWait: 30s
-    groupInterval: 5m
-    repeatInterval: 12h
     receiver: discord
     matchers:
-      - name: alertname
-        matchType: regexp
-        value: "DiskUsage.*"
+      - name: severity
+        matchType: equals
+        value: critical
   receivers:
     - name: "discord"
       discordConfigs:

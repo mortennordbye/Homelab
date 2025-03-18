@@ -54,7 +54,7 @@ alertmanager:
           resources:
             requests:
               storage: 5Gi
-    alertmanagerConfigSelector: {} # Enables support for AlertmanagerConfig CRDs
+    alertmanagerConfigSelector: {}
 
   config:
     global:
@@ -65,7 +65,6 @@ alertmanager:
       group_wait: 30s
       group_interval: 5m
       repeat_interval: 12h
-      routes: []
     receivers:
       - name: "null"
     templates:
