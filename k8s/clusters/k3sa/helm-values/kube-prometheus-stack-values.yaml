@@ -3,7 +3,7 @@ fullnameOverride: prometheus
 
 # enable CRD management
 crds:
-  enabled: true
+  enabled: false
 
 # Default alerting rules configuration
 defaultRules:
@@ -73,7 +73,9 @@ alertmanager:
     receivers:
       - name: "discord"
         discord_configs:
-          - webhook_url_file: /etc/alertmanager/secrets/alertmanager-discord-webhook-secret/webhook_url
+          - apiURL:
+              name: alertmanager-discord-webhook-secret
+              key: api-url
             send_resolved: true
       - name: "null"
     templates:
