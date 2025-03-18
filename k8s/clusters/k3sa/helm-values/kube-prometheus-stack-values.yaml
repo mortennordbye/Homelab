@@ -42,12 +42,10 @@ nodeExporter:
 # Alertmanager configuration
 alertmanager:
   enabled: true
-  fullnameOverride: alertmanager
-  ingress:
-    enabled: false
-
+  
   alertmanagerSpec:
     logLevel: debug
+    replicas: 1
     storage:
       volumeClaimTemplate:
         spec:
@@ -56,8 +54,6 @@ alertmanager:
           resources:
             requests:
               storage: 5Gi
-
-    # Simpler way to include your secret
     secrets:
       - alertmanager-discord-webhook-secret
 
@@ -77,12 +73,10 @@ alertmanager:
     receivers:
       - name: "discord"
         discord_configs:
-          - webhook_url_file: "/etc/alertmanager/secrets/alertmanager-discord-webhook-secret/webhook_url"
+          - webhook_url_file: /etc/alertmanager/secrets/alertmanager-discord-webhook-secret/webhook_url
       - name: "null"
-
-  templates:
-    - '/etc/alertmanager/config/*.tmpl'
-
+    templates:
+      - '/etc/alertmanager/config/*.tmpl'
 
 # Grafana configuration
 grafana:
