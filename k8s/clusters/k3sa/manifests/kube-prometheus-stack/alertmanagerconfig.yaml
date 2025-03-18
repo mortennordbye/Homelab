@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: discord-alerts
+  namespace: kube-prometheus-stack
+spec:
+  route:
+    groupBy: ['namespace', 'alertname']
+    groupWait: 30s
+    groupInterval: 5m
+    repeatInterval: 12h
+    receiver: discord
+    matchers:
+      - alertname =~ "DiskUsage.*"
+  receivers:
+    - name: "discord"
+      discordConfigs:
+        - apiURL:
+            name: alertmanager-discord-webhook-secret
+            key: api-url
+          sendResolved: true

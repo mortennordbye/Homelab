@@ -54,8 +54,7 @@ alertmanager:
           resources:
             requests:
               storage: 5Gi
-    secrets:
-      - alertmanager-discord-webhook-secret
+    alertmanagerConfigSelector: {} # Enables support for AlertmanagerConfig CRDs
 
   config:
     global:
@@ -66,20 +65,12 @@ alertmanager:
       group_wait: 30s
       group_interval: 5m
       repeat_interval: 12h
-      routes:
-        - receiver: "discord"
-          matchers:
-            - alertname =~ "DiskUsage.*"
+      routes: []
     receivers:
-      - name: "discord"
-        discord_configs:
-          - apiURL:
-              name: alertmanager-discord-webhook-secret
-              key: api-url
-            send_resolved: true
       - name: "null"
     templates:
       - '/etc/alertmanager/config/*.tmpl'
+
 
 # Grafana configuration
 grafana:
