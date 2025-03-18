@@ -75,7 +75,7 @@ alertmanager:
         discord_configs:
           - apiURL:
               name: alertmanager-discord-webhook-secret
-              key: api-url
+              key: webhook_url
             send_resolved: true
       - name: "null"
     templates:
