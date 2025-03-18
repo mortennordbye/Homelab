@@ -11,7 +11,9 @@ spec:
     repeatInterval: 12h
     receiver: discord
     matchers:
-      - alertname =~ "DiskUsage.*"
+      - name: alertname
+        matchType: regexp
+        value: "DiskUsage.*"
   receivers:
     - name: "discord"
       discordConfigs:
