@@ -13,9 +13,6 @@ spec:
           - name: alertname
             matchType: "=~"
             value: "DiskUsageCritical|DiskUsageWarning"
-          - name: severity
-            matchType: "="
-            value: "warning"
   receivers:
     - name: discord
       webhookConfigs:

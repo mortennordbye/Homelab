@@ -23,4 +23,3 @@ spec:
           annotations:
             summary: "Root disk usage is high on instance {{ $labels.instance }}"
             description: "Root disk usage is above 80% on {{ $labels.instance }}."
-#
