@@ -37,7 +37,7 @@ defaultRules:
 
 # Node exporter
 nodeExporter:
-  enabled: true  # Required for disk usage alerts
+  enabled: false
 
 # Alertmanager configuration
 alertmanager:
