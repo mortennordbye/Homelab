@@ -7,17 +7,15 @@ spec:
   route:
     receiver: discord
     groupBy: ['alertname', 'namespace']
-    group_wait: 30s
-    group_interval: 5m
-    repeat_interval: 1h
     continue: true
-    matchers:
-      - name: alertname
-        matchType: "=~"
-        value: "DiskUsageCritical|DiskUsageWarning"
-      - name: severity
-        matchType: "="
-        value: "warning"
+    routes:
+      - matchers:
+          - name: alertname
+            matchType: "=~"
+            value: "DiskUsageCritical|DiskUsageWarning"
+          - name: severity
+            matchType: "="
+            value: "warning"
   receivers:
     - name: discord
       webhookConfigs:
