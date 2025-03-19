@@ -1,25 +1,20 @@
-apiVersion: monitoring.coreos.com/v1
-kind: PrometheusRule
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
 metadata:
-  name: disk-usage-alerts
+  name: discord-alerts
   namespace: kube-prometheus-stack
 spec:
-  groups:
-    - name: disk-usage.rules
-      rules:
-        - alert: DiskUsageCritical
-          expr: (node_filesystem_avail_bytes{fstype!~"tmpfs|overlay", mountpoint="/"} / node_filesystem_size_bytes{fstype!~"tmpfs|overlay", mountpoint="/"}) * 100 < 10
-          for: 1m
-          labels:
-            severity: critical
-          annotations:
-            summary: "Root disk usage is critically high on instance {{ $labels.instance }}"
-            description: "Root disk usage is above 90% on {{ $labels.instance }}."
-        - alert: DiskUsageWarning
-          expr: (node_filesystem_avail_bytes{fstype!~"tmpfs|overlay", mountpoint="/"} / node_filesystem_size_bytes{fstype!~"tmpfs|overlay", mountpoint="/"}) * 100 < 20
-          for: 1m
-          labels:
-            severity: warning
-          annotations:
-            summary: "Root disk usage is high on instance {{ $labels.instance }}"
-            description: "Root disk usage is above 80% on {{ $labels.instance }}."
+  route:
+    receiver: discord
+    groupBy: ['alertname']
+    matchers:
+      - name: alertname
+        matchType: regexp
+        value: "DiskUsageCritical|DiskUsageWarning"
+  receivers:
+    - name: discord
+      discordConfigs:
+        - apiURL:
+            name: alertmanager-discord-webhook-secret
+            key: api-url
+          sendResolved: true
