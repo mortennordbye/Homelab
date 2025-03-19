@@ -6,12 +6,8 @@ metadata:
 spec:
   route:
     receiver: discord
-    matchers:
-      - name: severity
-        matchType: equals
-        value: critical
   receivers:
-    - name: "discord"
+    - name: discord
       discordConfigs:
         - apiURL:
             name: alertmanager-discord-webhook-secret
