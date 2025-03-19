@@ -7,7 +7,7 @@ spec:
   route:
     receiver: discord
     groupBy: ['alertname', 'namespace']
-    continue: true
+    continue: false
     routes:
       - matchers:
           - name: alertname
