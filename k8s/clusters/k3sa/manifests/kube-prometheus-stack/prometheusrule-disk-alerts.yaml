@@ -1,0 +1,25 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: disk-usage-alerts
+  namespace: kube-prometheus-stack
+spec:
+  groups:
+    - name: disk-usage.rules
+      rules:
+        - alert: DiskUsageCritical
+          expr: (node_filesystem_avail_bytes{fstype!~"tmpfs|overlay", mountpoint="/"} / node_filesystem_size_bytes{fstype!~"tmpfs|overlay", mountpoint="/"}) * 100 < 10
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Root disk usage is critically high on instance {{ $labels.instance }}"
+            description: "Root disk usage is above 90% on {{ $labels.instance }}."
+        - alert: DiskUsageWarning
+          expr: (node_filesystem_avail_bytes{fstype!~"tmpfs|overlay", mountpoint="/"} / node_filesystem_size_bytes{fstype!~"tmpfs|overlay", mountpoint="/"}) * 100 < 20
+          for: 1m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Root disk usage is high on instance {{ $labels.instance }}"
+            description: "Root disk usage is above 80% on {{ $labels.instance }}."
