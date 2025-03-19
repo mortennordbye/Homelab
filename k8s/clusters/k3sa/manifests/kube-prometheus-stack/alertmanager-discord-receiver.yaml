@@ -6,6 +6,11 @@ metadata:
 spec:
   route:
     receiver: discord
+    groupBy: ['alertname']
+    matchers:
+      - name: alertname
+        matchType: regexp
+        value: "DiskUsageCritical|DiskUsageWarning"
   receivers:
     - name: discord
       discordConfigs:
