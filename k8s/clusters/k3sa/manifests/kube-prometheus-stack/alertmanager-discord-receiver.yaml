@@ -6,15 +6,23 @@ metadata:
 spec:
   route:
     receiver: discord
-    groupBy: ['alertname']
+    groupBy: ['alertname', 'namespace']
+    group_wait: 30s
+    group_interval: 5m
+    repeat_interval: 1h
+    continue: true
     matchers:
       - name: alertname
-        matchType: regexp
+        matchType: "=~"
         value: "DiskUsageCritical|DiskUsageWarning"
+      - name: severity
+        matchType: "="
+        value: "warning"
   receivers:
     - name: discord
-      discordConfigs:
-        - apiURL:
+      webhookConfigs:
+        - urlSecret:
             name: alertmanager-discord-webhook-secret
             key: api-url
           sendResolved: true
+          maxAlerts: 5
