@@ -37,7 +37,7 @@ defaultRules:
 
 # Node exporter
 nodeExporter:
-  enabled: false
+  enabled: true  # Required for disk usage alerts
 
 # Alertmanager configuration
 alertmanager:
@@ -149,6 +149,9 @@ prometheus:
           resources:
             requests:
               storage: 10Gi
+    ruleSelectorNilUsesHelmValues: false
+    ruleSelector: {}
+    ruleNamespaceSelector: {}
     additionalScrapeConfigs:
       - job_name: 'external-node-exporter'
         static_configs:
