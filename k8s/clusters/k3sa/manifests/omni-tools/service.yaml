@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: omni-tools-service
+  namespace: omni-tools
+spec:
+  selector:
+    app: omni-tools
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
