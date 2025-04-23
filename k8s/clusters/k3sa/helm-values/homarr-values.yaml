@@ -1,0 +1,37 @@
+replicaCount: 1
+strategyType: RollingUpdate
+
+env:
+  TZ: "Europe/Oslo"
+
+envSecrets:
+  dbCredentials:
+    existingSecret: homarr-db-secret
+    dbEncryptionKey: db-encryption-key
+
+persistence:
+  homarrDatabase:
+    enabled: true
+    storageClassName: nfs-client
+    accessMode: ReadWriteOnce
+    size: 2Gi
+    mountPath: /appdata/db
+
+rbac:
+  enabled: true
+
+ingress:
+  enabled: true
+  ingressClassName: traefik
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.middlewares: default-headers@traefik
+  hosts:
+    - host: hub.bigd.no
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - hosts:
+        - hub.bigd.no
+      secretName: bigd-no-tls
