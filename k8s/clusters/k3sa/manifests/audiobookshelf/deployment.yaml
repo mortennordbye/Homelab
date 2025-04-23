@@ -23,10 +23,12 @@ spec:
           ports:
             - containerPort: 80
           volumeMounts:
-            - name: audiobooks
+            - name: share
               mountPath: /audiobooks
-            - name: podcasts
+              subPath: media/audiobooks
+            - name: share
               mountPath: /podcasts
+              subPath: media/podcasts
             - name: config
               mountPath: /config
             - name: metadata
@@ -35,14 +37,11 @@ spec:
             runAsNonRoot: true
           resources: {}
       volumes:
-        - name: audiobooks
-          hostPath:
-            path: /mnt/nfs/media/audiobooks
-            type: Directory
-        - name: podcasts
-          hostPath:
-            path: /mnt/nfs/media/podcasts
-            type: Directory
+        - name: share
+          nfs:
+            server: 10.0.0.2
+            path: /volume1/share
+            readOnly: false
         - name: config
           persistentVolumeClaim:
             claimName: config-pvc
