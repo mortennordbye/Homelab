@@ -13,9 +13,7 @@ persistence:
   homarrDatabase:
     enabled: true
     storageClassName: nfs-client
-    accessMode: ReadWriteOnce
-    size: 2Gi
-    mountPath: /appdata/db
+    size: "1Gi"
 
 rbac:
   enabled: true
@@ -26,6 +24,8 @@ ingress:
   annotations:
     kubernetes.io/ingress.class: traefik
     traefik.ingress.kubernetes.io/router.middlewares: default-headers@traefik
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
   hosts:
     - host: hub.bigd.no
       paths:
