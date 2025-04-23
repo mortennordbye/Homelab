@@ -22,6 +22,10 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
           volumeMounts:
             - name: share
               mountPath: /audiobooks
@@ -33,8 +37,6 @@ spec:
               mountPath: /config
             - name: metadata
               mountPath: /metadata
-          securityContext:
-            runAsNonRoot: true
           resources: {}
       volumes:
         - name: share
