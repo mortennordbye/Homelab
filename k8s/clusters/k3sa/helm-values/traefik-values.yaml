@@ -24,7 +24,6 @@ entryPoints:
           to: websecure
           scheme: https
           priority: 10
-
   websecure:
     address: ":8443"
     http3:
@@ -33,7 +32,6 @@ entryPoints:
       insecure: true
     tls:
       enabled: true
-
   ssh:
     address: ":2222"
 
@@ -81,7 +79,9 @@ providers:
     enabled: true
     allowExternalNameServices: true
     publishedService:
-      enabled: false
+      enabled: true
+      namespace: traefik
+      name: traefik
 
 rbac:
   enabled: true
