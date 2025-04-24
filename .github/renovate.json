@@ -1,0 +1,37 @@
+{
+    "extends": ["config:base"],
+    "branchPrefix": "renovate/",
+    "schedule": ["at any time"],
+  
+    "managers": [
+      "kubernetes",
+      "helm-values"
+    ],
+  
+    "kubernetes": {
+      "fileMatch": [
+        "(^|/)k8s/argo/applications/.*\\.ya?ml$",
+        "(^|/)k8s/clusters/[^/]+/manifests/.*\\.ya?ml$"
+      ]
+    },
+  
+    "helm-values": {
+      "fileMatch": [
+        "(^|/)k8s/clusters/[^/]+/helm-values/.*values\\.ya?ml$"
+      ]
+    },
+  
+    "packageRules": [
+      {
+        "managers": ["kubernetes", "helm-values"],
+        "groupName": "all container image updates",
+        "matchPackagePatterns": ["*"]
+      },
+      {
+        "matchUpdateTypes": ["patch", "minor"],
+        "automerge": true,
+        "automergeType": "branch-push"
+      }
+    ]
+  }
+  
