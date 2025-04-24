@@ -2,6 +2,23 @@ server:
   service:
     type: LoadBalancer
     loadBalancerIP: 10.0.0.59
+  ingress:
+    enabled: true
+    controller: generic
+    ingressClassName: traefik
+    annotations:
+      kubernetes.io/ingress.class: traefik
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+      traefik.ingress.kubernetes.io/router.tls: "true"
+      traefik.ingress.kubernetes.io/router.middlewares: traefik-default-headers@kubernetescrd
+    hostname: argocd.local.bigd.no
+    path: /
+    pathType: Prefix
+    tls: false
+    extraTls:
+      - hosts:
+          - argocd.local.bigd.no
+        secretName: local-bigd-tls
 
 configs:
   repositories:
