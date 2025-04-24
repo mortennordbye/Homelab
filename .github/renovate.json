@@ -1,8 +1,6 @@
 {
     "extends": ["config:base"],
     "branchPrefix": "renovate/",
-    "timezone": "Europe/Oslo",
-    "schedule": ["* 18 * * *"],
     "managers": [
       "kubernetes",
       "helm-values"
@@ -10,7 +8,7 @@
     "kubernetes": {
       "fileMatch": [
         "(^|/)k8s/argo/applications/.*\\.ya?ml$",
-        "( ^|/)k8s/clusters/[^/]+/manifests/.*\\.ya?ml$"
+        "(^|/)k8s/clusters/[^/]+/manifests/.*\\.ya?ml$"
       ]
     },
     "helm-values": {
