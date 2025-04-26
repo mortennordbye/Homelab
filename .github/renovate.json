@@ -1,21 +1,26 @@
 {
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": ["config:base"],
+    "enabledManagers": [
+      "github-actions",
+      "helm-values",
+      "regex"
+    ],
     "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
-    "labels": ["dependencies"],
-  
-    "managers": ["github-actions"],
-  
-    "regexManagers": [
+    "customManagers": [
       {
+        "description": "Update container images in K8s YAML",
+        "customType": "regex",
         "fileMatch": ["^k8s/.*\\.ya?ml$"],
         "matchStrings": [
-          "image:\\s*['\"]?(?<depName>[^:\\s\"']+:[0-9A-Za-z\\.\\-_]+)['\"]?"
+          // capture image name as depName and the current tag as currentValue
+          "image:\\s*['\\\"]?(?<depName>[^:\\s\\\"']+):(?<currentValue>[0-9A-Za-z\\.\\-_]+)['\\\"]?"
         ],
         "datasourceTemplate": "docker",
-        "depNameTemplate": "{{depName}}"
+        "depNameTemplate": "{{depName}}",
+        "versioningTemplate": "semver"
       }
     ],
-  
     "helm-values": [
       {
         "fileMatch": ["^k8s/clusters/.+/helm-values/.*\\.ya?ml$"],
@@ -24,7 +29,6 @@
         "packageNameTemplate": "{{chart}}"
       }
     ],
-  
     "packageRules": [
       {
         "managers": ["regex"],
