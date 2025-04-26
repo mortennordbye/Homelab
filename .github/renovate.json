@@ -7,7 +7,7 @@
   "kubernetes": {
     "fileMatch": ["^k8s/.*\\.ya?ml$"]
   },
-  "helmValues": {
+  "helm-values": {
     "fileMatch": [
       "(^|/)values\\.ya?ml$",
       "^k8s/clusters/k3sa/helm-values/.+-values\\.ya?ml$"
