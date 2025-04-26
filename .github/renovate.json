@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
-  "enabledManagers": ["kubernetes", "helm-values"],
+  "enabledManagers": ["kubernetes", "helm-values", "argocd"],
   "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
   "labels": ["dependencies"],
   "kubernetes": {
@@ -15,6 +15,9 @@
     "commitMessageTopic": "helm values {{depName}}",
     "pinDigests": false
   },
+  "argocd": {
+    "fileMatch": ["^k8s/argo/applications/.+\\.ya?ml$"]
+  },
   "packageRules": [
     {
       "matchManagers": ["kubernetes"],
@@ -24,6 +27,11 @@
     {
       "matchManagers": ["helm-values"],
       "groupName": "🚢 Helm values image updates",
+      "schedule": ["at any time"]
+    },
+    {
+      "matchManagers": ["argocd"],
+      "groupName": "🚢 ArgoCD chart updates",
       "schedule": ["at any time"]
     }
   ]
