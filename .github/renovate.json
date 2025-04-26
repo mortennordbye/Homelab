@@ -1,29 +1,30 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
-  ],
-  "enabledManagers": [
-    "kubernetes"
-  ],
+  "extends": ["config:recommended"],
+  "enabledManagers": ["kubernetes", "helm-values"],
   "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
-  "labels": [
-    "dependencies"
-  ],
+  "labels": ["dependencies"],
   "kubernetes": {
+    "fileMatch": ["^k8s/.*\\.ya?ml$"]
+  },
+  "helmValues": {
     "fileMatch": [
-      "^k8s/.*\\.ya?ml$"
-    ]
+      "(^|/)values\\.ya?ml$",
+      "^k8s/clusters/k3sa/helm-values/.+-values\\.ya?ml$"
+    ],
+    "commitMessageTopic": "helm values {{depName}}",
+    "pinDigests": false
   },
   "packageRules": [
     {
-      "matchManagers": [
-        "kubernetes"
-      ],
+      "matchManagers": ["kubernetes"],
       "groupName": "🚢 K8s image updates",
-      "schedule": [
-        "at any time"
-      ]
+      "schedule": ["at any time"]
+    },
+    {
+      "matchManagers": ["helm-values"],
+      "groupName": "🚢 Helm values image updates",
+      "schedule": ["at any time"]
     }
   ]
 }
