@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: it-tools
-          image: ghcr.io/corentinth/it-tools:latest
+          image: ghcr.io/corentinth/it-tools:2024.10.22-7ca5933
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
