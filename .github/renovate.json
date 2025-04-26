@@ -1,20 +1,29 @@
 {
-    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    "extends": ["config:base"],
-    "enabledManagers": ["kubernetes"],
-    "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
-    "labels": ["dependencies"],
-  
-    "kubernetes": {
-      "fileMatch": ["^k8s/.*\\.ya?ml$"]
-    },
-  
-    "packageRules": [
-      {
-        "managers": ["kubernetes"],
-        "groupName": "🚢 K8s image updates",
-        "schedule": ["at any time"]
-      }
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "enabledManagers": [
+    "kubernetes"
+  ],
+  "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
+  "labels": [
+    "dependencies"
+  ],
+  "kubernetes": {
+    "fileMatch": [
+      "^k8s/.*\\.ya?ml$"
     ]
-  }
-  
+  },
+  "packageRules": [
+    {
+      "matchManagers": [
+        "kubernetes"
+      ],
+      "groupName": "🚢 K8s image updates",
+      "schedule": [
+        "at any time"
+      ]
+    }
+  ]
+}
