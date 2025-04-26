@@ -1,49 +1,19 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": ["config:base"],
-    "enabledManagers": [
-      "github-actions",
-      "helm-values",
-      "regex"
-    ],
+    "enabledManagers": ["kubernetes"],
     "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
-    "customManagers": [
+    "labels": ["dependencies"],
+    "kubernetes": [
       {
-        "description": "Update container images in K8s YAML",
-        "customType": "regex",
-        "fileMatch": ["^k8s/.*\\.ya?ml$"],
-        "matchStrings": [
-          // capture image name as depName and the current tag as currentValue
-          "image:\\s*['\\\"]?(?<depName>[^:\\s\\\"']+):(?<currentValue>[0-9A-Za-z\\.\\-_]+)['\\\"]?"
-        ],
-        "datasourceTemplate": "docker",
-        "depNameTemplate": "{{depName}}",
-        "versioningTemplate": "semver"
-      }
-    ],
-    "helm-values": [
-      {
-        "fileMatch": ["^k8s/clusters/.+/helm-values/.*\\.ya?ml$"],
-        "datasourceTemplate": "helm",
-        "depNameTemplate": "{{chart}}",
-        "packageNameTemplate": "{{chart}}"
+        "fileMatch": ["^k8s/.*\\.ya?ml$"]
       }
     ],
     "packageRules": [
       {
-        "managers": ["regex"],
-        "groupName": "🚢 Container image updates",
+        "managers": ["kubernetes"],
+        "groupName": "🚢 K8s image updates",
         "schedule": ["at any time"]
-      },
-      {
-        "managers": ["helm-values"],
-        "groupName": "⎈ Weekly Helm chart updates",
-        "schedule": ["every weekend"]
-      },
-      {
-        "managers": ["github-actions"],
-        "groupName": "🤖 GitHub Actions updates",
-        "schedule": ["monthly"]
       }
     ]
   }
