@@ -1,0 +1,46 @@
+{
+    "extends": ["config:base"],
+    "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
+    "labels": ["dependencies"],
+  
+    "managers": ["github-actions"],
+  
+    "regexManagers": [
+      {
+        "fileMatch": ["^k8s/.*\\.ya?ml$"],
+        "matchStrings": [
+          "image:\\s*['\"]?(?<depName>[^:\\s\"']+:[0-9A-Za-z\\.\\-_]+)['\"]?"
+        ],
+        "datasourceTemplate": "docker",
+        "depNameTemplate": "{{depName}}"
+      }
+    ],
+  
+    "helm-values": [
+      {
+        "fileMatch": ["^k8s/clusters/.+/helm-values/.*\\.ya?ml$"],
+        "datasourceTemplate": "helm",
+        "depNameTemplate": "{{chart}}",
+        "packageNameTemplate": "{{chart}}"
+      }
+    ],
+  
+    "packageRules": [
+      {
+        "managers": ["regex"],
+        "groupName": "🚢 Container image updates",
+        "schedule": ["at any time"]
+      },
+      {
+        "managers": ["helm-values"],
+        "groupName": "⎈ Weekly Helm chart updates",
+        "schedule": ["every weekend"]
+      },
+      {
+        "managers": ["github-actions"],
+        "groupName": "🤖 GitHub Actions updates",
+        "schedule": ["monthly"]
+      }
+    ]
+  }
+  
