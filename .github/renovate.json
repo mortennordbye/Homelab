@@ -4,11 +4,11 @@
     "enabledManagers": ["kubernetes"],
     "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
     "labels": ["dependencies"],
-    "kubernetes": [
-      {
-        "fileMatch": ["^k8s/.*\\.ya?ml$"]
-      }
-    ],
+  
+    "kubernetes": {
+      "fileMatch": ["^k8s/.*\\.ya?ml$"]
+    },
+  
     "packageRules": [
       {
         "managers": ["kubernetes"],
