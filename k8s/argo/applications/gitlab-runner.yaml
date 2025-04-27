@@ -11,7 +11,7 @@ spec:
   sources:
     - repoURL: "https://charts.gitlab.io/"
       chart: gitlab-runner
-      targetRevision: "0.74.1"
+      targetRevision: "0.76.0"
       helm:
         valueFiles:
           - $values/k8s/clusters/k3sa/helm-values/gitlab-runner-values.yaml
