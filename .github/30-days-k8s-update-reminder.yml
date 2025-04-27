@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Send Discord reminder
         env:
-          WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          WEBHOOK_URL: ${{ secrets.HOMELAB_REMINDERS_WEBHOOK_URL }}
         run: |
           now=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           curl -sSL -H "Content-Type: application/json" -X POST \
