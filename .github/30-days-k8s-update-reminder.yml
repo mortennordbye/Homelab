@@ -1,6 +1,7 @@
 name: "Kubernetes Update Reminder (≈30 days)"
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 16 1 * *'
 
