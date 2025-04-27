@@ -1,0 +1,39 @@
+name: "Kubernetes Update Reminder (≈30 days)"
+
+on:
+  schedule:
+    - cron: '0 16 1 * *'
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Discord reminder
+        env:
+          WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          now=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          curl -sSL -H "Content-Type: application/json" -X POST \
+               -d '{
+                 "username": "Homelab-Reminders",
+                 "embeds":[
+                   {
+                     "title":"🔔 Kubernetes Update Reminder",
+                     "description":"An alert for Kubernetes upkeep has been triggered.",
+                     "color":15548997,
+                     "fields":[
+                       {
+                         "name":"📌 @everyone",
+                         "value":"• 🔄 CRDs: check & apply updates\n• 🤖 Renovate: review & merge PRs"
+                       },
+                       {
+                         "name":"⏳ Next run",
+                         "value":"Every 1st of the month at 18:00 Oslo time"
+                       }
+                     ],
+                     "footer":{"text":"Automated Reminder • Homelab"},
+                     "timestamp":"'"$now"'"
+                   }
+                 ]
+               }' \
+               "$WEBHOOK_URL"
