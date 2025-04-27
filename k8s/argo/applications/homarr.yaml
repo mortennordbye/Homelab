@@ -11,7 +11,7 @@ spec:
   sources:
     - repoURL: "https://homarr-labs.github.io/charts/"
       chart: homarr
-      targetRevision: "3.8.0"
+      targetRevision: "3.9.0"
       helm:
         valueFiles:
           - $values/k8s/clusters/k3sa/helm-values/homarr-values.yaml

@@ -11,7 +11,7 @@ spec:
   sources:
     - repoURL: "https://charts.jetstack.io"
       chart: cert-manager
-      targetRevision: "1.17.1"
+      targetRevision: "v1.17.2"
       helm:
         valueFiles:
           - $values/k8s/clusters/k3sa/helm-values/cert-manager-values.yaml
