@@ -1,3 +1,5 @@
+controllerManagerAddr: "gha-runner-scale-set-controller-controller-manager:9443"
+
 gha-runner-scale-set-controller:
   authSecret:
     enabled: true
