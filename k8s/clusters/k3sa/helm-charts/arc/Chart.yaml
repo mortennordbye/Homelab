@@ -8,6 +8,3 @@ dependencies:
   - name: gha-runner-scale-set-controller
     version: 0.10.0
     repository: oci://ghcr.io/actions/actions-runner-controller-charts
-    import-values:
-      - child: .
-        parent: .
