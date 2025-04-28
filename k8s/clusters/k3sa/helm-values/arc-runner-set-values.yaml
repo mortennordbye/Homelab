@@ -1,1 +1,4 @@
 githubConfigUrl: "https://github.com/mortennordbye/Homelab"
+controllerServiceAccount:
+  namespace: arc-systems
+  name: arc-gha-rs-controller
