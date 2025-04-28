@@ -21,3 +21,4 @@ resources:
   limits:
     cpu:    500m
     memory: 512Mi
+controllerManagerAddr: "gha-runner-scale-set-controller-controller-manager:9443"
