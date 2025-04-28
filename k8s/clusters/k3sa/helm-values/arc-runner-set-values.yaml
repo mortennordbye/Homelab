@@ -1,4 +1,4 @@
-githubConfigUrl: "https://github.com/myorg/myrepo"
+githubConfigUrl: "https://github.com/mortennordbye/Homelab"
 githubConfigSecret: arc-github-token
 
 controllerServiceAccount:
