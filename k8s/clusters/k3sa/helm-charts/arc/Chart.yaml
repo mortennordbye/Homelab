@@ -1,0 +1,10 @@
+apiVersion: v2
+name: gha-runner-wrapper
+description: Wrapper chart for GitHub Actions Runner Scale Set Controller
+type: application
+version: 0.1.0
+appVersion: "0.10.0"
+dependencies:
+  - name: gha-runner-scale-set-controller
+    version: 0.10.0
+    repository: oci://ghcr.io/actions/actions-runner-controller-charts

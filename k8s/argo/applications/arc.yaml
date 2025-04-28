@@ -9,19 +9,18 @@ spec:
     server: https://kubernetes.default.svc
     namespace: arc-systems
   sources:
-    - repoURL: "ghcr.io/actions/actions-runner-controller-charts"
-      chart: gha-runner-scale-set-controller
-      targetRevision: "0.11.0"
+    - repoURL: "https://github.com/mortennordbye/Homelab.git"
+      targetRevision: main
+      path: clusters/k3sa/helm-charts/gha-runner-wrapper
       helm:
         valueFiles:
-          - $values/k8s/clusters/k3sa/helm-values/arc-values.yaml
+          - values.yaml
     - repoURL: "https://github.com/mortennordbye/Homelab.git"
       targetRevision: main
       ref: values
-      path: k8s/clusters/k3sa/manifests/arc
+      path: clusters/k3sa/manifests/arc
       directory:
         recurse: true
-
   syncPolicy:
     automated:
       prune: true

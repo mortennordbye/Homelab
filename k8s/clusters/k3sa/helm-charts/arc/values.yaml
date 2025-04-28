@@ -1,0 +1,23 @@
+gha-runner-scale-set-controller:
+  authSecret:
+    enabled: true
+    create: false
+    name: arc-github-token
+
+  metrics:
+    serviceAnnotations:
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "8443"
+    port: 8443
+    serviceMonitor:
+      enable: true
+      namespace: monitoring
+      interval: 30s
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
