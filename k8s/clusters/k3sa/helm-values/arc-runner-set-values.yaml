@@ -1,4 +1,6 @@
-githubConfigUrl: "https://github.com/mortennordbye/Homelab"
+githubConfigUrl: "https://github.com/myorg/myrepo"
+githubConfigSecret: arc-github-token
+
 controllerServiceAccount:
   namespace: arc-systems
   name: arc-gha-rs-controller
