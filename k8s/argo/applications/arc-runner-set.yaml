@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: arc-runner-set
+  namespace: argo-cd
+spec:
+  project: homelab
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: arc-runners
+  sources:
+    - repoURL: "ghcr.io/actions/actions-runner-controller-charts"
+      chart: gha-runner-scale-set
+      targetRevision: "0.11.0"
+      helm:
+        valueFiles:
+          - $values/k8s/clusters/k3sa/helm-values/arc-runner-set-values.yaml
+    - repoURL: "https://github.com/mortennordbye/Homelab.git"
+      targetRevision: main
+      ref: values
+      path: k8s/clusters/k3sa/manifests/arc-runner-set
+      directory:
+        recurse: true
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
