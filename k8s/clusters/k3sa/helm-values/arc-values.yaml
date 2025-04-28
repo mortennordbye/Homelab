@@ -1,13 +1,14 @@
+controllerManagerAddr: "gha-runner-scale-set-controller-controller-manager:9443"
+
 authSecret:
   enabled: true
   create: false
   name: arc-github-token
 
-
 metrics:
   serviceAnnotations:
     prometheus.io/scrape: "true"
-    prometheus.io/port:   "8443"
+    prometheus.io/port: "8443"
   port: 8443
   serviceMonitor:
     enable: true
@@ -16,9 +17,8 @@ metrics:
 
 resources:
   requests:
-    cpu:    100m
+    cpu: 100m
     memory: 128Mi
   limits:
-    cpu:    500m
+    cpu: 500m
     memory: 512Mi
-controllerManagerAddr: "gha-runner-scale-set-controller-controller-manager:9443"
