@@ -1,0 +1,23 @@
+name: Deploy Argo configs
+on:
+  push:
+    paths:
+      - 'k8s/argo/**'
+jobs:
+  apply-argo:
+    runs-on: self-hosted
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'latest'
+
+      - name: Apply all Argo manifests
+        run: |
+          # point kubectl at your cluster (via kubeconfig or env vars)
+          kubectl apply -R -f k8s/argo/
+        env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}
