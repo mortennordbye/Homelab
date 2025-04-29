@@ -1,6 +1,9 @@
 githubConfigUrl: "https://github.com/mortennordbye/Homelab"
 githubConfigSecret: arc-github-token
 
+minRunners: 1
+maxRunners: 5
+
 controllerServiceAccount:
   namespace: arc-systems
   name: arc-gha-rs-controller
