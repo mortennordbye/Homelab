@@ -30,7 +30,6 @@ jobs:
       - name: Configure kubeconfig
         run: |
           mkdir -p ~/.kube
-          # preserve all newlines exactly
           printf '%s\n' "$HOMELAB_K3SA_KUBECONFIG" > ~/.kube/config
           chmod 600 ~/.kube/config
 
