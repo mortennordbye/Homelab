@@ -5,6 +5,7 @@ on:
     paths:
       - 'k8s/argo/**'
   workflow_dispatch:
+
 jobs:
   apply-argo:
     runs-on: arc-runner-set
@@ -18,8 +19,11 @@ jobs:
         with:
           version: 'latest'
 
-      - name: Apply all Argo manifests
+      - name: Configure kubeconfig
         run: |
-          kubectl apply -R -f k8s/argo/
-        env:
-          KUBECONFIG: ${{ secrets.KUBECONFIG }}
+          mkdir -p ~/.kube
+          echo "${{ secrets.HOMELAB_K3SA_KUBECONFIG }}" > ~/.kube/config
+          chmod 600 ~/.kube/config
+
+      - name: Apply all Argo manifests
+        run: kubectl apply -R -f k8s/argo/
