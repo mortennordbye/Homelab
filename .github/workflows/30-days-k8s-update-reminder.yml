@@ -9,9 +9,15 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
+      - name: Get Discord Webhook URL from Bitwarden
+        id: bw-fetch
+        uses: bitwarden/sm-action@v2
+        with:
+          access_token: ${{ secrets.BW_ACCESS_TOKEN }}
+          secrets: |
+            ab7c03b3-dc21-4174-babf-b2cf00f9ae40 > HOMELAB_REMINDERS_WEBHOOK_URL
+
       - name: Send Discord reminder
-        env:
-          WEBHOOK_URL: ${{ secrets.HOMELAB_REMINDERS_WEBHOOK_URL }}
         run: |
           now=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           curl -sSL -H "Content-Type: application/json" -X POST \
@@ -37,4 +43,4 @@ jobs:
                    }
                  ]
                }' \
-               "$WEBHOOK_URL"
+               "$HOMELAB_REMINDERS_WEBHOOK_URL"
