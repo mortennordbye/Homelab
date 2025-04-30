@@ -16,3 +16,12 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: cluster-admin
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: github-actions-token
+  namespace: kube-system
+  annotations:
+    kubernetes.io/service-account.name: github-actions
+type: kubernetes.io/service-account-token
