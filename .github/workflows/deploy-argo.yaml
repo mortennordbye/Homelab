@@ -11,7 +11,7 @@ jobs:
     runs-on: arc-runner-set
 
     steps:
-      - name: Check out code
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Set up kubectl
@@ -19,10 +19,19 @@ jobs:
         with:
           version: 'latest'
 
+      - name: Get Kubeconfig from Bitwarden
+        id: bw-kube
+        uses: bitwarden/sm-action@v2
+        with:
+          access_token: ${{ secrets.BW_ACCESS_TOKEN }}
+          secrets: |
+            018e7772-5854-4e4a-b9c3-b2cf00fb93e3 > HOMELAB_K3SA_KUBECONFIG
+
       - name: Configure kubeconfig
         run: |
           mkdir -p ~/.kube
-          echo "${{ secrets.HOMELAB_K3SA_KUBECONFIG }}" > ~/.kube/config
+          # preserve all newlines exactly
+          printf '%s\n' "$HOMELAB_K3SA_KUBECONFIG" > ~/.kube/config
           chmod 600 ~/.kube/config
 
       - name: Apply all Argo manifests
