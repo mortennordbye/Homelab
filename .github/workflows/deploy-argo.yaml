@@ -32,20 +32,16 @@ jobs:
       - name: Configure kubeconfig
         run: |
           mkdir -p ~/.kube
-          printf '%s\n' "$HOMELAB_K3SA_KUBECONFIG" > ~/.kube/config
+          printf '%b' "$HOMELAB_K3SA_KUBECONFIG" > ~/.kube/config
           chmod 600 ~/.kube/config
 
       - name: Apply only changed Argo manifests
         run: |
-          # get list of added/modified files under k8s/argo
           CHANGED=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- k8s/argo)
           if [ -z "$CHANGED" ]; then
             echo "✅ No changes in k8s/argo → skipping apply"
             exit 0
           fi
-
           echo "🔍 Changed files:"
           echo "$CHANGED"
-          # apply each one
           echo "$CHANGED" | xargs -r -n1 kubectl apply -f
-
