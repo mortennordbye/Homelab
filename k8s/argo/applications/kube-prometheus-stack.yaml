@@ -11,7 +11,7 @@ spec:
   sources:
     - repoURL: "https://prometheus-community.github.io/helm-charts"
       chart: kube-prometheus-stack
-      targetRevision: "71.1.1"
+      targetRevision: "71.2.0"
       helm:
         valueFiles:
           - $values/k8s/clusters/k3sa/helm-values/kube-prometheus-stack-values.yaml
