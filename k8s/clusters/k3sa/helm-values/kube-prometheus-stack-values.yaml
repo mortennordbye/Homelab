@@ -68,22 +68,17 @@ alertmanager:
       resolve_timeout: 5m
 
     route:
-      receiver: "discord"
-      group_by:
-        - namespace
-        - alertname
+      group_by: ['alertname', 'job']
       group_wait: 30s
       group_interval: 5m
       repeat_interval: 12h
+      receiver: "discord"
 
     receivers:
       # drop unwanted alerts
       - name: "discord"
         discord_configs:
-          - send_resolved: true
-            # point to your mounted Secret key
             webhook_url_file: /etc/alertmanager/secrets/alertmanager-discord-webhook-secret/api-url
-      - name: "null" 
     templates:
       - '/etc/alertmanager/config/*.tmpl'
 
