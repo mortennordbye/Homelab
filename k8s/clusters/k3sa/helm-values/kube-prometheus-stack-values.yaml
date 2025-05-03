@@ -46,6 +46,7 @@ alertmanager:
   alertmanagerSpec:
     logLevel: debug
     replicas: 1
+
     storage:
       volumeClaimTemplate:
         spec:
@@ -55,32 +56,40 @@ alertmanager:
             requests:
               storage: 5Gi
 
-    # mount your Discord webhook Secret
+    # mount your ExternalSecret sync’d Secret
     secrets:
       - alertmanager-discord-webhook-secret
 
-    # no CRD in use, so leave selector empty
+    # in-chart config (no CRD selector)
     alertmanagerConfigSelector: {}
 
-  # in-chart Alertmanager config
   config:
     global:
       resolve_timeout: 5m
 
     route:
       receiver: "discord"
-      group_by: ['namespace', 'alertname']
+      group_by:
+        - namespace
+        - alertname
       group_wait: 30s
       group_interval: 5m
       repeat_interval: 12h
 
     receivers:
+      # keep your null receiver to drop unwanted alerts
       - name: "null"
+      # Discord receiver using native discord_configs
       - name: "discord"
-        webhook_configs:
+        discord_configs:
           - send_resolved: true
-            # read URL securely from file
-            url_file: /etc/alertmanager/secrets/alertmanager-discord-webhook-secret/api-url
+            webhook_url_file: /etc/alertmanager/secrets/alertmanager-discord-webhook-secret/api-url
+            # optional—you can omit these if you want the built-in defaults
+            # title: '{{ template "discord.default.title" . }}'
+            # message: '{{ template "discord.default.message" . }}'
+            # content: '{{ template "discord.default.content" . }}'
+            # username: 'Alertmanager'
+            # avatar_url: 'https://example.com/avatar.png'
 
     templates:
       - '/etc/alertmanager/config/*.tmpl'
