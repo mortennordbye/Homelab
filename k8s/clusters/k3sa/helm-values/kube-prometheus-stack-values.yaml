@@ -87,7 +87,7 @@ alertmanager:
             # optional—you can omit these if you want the built-in defaults
             # title: '{{ template "discord.default.title" . }}'
             # message: '{{ template "discord.default.message" . }}'
-            # content: '{{ template "discord.default.content" . }}'
+            content: '{{ template "discord.default.content" . }}'
             # username: 'Alertmanager'
             # avatar_url: 'https://example.com/avatar.png'
 
