@@ -76,16 +76,28 @@ alertmanager:
       group_interval: 5m
       repeat_interval: 12h
 
-    receivers:
-      # drop unwanted alerts
-      - name: "null"
+      receivers:
+        - name: "discord"
+          discord_configs:
+            - send_resolved: true
+              url_file: /etc/alertmanager/secrets/alertmanager-discord-webhook-secret/api-url
 
-      - name: "discord"
-        discord_configs:
-          - send_resolved: true
-            # point to your mounted Secret key
-            url_file: /etc/alertmanager/secrets/alertmanager-discord-webhook-secret/api-url
- 
+              # ---- add one or more of these ----
+
+              # simple summary in the chat
+              content: |
+                🚨 {{ len .Alerts.Firing }} firing, {{ len .Alerts.Resolved }} resolved
+
+              # embed title
+              title: '{{ .CommonLabels.alertname }}'
+
+              # embed body / description
+              message: |
+                {{- range .Alerts -}}
+                • **{{ .Labels.severity }}** on `{{ .Labels.instance }}`:
+                  {{ .Annotations.summary }}
+                {{- end }}
+
     templates:
       - '/etc/alertmanager/config/*.tmpl'
 
