@@ -78,21 +78,12 @@ alertmanager:
 
     receivers:
       # drop unwanted alerts
-      - name: "null"
-
       - name: "discord"
         discord_configs:
           - send_resolved: true
             # point to your mounted Secret key
             webhook_url_file: /etc/alertmanager/secrets/alertmanager-discord-webhook-secret/api-url
-            content: |
-              🚨 {{ len .Alerts.Firing }} firing, {{ len .Alerts.Resolved }} resolved
-            title: '{{ .CommonLabels.alertname }}'
-            message: |
-              {{- range .Alerts -}}
-              • **{{ .Labels.severity }}** on `{{ .Labels.instance }}`: {{ .Annotations.summary }}
-              {{- end }}
- 
+      - name: "null" 
     templates:
       - '/etc/alertmanager/config/*.tmpl'
 
