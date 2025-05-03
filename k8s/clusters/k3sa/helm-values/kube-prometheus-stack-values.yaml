@@ -54,21 +54,37 @@ alertmanager:
           resources:
             requests:
               storage: 5Gi
+
+    # mount your Discord webhook Secret
+    secrets:
+      - alertmanager-discord-webhook-secret
+
+    # no CRD in use, so leave selector empty
     alertmanagerConfigSelector: {}
 
+  # in-chart Alertmanager config
   config:
     global:
       resolve_timeout: 5m
+
     route:
-      receiver: "null"
+      receiver: "discord"
       group_by: ['namespace', 'alertname']
       group_wait: 30s
       group_interval: 5m
       repeat_interval: 12h
+
     receivers:
       - name: "null"
+      - name: "discord"
+        webhook_configs:
+          - send_resolved: true
+            # read URL securely from file
+            url_file: /etc/alertmanager/secrets/alertmanager-discord-webhook-secret/webhook-url
+
     templates:
       - '/etc/alertmanager/config/*.tmpl'
+
 
 # Grafana configuration
 grafana:
