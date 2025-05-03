@@ -80,28 +80,12 @@ alertmanager:
       # drop unwanted alerts
       - name: "null"
 
-      # Discord via generic webhook_configs with custom JSON body
       - name: "discord"
-        webhook_configs:
+        discord_configs:
           - send_resolved: true
             # point to your mounted Secret key
             url_file: /etc/alertmanager/secrets/alertmanager-discord-webhook-secret/api-url
-
-            # force JSON content-type so Discord accepts the payload
-            http_config:
-              headers:
-                Content-Type:
-                  - "application/json"
-
-            # hand-craft the body: always send content, using the standard Discord template
-            body: |
-              {
-                "username": "Alertmanager",
-                "content": {{ template "discord.default.content" . | toJson }}
-              }
-
-    # keep your custom templates mount if you have extras,
-    # otherwise you can remove this to rely purely on builtin templates
+ 
     templates:
       - '/etc/alertmanager/config/*.tmpl'
 
