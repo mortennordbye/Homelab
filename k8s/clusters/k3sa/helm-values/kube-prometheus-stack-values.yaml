@@ -77,8 +77,8 @@ alertmanager:
     receivers:
       # drop unwanted alerts
       - name: "discord"
-        discord_configs:
-            webhook_url_file: /etc/alertmanager/secrets/alertmanager-discord-webhook-secret/api-url
+        webhook_configs:
+            url_file: /etc/alertmanager/secrets/alertmanager-discord-webhook-secret/api-url
     templates:
       - '/etc/alertmanager/config/*.tmpl'
 
