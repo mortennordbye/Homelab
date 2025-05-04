@@ -56,9 +56,6 @@ alertmanager:
             requests:
               storage: 5Gi
 
-    secrets:
-      - alertmanager-discord-webhook-secret
-
   config:
     global:
       resolve_timeout: 5m
