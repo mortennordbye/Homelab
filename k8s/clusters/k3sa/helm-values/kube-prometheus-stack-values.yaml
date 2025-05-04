@@ -175,7 +175,7 @@ prometheus:
           resources:
             requests:
               storage: 10Gi
-    ruleSelectorNilUsesHelmValues: true
+    ruleSelectorNilUsesHelmValues: false
     ruleSelector: {}
     ruleNamespaceSelector: {}
     additionalScrapeConfigs:
