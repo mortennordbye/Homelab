@@ -2,7 +2,7 @@ apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: grafana-ingress
-  namespace: kube-prometheus-stack
+  namespace: monitoring
   annotations: 
     kubernetes.io/ingress.class: traefik 
 spec:
