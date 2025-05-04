@@ -56,12 +56,8 @@ alertmanager:
             requests:
               storage: 5Gi
 
-    # mount your ExternalSecret-synced Secret
     secrets:
       - alertmanager-discord-webhook-secret
-
-    # in-chart config (no CRD selector)
-    alertmanagerConfigSelector: {}
 
   config:
     global:
@@ -72,12 +68,13 @@ alertmanager:
       group_wait: 30s
       group_interval: 5m
       repeat_interval: 12h
-      receiver: "discord"
+      receiver: discord
 
     receivers:
-      - name: "discord"
+      - name: discord
         discord_configs:
           - webhook_url: "https://discordapp.com/api/webhooks/1368506706413224067/AelHgudWv8aY2j0bLnAnU3BzJOmlMq-6MTq-tpAnDf4t6FjrMSVB3Gyo2B1CVtiTHOaH"
+
     templates:
       - '/etc/alertmanager/config/*.tmpl'
 
