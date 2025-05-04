@@ -7,7 +7,7 @@ spec:
   project: homelab
   destination:
     server: https://kubernetes.default.svc
-    namespace: kube-prometheus-stack
+    namespace: monitoring
   sources:
     - repoURL: "https://prometheus-community.github.io/helm-charts"
       chart: kube-prometheus-stack

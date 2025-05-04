@@ -1,10 +1,6 @@
-# Kube-Prometheus-Stack configuration
-fullnameOverride: prometheus
-
 # Enable CRD management
 crds:
-  enabled: false
-
+  enabled: true
 # Default alerting rules configuration
 defaultRules:
   create: true
@@ -13,11 +9,18 @@ defaultRules:
     etcd: true
     configReloaders: true
     general: true
-    k8s: true
+    k8sContainerCpuUsageSecondsTotal: true
+    k8sContainerMemoryCache: true
+    k8sContainerMemoryRss: true
+    k8sContainerMemorySwap: true
+    k8sContainerResource: true
+    k8sContainerMemoryWorkingSetBytes: true
+    k8sPodOwner: true
     kubeApiserverAvailability: true
     kubeApiserverBurnrate: true
     kubeApiserverHistogram: true
     kubeApiserverSlos: true
+    kubeControllerManager: true
     kubelet: true
     kubeProxy: false
     kubePrometheusGeneral: true
@@ -26,7 +29,8 @@ defaultRules:
     kubernetesResources: true
     kubernetesStorage: true
     kubernetesSystem: true
-    kubeScheduler: true
+    kubeSchedulerAlerting: true
+    kubeSchedulerRecording: true
     kubeStateMetrics: true
     network: true
     node: true
@@ -34,22 +38,54 @@ defaultRules:
     nodeExporterRecording: true
     prometheus: true
     prometheusOperator: true
-
-# Node exporter
-nodeExporter:
-  enabled: false
-
+    windows: true
+# Alertmanager configuration
 alertmanager:
   enabled: true
-
+  config:
+    global:
+      resolve_timeout: 5m
+    inhibit_rules:
+      - source_matchers:
+          - 'severity = critical'
+        target_matchers:
+          - 'severity =~ warning|info'
+        equal:
+          - 'namespace'
+          - 'alertname'
+      - source_matchers:
+          - 'severity = warning'
+        target_matchers:
+          - 'severity = info'
+        equal:
+          - 'namespace'
+          - 'alertname'
+      - source_matchers:
+          - 'alertname = InfoInhibitor'
+        target_matchers:
+          - 'severity = info'
+        equal:
+          - 'namespace'
+      - target_matchers:
+          - 'alertname = InfoInhibitor'
+    route:
+      group_by: ['namespace']
+      group_wait: 30s
+      group_interval: 5m
+      repeat_interval: 12h
+      receiver: 'null'
+      routes:
+      - receiver: 'null'
+        matchers:
+          - alertname = "Watchdog"
+    receivers:
+    - name: 'null'
+    templates:
+    - '/etc/alertmanager/config/*.tmpl'
   alertmanagerSpec:
     logLevel: debug
     replicas: 1
-    alertmanagerConfigSelector: null
-    alertmanagerConfigNamespaceSelector: null
-    configSecret: "alertmanager-prometheus-alertmanager"
-    secrets:
-      - alertmanager-discord-webhook-secret
+    retention: 48h
     storage:
       volumeClaimTemplate:
         spec:
@@ -59,41 +95,18 @@ alertmanager:
           resources:
             requests:
               storage: 5Gi
-
-  config:
-    global:
-      resolve_timeout: 5m
-
-    route:
-      group_by:
-        - alertname
-        - job
-      group_wait: 30s
-      group_interval: 5m
-      repeat_interval: 12h
-      receiver: discord
-
-    receivers:
-      - name: discord
-        discord_configs:
-          - webhook_url: "https://discordapp.com/api/webhooks/1368506706413224067/AelHgudWv8aY2j0bLnAnU3BzJOmlMq-6MTq-tpAnDf4t6FjrMSVB3Gyo2B1CVtiTHOaH"
-
-    templates:
-      - "/etc/alertmanager/config/*.tmpl"
-
-
-
-
 # Grafana configuration
 grafana:
   enabled: true
-  fullnameOverride: grafana
   forceDeployDatasources: false
   forceDeployDashboards: false
   defaultDashboardsEnabled: true
-  defaultDashboardsTimezone: utc
+  defaultDashboardsTimezone: Europe/Oslo
+  defaultDashboardsEditable: true
+  defaultDashboardsInterval: 24h
   serviceMonitor:
     enabled: true
+# Follow up this one
   admin:
     existingSecret: grafana-admin-credentials
     userKey: admin-user
@@ -103,37 +116,33 @@ grafana:
     storageClassName: "nfs-client"
     accessModes: ["ReadWriteOnce"]
     size: 5Gi
-
+    finalizers:
+      - kubernetes.io/pvc-protection
 # Core Kubernetes component configurations
 kubeApiServer:
   enabled: true
-
 kubelet:
   enabled: true
+  namespace: kube-system
   serviceMonitor:
-    metricRelabelings:
-      - action: replace
-        sourceLabels:
-          - node
-        targetLabel: instance
-
+    enabled: true
+    kubelet: true
 kubeControllerManager:
   enabled: true
   endpoints:
     - 10.0.0.51
     - 10.0.0.52
     - 10.0.0.53
-
+coreDns:
+  enabled: true
+kubeDns:
+  enabled: false
 kubeEtcd:
   enabled: true
   endpoints:
     - 10.0.0.51
     - 10.0.0.52
     - 10.0.0.53
-  service:
-    enabled: true
-    port: 2381
-    targetPort: 2381
 
 kubeScheduler:
   enabled: true
@@ -141,10 +150,13 @@ kubeScheduler:
     - 10.0.0.51
     - 10.0.0.52
     - 10.0.0.53
-
+kubeProxy:
+  enabled: false
 kubeStateMetrics:
   enabled: true
-
+# Prometheus node exporter configuration
+nodeExporter:
+  enabled: false
 # Prometheus configuration
 prometheus:
   enabled: true
@@ -163,7 +175,7 @@ prometheus:
           resources:
             requests:
               storage: 10Gi
-    ruleSelectorNilUsesHelmValues: false
+    ruleSelectorNilUsesHelmValues: true
     ruleSelector: {}
     ruleNamespaceSelector: {}
     additionalScrapeConfigs:
@@ -220,7 +232,6 @@ prometheus:
           - targets: ['10.0.0.80:9100']
             labels:
               instance: 'test-vm'
-
-# ThanosRuler disabled
+# ThanosRuler configuration
 thanosRuler:
   enabled: false
