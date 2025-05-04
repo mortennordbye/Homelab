@@ -12,12 +12,12 @@ spec:
     - match: Host(`grafana.local.bigd.no`)
       kind: Rule
       services:
-        - name: grafana
+        - name: kube-prometheus-stack-grafana
           port: 80
           sticky:
             cookie:
               httpOnly: true
-              name: grafana
+              name: kube-prometheus-stack-grafana
               secure: true
               sameSite: none
   tls:
