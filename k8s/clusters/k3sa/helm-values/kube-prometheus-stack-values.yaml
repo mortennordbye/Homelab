@@ -56,10 +56,15 @@ alertmanager:
         matchers:
           - alertname = "Watchdog"
     receivers:
-    - name: 'discord'
-      discord_configs:
-        - send_resolved: true
-          webhook_url_file: /etc/alertmanager/secrets/alertmanager-discord-webhook-secret/webhook-url
+    - name: discord
+      webhook_configs:
+        - url_file: /etc/alertmanager/secrets/alertmanager-discord-webhook-secret/webhook_url
+          send_resolved: true
+          http_config:
+            headers:
+              Content-Type: "application/json"
+          body: |
+            {{ template "discord.default.message" . }}
     - name: 'null'
     templates:
     - '/etc/alertmanager/config/*.tmpl'
