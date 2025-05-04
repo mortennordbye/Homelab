@@ -1,6 +1,6 @@
-# Enable CRD management
+# Disable CRD management
 crds:
-  enabled: true
+  enabled: false
 # Default alerting rules configuration
 defaultRules:
   create: true
@@ -95,6 +95,8 @@ alertmanager:
           resources:
             requests:
               storage: 5Gi
+    secrets:
+      - alertmanager-discord-webhook-secret
 # Grafana configuration
 grafana:
   enabled: true
