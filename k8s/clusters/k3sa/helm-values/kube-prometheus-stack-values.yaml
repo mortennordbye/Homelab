@@ -58,7 +58,8 @@ alertmanager:
     receivers:
     - name: 'discord'
       discord_configs:
-        webhook_url: https://discordapp.com/api/webhooks/1368506706413224067/AelHgudWv8aY2j0bLnAnU3BzJOmlMq-6MTq-tpAnDf4t6FjrMSVB3Gyo2B1CVtiTHOaH
+        - send_resolved: true
+          webhook_url_file: /etc/alertmanager/secrets/alertmanager-discord-webhook-secret/webhook-url
     - name: 'null'
     templates:
     - '/etc/alertmanager/config/*.tmpl'
