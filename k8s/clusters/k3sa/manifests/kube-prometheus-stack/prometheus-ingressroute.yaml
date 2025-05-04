@@ -12,7 +12,7 @@ spec:
     - match: Host(`prometheus.local.bigd.no`)
       kind: Rule
       services:
-        - name: prometheus-kube-prometheus-stack-prometheus
+        - name: kube-prometheus-stack-prometheus
           port: 9090
           sticky:
             cookie:
