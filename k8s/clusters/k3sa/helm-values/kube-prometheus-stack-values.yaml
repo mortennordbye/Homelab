@@ -39,19 +39,23 @@ defaultRules:
 nodeExporter:
   enabled: false
 
-# Alertmanager configuration
 alertmanager:
   enabled: true
 
   alertmanagerSpec:
     logLevel: debug
     replicas: 1
-
+    alertmanagerConfigSelector: null
+    alertmanagerConfigNamespaceSelector: null
+    configSecret: "alertmanager-prometheus-alertmanager"
+    secrets:
+      - alertmanager-discord-webhook-secret
     storage:
       volumeClaimTemplate:
         spec:
           storageClassName: "nfs-client"
-          accessModes: ["ReadWriteOnce"]
+          accessModes:
+            - ReadWriteOnce
           resources:
             requests:
               storage: 5Gi
@@ -61,7 +65,9 @@ alertmanager:
       resolve_timeout: 5m
 
     route:
-      group_by: ['alertname', 'job']
+      group_by:
+        - alertname
+        - job
       group_wait: 30s
       group_interval: 5m
       repeat_interval: 12h
@@ -73,7 +79,8 @@ alertmanager:
           - webhook_url: "https://discordapp.com/api/webhooks/1368506706413224067/AelHgudWv8aY2j0bLnAnU3BzJOmlMq-6MTq-tpAnDf4t6FjrMSVB3Gyo2B1CVtiTHOaH"
 
     templates:
-      - '/etc/alertmanager/config/*.tmpl'
+      - "/etc/alertmanager/config/*.tmpl"
+
 
 
 
