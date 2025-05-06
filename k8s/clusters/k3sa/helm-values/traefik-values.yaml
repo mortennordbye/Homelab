@@ -34,6 +34,8 @@ entryPoints:
       enabled: true
   ssh:
     address: ":2222"
+  metrics:
+    address: ":8082"
 
 ports:
   web:
@@ -62,12 +64,19 @@ metrics:
     entryPoint: metrics
     service:
       enabled: true
-      labels: {}
+      labels:
+        Release: kube-prometheus-stack
       annotations: {}
     serviceMonitor:
       enabled: true
+      namespace: monitoring
+      namespaceSelector:
+        matchNames:
+          - monitoring
+      additionalLabels:
+        Release: kube-prometheus-stack
       interval: 30s
-      additionalLabels: {}
+      scrapeTimeout: 10s
 
 providers:
   kubernetesCRD:
