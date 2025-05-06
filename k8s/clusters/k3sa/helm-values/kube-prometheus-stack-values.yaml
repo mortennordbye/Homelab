@@ -165,8 +165,7 @@ prometheus:
               storage: 10Gi
     serviceMonitorSelectorNilUsesHelmValues: false
     serviceMonitorSelector: {}
-    serviceMonitorNamespaceSelector:
-      any: true
+    serviceMonitorNamespaceSelector: {}
     ruleSelectorNilUsesHelmValues: false
     ruleSelector: {}
     ruleNamespaceSelector: {}
