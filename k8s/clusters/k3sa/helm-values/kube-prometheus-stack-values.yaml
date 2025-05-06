@@ -71,7 +71,7 @@ alertmanager:
   alertmanagerSpec:
     logLevel: debug
     replicas: 1
-    retention: 48h
+    retention: 15d
     storage:
       volumeClaimTemplate:
         spec:
@@ -150,7 +150,7 @@ prometheus:
   enabled: true
   prometheusSpec:
     replicas: 1
-    retention: 6h
+    retention: 15d
     enableAdminAPI: true
     walCompression: true
     scrapeInterval: 30s
@@ -162,7 +162,7 @@ prometheus:
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:
-              storage: 10Gi
+              storage: 30Gi
     serviceMonitorSelectorNilUsesHelmValues: false
     serviceMonitorSelector: {}
     serviceMonitorNamespaceSelector: {}
