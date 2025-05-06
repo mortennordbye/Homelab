@@ -72,7 +72,7 @@ metrics:
       namespace: monitoring
       namespaceSelector:
         matchNames:
-          - monitoring
+          - traefik
       additionalLabels:
         Release: kube-prometheus-stack
       interval: 30s
