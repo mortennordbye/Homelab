@@ -169,6 +169,10 @@ prometheus:
     ruleSelectorNilUsesHelmValues: false
     ruleSelector: {}
     ruleNamespaceSelector: {}
+    scrapeConfigSelectorNilUsesHelmValues: false
+    scrapeConfigSelector:
+      matchLabels:
+        release: prometheus
     additionalScrapeConfigs:
       - job_name: 'external-node-exporter'
         static_configs:
