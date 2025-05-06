@@ -12,7 +12,7 @@ prometheus:
   enabled: true
   servicemonitor:
     enabled: true
-     namespace: monitoring
+    namespace: monitoring
     prometheusInstance: default
     targetPort: 9402
     path: /metrics
