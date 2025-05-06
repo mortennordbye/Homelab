@@ -176,9 +176,6 @@ prometheus:
     additionalScrapeConfigs:
       - job_name: 'external-node-exporter'
         static_configs:
-          - targets: ['10.0.0.21:9100']
-            labels:
-              instance: 'adguard'
           - targets: ['10.0.0.22:9100']
             labels:
               instance: 'bind'
