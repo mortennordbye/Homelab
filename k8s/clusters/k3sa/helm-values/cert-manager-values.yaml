@@ -8,3 +8,15 @@ podDnsConfig:
   nameservers: 
     - 1.1.1.1
     - 9.9.9.9
+prometheus:
+  enabled: true
+  servicemonitor:
+    enabled: true
+    prometheusInstance: default
+    targetPort: 9402
+    path: /metrics
+    interval: 30s
+    scrapeTimeout: 10s
+    labels:
+      Release: kube-prometheus-stack
+    annotations: {}
