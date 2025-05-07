@@ -207,69 +207,91 @@ config:
       url: "https://stage.nordbye.it/"
 
   # Internal TCP SSH Endpoints (Sorted by IP)
-    - name: pfSense
-      <<: *internal-tcp-ssh-defaults
-      url: "tcp://10.0.0.1:22"
-    - name: NAS - Synology LAN1
-      <<: *internal-tcp-ssh-defaults
-      url: "tcp://10.0.0.2:22"
-    - name: Hyper1(ProLiant DL380 Gen10)
-      <<: *internal-tcp-ssh-defaults
-      url: "tcp://10.0.0.4:22"
-    - name: Hyper1(ProLiant DL380 Gen10)(ILO)
-      <<: *internal-tcp-ssh-defaults
-      url: "tcp://10.0.0.5:22"
-    - name: Adguard
-      <<: *internal-tcp-ssh-defaults
-      url: "tcp://10.0.0.21:22"
-    - name: BIND
-      <<: *internal-tcp-ssh-defaults
-      url: "tcp://10.0.0.22:22"
-    - name: Linbast
-      <<: *internal-tcp-ssh-defaults
-      url: "tcp://docker-utility.local.bigd.no:22"
-    - name: Docker-Utility
-      <<: *internal-tcp-ssh-defaults
-      url: "tcp://10.0.0.27:22"
-    - name: Docker-Piracy
-      <<: *internal-tcp-ssh-defaults
-      url: "tcp://10.0.0.28:22"
-    - name: qBittorrent
-      <<: *internal-tcp-ssh-defaults
-      url: "tcp://10.0.0.29:22"
-    - name: Plex
-      <<: *internal-tcp-ssh-defaults
-      url: "tcp://10.0.0.31:22"
-    - name: Docker-Nextcloud
-      <<: *internal-tcp-ssh-defaults
-      url: "tcp://10.0.0.32:22"
-    - name: Gitlab
-      <<: *internal-tcp-ssh-defaults
-      url: "tcp://10.0.0.36:22"
-    - name: Homeassistant
-      <<: *internal-tcp-ssh-defaults
-      url: "tcp://10.0.0.38:22"
-    - name: NFS
-      <<: *internal-tcp-ssh-defaults
-      url: "tcp://10.0.0.39:22"
-    - name: k3sam1
-      <<: *internal-tcp-ssh-defaults
-      url: "tcp://10.0.0.51:22"
-    - name: k3sam2
-      <<: *internal-tcp-ssh-defaults
-      url: "tcp://10.0.0.52:22"
-    - name: k3sam3
-      <<: *internal-tcp-ssh-defaults
-      url: "tcp://10.0.0.53:22"
-    - name: k3saca1
-      <<: *internal-tcp-ssh-defaults
-      url: "tcp://10.0.0.54:22"
-    - name: k3saca2
-      <<: *internal-tcp-ssh-defaults
-      url: "tcp://10.0.0.55:22"
-    - name: k3saca3
-      <<: *internal-tcp-ssh-defaults
-      url: "tcp://10.0.0.56:22"
+# Internal TCP SSH Endpoints (Sorted by FQDN)
+
+- name: pfSense
+  <<: *internal-tcp-ssh-defaults
+  url: "tcp://pfSense.local.bigd.no:22"
+
+- name: NAS - Synology LAN1
+  <<: *internal-tcp-ssh-defaults
+  url: "tcp://nas1.local.bigd.no:22"
+
+- name: Hyper1(ProLiant DL380 Gen10)
+  <<: *internal-tcp-ssh-defaults
+  url: "tcp://hyper1.local.bigd.no:22"
+
+- name: Hyper1(ProLiant DL380 Gen10)(ILO)
+  <<: *internal-tcp-ssh-defaults
+  url: "tcp://hyper1ilo.local.bigd.no:22"
+
+- name: Adguard
+  <<: *internal-tcp-ssh-defaults
+  url: "tcp://10.0.0.21:22"
+
+- name: BIND
+  <<: *internal-tcp-ssh-defaults
+  url: "tcp://10.0.0.22:22"
+
+- name: Linbast
+  <<: *internal-tcp-ssh-defaults
+  url: "tcp://linbast.local.bigd.no:22"
+
+- name: Docker-Utility
+  <<: *internal-tcp-ssh-defaults
+  url: "tcp://docker-utility.local.bigd.no:22"
+
+- name: Docker-Piracy
+  <<: *internal-tcp-ssh-defaults
+  url: "tcp://docker-piracy.local.bigd.no:22"
+
+- name: qBittorrent
+  <<: *internal-tcp-ssh-defaults
+  url: "tcp://qbittorrent.local.bigd.no:22"
+
+- name: Plex
+  <<: *internal-tcp-ssh-defaults
+  url: "tcp://plex.local.bigd.no:22"
+
+- name: Docker-Nextcloud
+  <<: *internal-tcp-ssh-defaults
+  url: "tcp://docker-nextcloud.local.bigd.no:22"
+
+- name: Gitlab
+  <<: *internal-tcp-ssh-defaults
+  url: "tcp://gitlab.local.bigd.no:22"
+
+- name: Homeassistant
+  <<: *internal-tcp-ssh-defaults
+  url: "tcp://homeassistant.local.bigd.no:22"
+
+- name: NFS
+  <<: *internal-tcp-ssh-defaults
+  url: "tcp://NFS.local.bigd.no:22"
+
+- name: k3sam1
+  <<: *internal-tcp-ssh-defaults
+  url: "tcp://k3sam1.local.bigd.no:22"
+
+- name: k3sam2
+  <<: *internal-tcp-ssh-defaults
+  url: "tcp://k3sam2.local.bigd.no:22"
+
+- name: k3sam3
+  <<: *internal-tcp-ssh-defaults
+  url: "tcp://k3sam3.local.bigd.no:22"
+
+- name: k3saca1
+  <<: *internal-tcp-ssh-defaults
+  url: "tcp://k3saca1.local.bigd.no:22"
+
+- name: k3saca2
+  <<: *internal-tcp-ssh-defaults
+  url: "tcp://k3saca2.local.bigd.no:22"
+
+- name: k3saca3
+  <<: *internal-tcp-ssh-defaults
+  url: "tcp://k3saca3.local.bigd.no:22"
 
   # Internal TCP RDP Endpoints (Sorted by IP)
     - name: Gaming PC
