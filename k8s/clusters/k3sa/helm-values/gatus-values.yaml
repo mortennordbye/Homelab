@@ -227,7 +227,7 @@ config:
       url: "tcp://10.0.0.22:22"
     - name: Linbast
       <<: *internal-tcp-ssh-defaults
-      url: "tcp://10.0.0.25:22"
+      url: "tcp://docker-utility.local.bigd.no:22"
     - name: Docker-Utility
       <<: *internal-tcp-ssh-defaults
       url: "tcp://10.0.0.27:22"
