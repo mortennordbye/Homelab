@@ -267,7 +267,7 @@ config:
 
     - name: NFS
       <<: *internal-tcp-ssh-defaults
-      url: "tcp://NFS.local.bigd.no:22"
+      url: "tcp://nfs.local.bigd.no:22"
 
     - name: k3sam1
       <<: *internal-tcp-ssh-defaults
