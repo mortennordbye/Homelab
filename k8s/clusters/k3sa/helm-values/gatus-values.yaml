@@ -296,9 +296,6 @@ config:
   # Internal TCP RDP Endpoints (Sorted by IP)
     - name: Gaming PC
       <<: *internal-tcp-rdp-defaults
-      url: "tcp://10.0.0.9:3389"
+      url: "tcp://gaming.local.bigd.no:3389"
       enabled: false
-    - name: Winbast
-      <<: *internal-tcp-rdp-defaults
-      url: "tcp://10.0.0.26:3389"
-      enabled: false
+
