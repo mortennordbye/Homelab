@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: owncloud
+  namespace: owncloud
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: owncloud
+  template:
+    metadata:
+      labels:
+        app: owncloud
+    spec:
+      containers:
+        - name: owncloud
+          image: owncloud/server:10.15.2
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: owncloud-config
+            - secretRef:
+                name: owncloud-secrets
+          volumeMounts:
+            - name: files
+              mountPath: /mnt/data
+          readinessProbe:
+            exec:
+              command: ["/usr/bin/healthcheck"]
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 5
+          livenessProbe:
+            exec:
+              command: ["/usr/bin/healthcheck"]
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 5
+      volumes:
+        - name: files
+          persistentVolumeClaim:
+            claimName: owncloud-files-pvc
