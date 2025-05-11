@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: owncloud
+  name: owncloud-service
   namespace: owncloud
 spec:
   type: ClusterIP
