@@ -185,6 +185,9 @@ prometheus:
           - targets: ['10.0.0.25:9100']
             labels:
               instance: 'linbast'
+          - targets: ['10.0.0.26:9100']
+            labels:
+              instance: 'docker-alfa'              
           - targets: ['10.0.0.27:9100']
             labels:
               instance: 'docker-utility'
