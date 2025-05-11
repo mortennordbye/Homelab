@@ -9,7 +9,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`cloud.bigd.no`)
+    - match: Host(`owncloud.bigd.no`)
       kind: Rule
       middlewares:
         - name: default-headers
