@@ -11,7 +11,7 @@ spec:
   sources:
     - repoURL: "https://emberstack.github.io/helm-charts"
       chart: reflector
-      targetRevision: "9.1.5"
+      targetRevision: "9.1.7"
       helm:
         valueFiles:
           - $values/k8s/clusters/k3sa/helm-values/reflector-values.yaml
