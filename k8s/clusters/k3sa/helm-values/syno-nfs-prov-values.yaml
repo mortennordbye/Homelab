@@ -1,0 +1,12 @@
+replicaCount: 1
+nfs:
+  server: "10.0.0.2"
+  path: "/volume1/k8s-volumes/k3sa"
+
+storageClass:
+  create: true
+  name: syno-nfs
+  defaultClass: true
+  allowVolumeExpansion: true
+  reclaimPolicy: Delete
+  archiveOnDelete: false

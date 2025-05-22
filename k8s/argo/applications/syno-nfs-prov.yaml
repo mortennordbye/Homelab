@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: syno-nfs-prov
+  namespace: argo-cd
+spec:
+  project: homelab
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: syno-nfs-prov
+
+  sources:
+    - repoURL: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/
+      chart: nfs-subdir-external-provisioner
+      targetRevision: "4.0.18"
+      helm:
+        valueFiles:
+          - $values/k8s/clusters/k3sa/helm-values/syno-nfs-prov-values.yaml
+    - repoURL: https://github.com/mortennordbye/Homelab.git
+      targetRevision: main
+      path: k8s/clusters/k3sa/helm-values
+      directory:
+        recurse: false
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
