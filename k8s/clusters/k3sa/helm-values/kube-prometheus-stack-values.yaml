@@ -1,4 +1,4 @@
-# Disable CRD management
+# CRD management
 crds:
   enabled: false
 # Default alerting rules configuration
