@@ -43,7 +43,7 @@ spec:
         - name: share
           nfs:
             server: 10.0.0.2
-            path: /volume1/share
+            path: /volume1/shared-data
             readOnly: false
         - name: config
           persistentVolumeClaim:
