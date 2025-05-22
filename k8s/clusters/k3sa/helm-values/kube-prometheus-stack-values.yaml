@@ -75,7 +75,7 @@ alertmanager:
     storage:
       volumeClaimTemplate:
         spec:
-          storageClassName: "syno-nfs"
+          storageClassName: ""
           accessModes:
             - ReadWriteOnce
           resources:
@@ -101,7 +101,7 @@ grafana:
     passwordKey: admin-password
   persistence:
     enabled: true
-    storageClassName: "syno-nfs"
+    storageClassName: ""
     accessModes: ["ReadWriteOnce"]
     size: 5Gi
     finalizers:
@@ -158,7 +158,7 @@ prometheus:
     storageSpec:
       volumeClaimTemplate:
         spec:
-          storageClassName: "syno-nfs"
+          storageClassName: ""
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:
