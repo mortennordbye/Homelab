@@ -12,7 +12,7 @@ envSecrets:
 persistence:
   homarrDatabase:
     enabled: true
-    storageClassName: nfs-client
+    storageClassName: syno-nfs
     size: "1Gi"
 
 rbac:
