@@ -9,4 +9,4 @@ spec:
   storageClassName: syno-nfs
   resources:
     requests:
-      storage: 1Gi
+      storage: 5Gi
