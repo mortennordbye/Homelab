@@ -1,46 +1,36 @@
-# Disable persistence (as requested)
 persistence:
   enabled: false
 
-# Ingress configuration for Gatus
 ingress:
   enabled: false
 
-# Service configuration
 service:
   type: ClusterIP
   port: 80
 
-# Security context (non-root user)
 securityContext:
   runAsNonRoot: true
   runAsUser: 65534
   runAsGroup: 65534
   readOnlyRootFilesystem: true
 
-# Liveness and readiness probes
 readinessProbe:
   enabled: true
 livenessProbe:
   enabled: true
 
-# Resources (optional, adjust as needed)
 resources: {}
 
-# Service Monitor for Prometheus (optional)
 serviceMonitor:
   enabled: false
 
-# Network policy (optional)
 networkPolicy:
   enabled: false
 
-# Inject environment variables from ESO-managed Kubernetes Secret
 envFrom:
   - secretRef:
       name: gatus-discord-webhook-secret
 
-# Gatus configuration
 config:
   alerting:
     discord:
@@ -51,15 +41,12 @@ config:
         failure-threshold: 2
         success-threshold: 2
 
-
-  # Maintenance configuration under Discord setup
   maintenance:
     enabled: false
     start: "23:00"
     duration: "1h"
     timezone: "Europe/Oslo"
 
-  # Endpoint defaults for Internal HTTP services
   internal-http-defaults: &internal-http-defaults
     group: Internal HTTP
     method: GET
@@ -71,7 +58,6 @@ config:
     alerts:
       - type: discord
 
-  # Endpoint defaults for External HTTP services
   external-http-defaults: &external-http-defaults
     group: External HTTP
     method: GET
@@ -84,7 +70,6 @@ config:
     alerts:
       - type: discord
 
-  # Endpoint defaults for Internal TCP SSH services
   internal-tcp-ssh-defaults: &internal-tcp-ssh-defaults
     group: Internal TCP SSH
     interval: 30s
@@ -95,7 +80,6 @@ config:
     alerts:
       - type: discord
 
-  # Endpoint defaults for Internal TCP RDP services
   internal-tcp-rdp-defaults: &internal-tcp-rdp-defaults
     group: Internal TCP RDP
     interval: 30s
@@ -106,109 +90,104 @@ config:
     alerts:
       - type: discord
 
-  # Internal HTTP Endpoints (Sorted by IP)
   endpoints:
+    ## Internal HTTP (IP-based)
     - name: pfSense
       <<: *internal-http-defaults
       url: "https://10.0.0.1"
+
     - name: Synology
       <<: *internal-http-defaults
-      url: "http://10.0.0.2:5000"
+      url: "https://10.0.0.2:5001"
+
     - name: Proxmox
       <<: *internal-http-defaults
       url: "https://10.0.0.4:8006/#"
+
     - name: ILO
       <<: *internal-http-defaults
       url: "https://10.0.0.5"
-    - name: Audiobookshelf
-      <<: *internal-http-defaults
-      url: "http://10.0.0.27:13378"
-    - name: Nginx Proxy Manager
-      <<: *internal-http-defaults
-      url: "http://10.0.0.27:181"
-    - name: Sonarr
-      <<: *internal-http-defaults
-      url: "http://10.0.0.28:8989"
-    - name: Radarr
-      <<: *internal-http-defaults
-      url: "http://10.0.0.28:7878"
-    - name: qBittorrent
-      <<: *internal-http-defaults
-      url: "http://10.0.0.29:8080"
-    - name: Portainer
-      <<: *internal-http-defaults
-      url: "https://10.0.0.27:9443"
-    - name: Plex (Internal)
-      <<: *internal-http-defaults
-      url: "http://10.0.0.31:32400/web"
-    - name: Tautulli
-      <<: *internal-http-defaults
-      url: "http://10.0.0.31:8181"
-    - name: Readarr
-      <<: *internal-http-defaults
-      url: "http://10.0.0.28:8787"
-    - name: Bazarr
-      <<: *internal-http-defaults
-      url: "http://10.0.0.28:6767"
-    - name: Prowlarr
-      <<: *internal-http-defaults
-      url: "http://10.0.0.28:9696"
-    - name: Tdarr
-      <<: *internal-http-defaults
-      url: "http://10.0.0.28:8265"
+
     - name: AdGuard Home
       <<: *internal-http-defaults
       url: "http://10.0.0.21"
+
     - name: Argo
       <<: *internal-http-defaults
       url: "https://10.0.0.59"
+
+    - name: Nginx Proxy Manager
+      <<: *internal-http-defaults
+      url: "http://10.0.0.27:181"
+
+    - name: Portainer
+      <<: *internal-http-defaults
+      url: "https://10.0.0.27:9443"
+
+    - name: Your Spotify
+      <<: *internal-http-defaults
+      url: "http://10.0.0.27:3000/"
+
+    - name: Sonarr
+      <<: *internal-http-defaults
+      url: "http://10.0.0.28:8989"
+
+    - name: Radarr
+      <<: *internal-http-defaults
+      url: "http://10.0.0.28:7878"
+
+    - name: Readarr
+      <<: *internal-http-defaults
+      url: "http://10.0.0.28:8787"
+
+    - name: Bazarr
+      <<: *internal-http-defaults
+      url: "http://10.0.0.28:6767"
+
+    - name: Prowlarr
+      <<: *internal-http-defaults
+      url: "http://10.0.0.28:9696"
+
+    - name: Tdarr
+      <<: *internal-http-defaults
+      url: "http://10.0.0.28:8265"
+
+    - name: FlareSolverr
+      <<: *internal-http-defaults
+      url: "http://10.0.0.28:8191"
+
+    - name: qBittorrent
+      <<: *internal-http-defaults
+      url: "http://10.0.0.29:8080"
+
+    - name: Plex (Internal)
+      <<: *internal-http-defaults
+      url: "http://10.0.0.31:32400/web"
+
+    - name: Tautulli
+      <<: *internal-http-defaults
+      url: "http://10.0.0.31:8181"
+
+    - name: Home Assistant
+      <<: *internal-http-defaults
+      url: "http://10.0.0.38:8123"
+
+    - name: PBS
+      <<: *internal-http-defaults
+      url: "https://10.0.0.23:8007"
+
+    - name: UniFi-Network
+      <<: *internal-http-defaults
+      url: "https://10.0.0.10:8443"
+
+    ## Internal HTTP (FQDN-based)
     - name: Traefik
       <<: *internal-http-defaults
       url: "https://traefik.local.bigd.no/dashboard/#"
       headers:
         Authorization: "Basic ${TRAEFIK_BASIC_AUTH}"
-    - name: Home Assistant
-      <<: *internal-http-defaults
-      url: "http://10.0.0.38:8123"
-    - name: Asus
-      <<: *internal-http-defaults
-      url: "http://10.0.0.50"
-    - name: Nextcloud AIO
-      <<: *internal-http-defaults
-      url: "https://10.0.0.32:8080/containers"
-    - name: Kavita
-      <<: *internal-http-defaults
-      url: "http://10.0.0.27:5000/test/login"
-    - name: FlareSolverr
-      <<: *internal-http-defaults
-      url: "http://10.0.0.28:8191"
-    - name: Homarr (Internal)
-      <<: *internal-http-defaults
-      url: "http://10.0.0.27:7575/auth/login?redirectAfterLogin=/board"
-
-  # External HTTP Endpoints (Sorted by IP)
-    - name: Plex
-      <<: *external-http-defaults
-      url: "https://app.plex.tv"
-    - name: Overseerr
-      <<: *external-http-defaults
-      url: "https://overseerr.bigd.no"
-    - name: Gitlab
-      <<: *external-http-defaults
-      url: "https://gitlab.bigd.no"
-    - name: Nextcloud
-      <<: *external-http-defaults
-      url: "https://cloud.bigd.no"
-    - name: Prod-Portfolio
-      <<: *external-http-defaults
-      url: "https://nordbye.it/"
-    - name: Stage-Portfolio
-      <<: *external-http-defaults
-      url: "https://stage.nordbye.it/"
-
-  # Internal TCP SSH Endpoints (Sorted by IP)
-# Internal TCP SSH Endpoints (Sorted by FQDN)
-
+        
+    ## Internal TCP SSH (FQDN-based)
     - name: pfSense
       <<: *internal-tcp-ssh-defaults
       url: "tcp://pfSense.local.bigd.no:22"
@@ -224,14 +203,6 @@ config:
     - name: Hyper1(ProLiant DL380 Gen10)(ILO)
       <<: *internal-tcp-ssh-defaults
       url: "tcp://hyper1ilo.local.bigd.no:22"
-
-    - name: Adguard
-      <<: *internal-tcp-ssh-defaults
-      url: "tcp://10.0.0.21:22"
-
-    - name: BIND
-      <<: *internal-tcp-ssh-defaults
-      url: "tcp://10.0.0.22:22"
 
     - name: Linbast
       <<: *internal-tcp-ssh-defaults
@@ -253,10 +224,6 @@ config:
       <<: *internal-tcp-ssh-defaults
       url: "tcp://plex.local.bigd.no:22"
 
-    - name: Docker-Nextcloud
-      <<: *internal-tcp-ssh-defaults
-      url: "tcp://docker-nextcloud.local.bigd.no:22"
-
     - name: Gitlab
       <<: *internal-tcp-ssh-defaults
       url: "tcp://gitlab.local.bigd.no:22"
@@ -264,10 +231,6 @@ config:
     - name: Homeassistant
       <<: *internal-tcp-ssh-defaults
       url: "tcp://homeassistant.local.bigd.no:22"
-
-    - name: NFS
-      <<: *internal-tcp-ssh-defaults
-      url: "tcp://nfs.local.bigd.no:22"
 
     - name: k3sam1
       <<: *internal-tcp-ssh-defaults
@@ -293,9 +256,17 @@ config:
       <<: *internal-tcp-ssh-defaults
       url: "tcp://k3saca3.local.bigd.no:22"
 
-  # Internal TCP RDP Endpoints (Sorted by IP)
+    ## Internal TCP SSH (IP-based)
+    - name: Adguard
+      <<: *internal-tcp-ssh-defaults
+      url: "tcp://10.0.0.21:22"
+
+    - name: BIND
+      <<: *internal-tcp-ssh-defaults
+      url: "tcp://10.0.0.22:22"
+
+    ## Internal TCP RDP (FQDN)
     - name: Gaming PC
       <<: *internal-tcp-rdp-defaults
       url: "tcp://gaming.local.bigd.no:3389"
       enabled: false
-
