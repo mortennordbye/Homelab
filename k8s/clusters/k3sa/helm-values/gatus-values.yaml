@@ -112,7 +112,7 @@ config:
       <<: *internal-http-defaults
       url: "http://10.0.0.21"
 
-    - name: Argo
+    - name: Argo-cd
       <<: *internal-http-defaults
       url: "https://10.0.0.59"
 
@@ -127,6 +127,18 @@ config:
     - name: Your Spotify
       <<: *internal-http-defaults
       url: "http://10.0.0.27:3000/"
+
+    - name: pgAdmin-4
+      <<: *internal-http-defaults
+      url: "http://10.0.0.27:37492/login?next=/browser/"
+
+    - name: Etherpad
+      <<: *internal-http-defaults
+      url: "http://10.0.0.27:9001/"
+
+    - name: Admin-Etherpad
+      <<: *internal-http-defaults
+      url: "http://10.0.0.27:9001/admin/"
 
     - name: Sonarr
       <<: *internal-http-defaults
@@ -186,6 +198,67 @@ config:
       url: "https://traefik.local.bigd.no/dashboard/#"
       headers:
         Authorization: "Basic ${TRAEFIK_BASIC_AUTH}"
+        
+    - name: Gatus
+      <<: *internal-http-defaults
+      url: "https://uptime.local.bigd.no/"
+
+    - name: Prometheus
+      <<: *internal-http-defaults
+      url: "https://prometheus.local.bigd.no/query"
+
+    - name: Grafana
+      <<: *internal-http-defaults
+      url: "https://grafana.local.bigd.no/"
+
+    - name: Argo-cd
+      <<: *internal-http-defaults
+      url: "https://argocd.local.bigd.no"
+
+    - name: Coder
+      <<: *internal-http-defaults
+      url: "https://coder.local.bigd.no/login"
+
+    ## External HTTP (FQDN-based)
+    - name: Plex
+      <<: *external-http-defaults
+      url: "https://app.plex.tv"
+
+    - name: Overseerr
+      <<: *external-http-defaults
+      url: "https://overseerr.bigd.no"
+
+    - name: Gitlab
+      <<: *external-http-defaults
+      url: "https://gitlab.bigd.no"
+
+    - name: Prod-Portfolio
+      <<: *external-http-defaults
+      url: "https://nordbye.it/"
+
+    - name: Stage-Portfolio
+      <<: *external-http-defaults
+      url: "https://stage.nordbye.it/"
+
+    - name: Etherpad
+      <<: *external-http-defaults
+      url: "https://etherpad.bigd.no/"
+
+    - name: Audiobookshelf
+      <<: *external-http-defaults
+      url: "https://audiobookshelf.bigd.no"
+
+    - name: OmniTools
+      <<: *external-http-defaults
+      url: "https://omni-tools.bigd.no/"
+
+    - name: It-Tools
+      <<: *external-http-defaults
+      url: "https://it-tools.bigd.no/"
+
+    - name: Homarr
+      <<: *external-http-defaults
+      url: "https://hub.bigd.no/"
         
     ## Internal TCP SSH (FQDN-based)
     - name: pfSense
