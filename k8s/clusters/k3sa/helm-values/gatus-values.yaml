@@ -1,5 +1,11 @@
 persistence:
-  enabled: false
+  enabled: true
+  size: 1Gi
+  mountPath: /data
+  storageClassName: syno-nfs
+  accessModes:
+    - ReadWriteOnce
+
 
 ingress:
   enabled: false
@@ -46,6 +52,10 @@ config:
     start: "23:00"
     duration: "1h"
     timezone: "Europe/Oslo"
+  storage:
+    type: sqlite
+    path: /data/data.db
+
 
   internal-http-defaults: &internal-http-defaults
     group: Internal HTTP
@@ -198,7 +208,7 @@ config:
       url: "https://traefik.local.bigd.no/dashboard/#"
       headers:
         Authorization: "Basic ${TRAEFIK_BASIC_AUTH}"
-        
+
     - name: Gatus
       <<: *internal-http-defaults
       url: "https://uptime.local.bigd.no/"
