@@ -221,7 +221,7 @@ config:
       <<: *internal-http-defaults
       url: "https://grafana.local.bigd.no/"
 
-    - name: Argo-cd
+    - name: Argo-cd-FQDN
       <<: *internal-http-defaults
       url: "https://argocd.local.bigd.no"
 
