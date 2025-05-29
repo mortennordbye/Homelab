@@ -1,4 +1,10 @@
 ---
+- name: Ensure APT cache is up to date
+  ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: 3600
+  tags: always
+
 - name: Include QEMU guest agent setup
   ansible.builtin.include_tasks: qemu_guest_agent.yaml
 
