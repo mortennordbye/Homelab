@@ -9,7 +9,6 @@
           - curl
           - gnupg
         state: present
-        update_cache: yes
 
     - name: Create directory for Docker GPG key
       ansible.builtin.file:
