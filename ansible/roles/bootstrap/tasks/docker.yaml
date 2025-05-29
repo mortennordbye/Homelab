@@ -54,6 +54,14 @@
         groups: docker
         append: yes
       when: bootstrap_add_user_to_docker | bool
+    
+    - name: Create /opt/docker base directory
+      ansible.builtin.file:
+        path: /opt/docker
+        state: directory
+        owner: docker
+        group: docker
+        mode: '0755'
 
   when: bootstrap_install_docker | bool
   tags: [docker, bootstrap]
