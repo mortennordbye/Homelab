@@ -13,6 +13,7 @@ bootstrap_default_packages:
   - jq
   - lsof
   - traceroute
+  - dnsutils
 
 # Optional packages to be installed per-host/group
 bootstrap_optional_packages: []

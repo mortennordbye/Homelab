@@ -12,7 +12,7 @@
 - name: Configure Synology NFS mount in fstab (validated)
   ansible.builtin.lineinfile:
     path: /etc/fstab
-    line: "nas1.local.bigd.no:/volume1/shared-data /mnt/nfs nfs _netdev,auto,vers=3,proto=tcp,hard,intr,rsize=131072,wsize=131072,noatime,nodiratime,actimeo=60 0 0"
+    line: "10.0.0.2:/volume1/shared-data /mnt/nfs nfs _netdev,auto,vers=3,proto=tcp,hard,intr,rsize=131072,wsize=131072,noatime,nodiratime,actimeo=60 0 0"
     state: present
     create: yes
     validate: '/bin/mount -a -f -t nfs -T %s'
