@@ -1,4 +1,3 @@
----
 # Core baseline packages to install on all systems
 bootstrap_default_packages:
   - vim

@@ -1,4 +1,3 @@
----
 - name: Install QEMU Guest Agent
   ansible.builtin.package:
     name: qemu-guest-agent

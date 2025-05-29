@@ -1,4 +1,3 @@
----
 - name: Install default/baseline packages
   ansible.builtin.package:
     name: "{{ bootstrap_default_packages }}"

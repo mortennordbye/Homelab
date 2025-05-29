@@ -1,0 +1,8 @@
+roles:
+  - name: bootstrap
+    src: https://github.com/mortennordbye/Homelab.git
+    scm: git
+    version: main
+
+collections:
+  - name: prometheus.prometheus
