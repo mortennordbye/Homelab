@@ -1,0 +1,17 @@
+---
+- name: Include QEMU guest agent setup
+  ansible.builtin.include_tasks: qemu_guest_agent.yaml
+
+- name: Include default applications install
+  ansible.builtin.include_tasks: default_apps.yaml
+
+- name: Include optional/non-default packages
+  ansible.builtin.include_tasks: optional_apps.yaml
+
+- name: Include Docker install
+  ansible.builtin.include_tasks: docker.yaml
+  when: bootstrap_install_docker | bool
+
+- name: Include Synology NFS mount
+  ansible.builtin.include_tasks: nfs_synology.yaml
+  when: bootstrap_mount_synology_nfs | bool

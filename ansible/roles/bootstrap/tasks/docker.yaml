@@ -1,0 +1,61 @@
+---
+- name: Install Docker
+  block:
+
+    - name: Install prerequisites for Docker
+      ansible.builtin.apt:
+        name:
+          - ca-certificates
+          - curl
+          - gnupg
+        state: present
+        update_cache: yes
+
+    - name: Create directory for Docker GPG key
+      ansible.builtin.file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: '0755'
+
+    - name: Download Docker GPG key
+      ansible.builtin.get_url:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        dest: /etc/apt/keyrings/docker.asc
+        mode: '0644'
+
+    - name: Add Docker apt repository
+      ansible.builtin.copy:
+        dest: /etc/apt/sources.list.d/docker.list
+        content: |
+          deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+        mode: '0644'
+
+    - name: Refresh APT cache
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Install Docker engine and plugins
+      ansible.builtin.apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: present
+
+    - name: Ensure Docker service is enabled and running
+      ansible.builtin.systemd:
+        name: docker
+        enabled: true
+        state: started
+
+    - name: Add user to Docker group
+      ansible.builtin.user:
+        name: "{{ bootstrap_docker_user }}"
+        groups: docker
+        append: yes
+      when: bootstrap_add_user_to_docker | bool
+
+  when: bootstrap_install_docker | bool
+  tags: [docker, bootstrap]

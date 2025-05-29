@@ -1,0 +1,22 @@
+- name: Ensure NFS client tools are installed
+  ansible.builtin.package:
+    name: nfs-common
+    state: present
+
+- name: Ensure Synology NFS mount point exists
+  ansible.builtin.file:
+    path: /mnt/nfs
+    state: directory
+    mode: '0755'
+
+- name: Configure Synology NFS mount in fstab (validated)
+  ansible.builtin.lineinfile:
+    path: /etc/fstab
+    line: "nas1.local.bigd.no:/volume1/shared-data /mnt/nfs nfs _netdev,auto,vers=3,proto=tcp,hard,intr,rsize=131072,wsize=131072,noatime,nodiratime,actimeo=60 0 0"
+    state: present
+    create: yes
+    validate: '/bin/mount -a -f -t nfs'
+
+- name: Mount all filesystems from fstab
+  ansible.builtin.command: mount -a
+  changed_when: false
