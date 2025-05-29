@@ -2,6 +2,8 @@ name: Deploy Argo configs
 
 on:
   push:
+    branches:
+      - main
     paths:
       - 'k8s/argo/**'
   workflow_dispatch:
