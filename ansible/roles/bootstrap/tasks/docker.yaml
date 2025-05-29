@@ -59,7 +59,7 @@
       ansible.builtin.file:
         path: /opt/docker
         state: directory
-        owner: docker
+        owner: "{{ bootstrap_docker_user }}"
         group: docker
         mode: '0755'
 
