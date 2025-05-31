@@ -36,7 +36,8 @@ database:
   usernameFromSecret: true
 
 extraEnvVariables:
-  SEMAPHORE_DB_OPTIONS: '{"sslmode":"disable"}'
+  SEMAPHORE_DB_OPTIONS:
+    sslmode: disable
 
 admin:
   create: true
