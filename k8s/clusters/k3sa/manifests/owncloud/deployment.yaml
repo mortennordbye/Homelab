@@ -4,7 +4,7 @@ metadata:
   name: owncloud
   namespace: owncloud
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: owncloud
