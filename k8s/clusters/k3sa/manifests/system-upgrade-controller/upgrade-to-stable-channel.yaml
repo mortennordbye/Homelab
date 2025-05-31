@@ -49,6 +49,10 @@ spec:
   nodeSelector:
     matchLabels:
       k3s-upgrade: server
+  tolerations:
+  - key: "node-role.kubernetes.io/control-plane"
+    operator: "Exists"
+    effect: "NoSchedule"
   # track latest stable k3s release
   channel: https://update.k3s.io/v1-release/channels/stable
   upgrade:
