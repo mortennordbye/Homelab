@@ -35,6 +35,9 @@ database:
   passwordKey: password
   usernameFromSecret: true
 
+extraEnvVariables:
+  SEMAPHORE_DB_OPTIONS: '{"sslmode":"disable"}
+
 admin:
   create: true
   existingSecret: semaphore-admin-secret
