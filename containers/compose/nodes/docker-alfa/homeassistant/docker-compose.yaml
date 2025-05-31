@@ -1,0 +1,13 @@
+services:
+  homeassistant:
+    container_name: homeassistant
+    image: ${HOMEASSISTANT_IMAGE}
+    volumes:
+      - homeassistant_config:/config
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+
+volumes:
+  homeassistant_config:
