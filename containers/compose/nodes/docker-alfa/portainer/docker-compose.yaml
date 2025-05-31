@@ -1,13 +1,14 @@
 services:
-    portainer-ce:
-        image: 'portainer/portainer-ce:lts'
-        volumes:
-            - 'portainer_data:/data'
-            - '/var/run/docker.sock:/var/run/docker.sock'
-        restart: always
-        container_name: portainer
-        ports:
-            - '9443:9443'
-            - '8000:8000'
+  portainer-ce:
+    image: portainer/portainer-ce:lts
+    container_name: portainer
+    restart: always
+    volumes:
+      - portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 9443:9443
+      - 8000:8000
+
 volumes:
-    portainer_data:
+  portainer_data:
