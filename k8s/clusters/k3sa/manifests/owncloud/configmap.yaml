@@ -4,8 +4,8 @@ metadata:
   name: owncloud-config
   namespace: owncloud
 data:
-  OWNCLOUD_DOMAIN: owncloud.bigd.no
-  OWNCLOUD_TRUSTED_DOMAINS: owncloud.bigd.no
+  OWNCLOUD_DOMAIN: cloud.bigd.no
+  OWNCLOUD_TRUSTED_DOMAINS: cloud.bigd.no
   OWNCLOUD_DB_TYPE: pgsql
   OWNCLOUD_DB_NAME: owncloud
   OWNCLOUD_DB_HOST: docker-alfa.local.bigd.no
