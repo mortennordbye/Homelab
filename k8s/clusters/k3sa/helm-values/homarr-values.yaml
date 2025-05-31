@@ -1,4 +1,4 @@
-replicaCount: 0
+replicaCount: 1
 strategyType: RollingUpdate
 
 env:
