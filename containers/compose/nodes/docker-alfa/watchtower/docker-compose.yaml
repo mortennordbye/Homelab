@@ -1,0 +1,13 @@
+services:
+  watchtower:
+    image: ${WATCHTOWER_IMAGE}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      WATCHTOWER_NOTIFICATIONS: ${WATCHTOWER_NOTIFICATIONS}
+      WATCHTOWER_NOTIFICATION_URL: ${WATCHTOWER_NOTIFICATION_URL}
+    command:
+      - --interval
+      - "300"
+      - --notification-report
+    restart: always
