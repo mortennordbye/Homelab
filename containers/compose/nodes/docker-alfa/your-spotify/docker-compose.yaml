@@ -1,0 +1,32 @@
+services:
+  server:
+    image: ${SPOTIFY_SERVER_IMAGE}
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
+    environment:
+      API_ENDPOINT: ${API_ENDPOINT}
+      CLIENT_ENDPOINT: ${CLIENT_ENDPOINT}
+      SPOTIFY_PUBLIC: ${SPOTIFY_PUBLIC}
+      SPOTIFY_SECRET: ${SPOTIFY_SECRET}
+      CORS: ${CORS}
+
+  mongo:
+    container_name: mongo
+    image: ${MONGO_IMAGE}
+    restart: always
+    volumes:
+      - mongo_data:/data/db
+
+  web:
+    image: ${SPOTIFY_CLIENT_IMAGE}
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      API_ENDPOINT: ${API_ENDPOINT}
+
+volumes:
+  mongo_data:
