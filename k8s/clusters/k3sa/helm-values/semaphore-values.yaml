@@ -38,5 +38,8 @@ admin:
   fullnameKey: fullname
 
 secrets:
-  existingSecret: semaphore-accesskeyencryption-secret
+  existingSecret: semaphore-crypto-secret
+  cookieHashKey: cookieHash
+  cookieEncryptionKey: cookieEncryption
   accesskeyEncryptionKey: accesskeyEncryption
+
