@@ -36,3 +36,7 @@ admin:
   passwordKey: password
   emailKey: email
   fullnameKey: fullname
+
+secrets:
+  existingSecret: semaphore-accesskeyencryption-secret
+  accesskeyEncryptionKey: accesskeyEncryption
