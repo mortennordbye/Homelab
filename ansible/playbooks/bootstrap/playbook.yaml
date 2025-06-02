@@ -3,3 +3,4 @@
   become: true
   roles:
     - role: bootstrap
+    - role: prometheus.prometheus.node_exporter
