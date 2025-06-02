@@ -6,7 +6,7 @@ metadata:
   labels:
     app: prod-portfolio
 spec:
-  replicas: 5
+  replicas: 2
   revisionHistoryLimit: 3
   selector:
     matchLabels:
