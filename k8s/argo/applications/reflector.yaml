@@ -21,7 +21,7 @@ spec:
       path: k8s/clusters/k3sa/manifests/reflector
       directory:
         recurse: true
-        
+
   syncPolicy:
     automated:
       prune: true

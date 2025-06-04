@@ -21,7 +21,7 @@ spec:
       path: k8s/clusters/k3sa/manifests/argo-cd
       directory:
         recurse: true
-         
+
   syncPolicy:
     automated:
       prune: true
