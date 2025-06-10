@@ -17,7 +17,7 @@ deployment:
 
 entryPoints:
   web:
-    address: ":8080"
+    address: ":80"
     http:
       redirections:
         entryPoint:
@@ -25,7 +25,7 @@ entryPoints:
           scheme: https
           priority: 10
   websecure:
-    address: ":8443"
+    address: ":443"
     http3:
       enabled: true
     forwardedHeaders:
@@ -39,13 +39,13 @@ entryPoints:
 
 ports:
   web:
-    exposedPort: 8080
+    exposedPort: 80
   websecure:
-    port: 8443
+    port: 443
     http3:
       enabled: true
-    advertisedPort: 8443
-    exposedPort: 8443
+    advertisedPort: 443
+    exposedPort: 443
     tls:
       enabled: true
   ssh:
