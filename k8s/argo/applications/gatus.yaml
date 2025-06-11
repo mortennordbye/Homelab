@@ -11,7 +11,7 @@ spec:
   sources:
     - repoURL: "https://twin.github.io/helm-charts"
       chart: gatus
-      targetRevision: "1.2.0"
+      targetRevision: "1.3.0"
       helm:
         valueFiles:
           - $values/k8s/clusters/k3sa/helm-values/gatus-values.yaml
