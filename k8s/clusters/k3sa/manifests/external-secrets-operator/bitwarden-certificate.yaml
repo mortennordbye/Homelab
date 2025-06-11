@@ -10,8 +10,6 @@ spec:
     - bitwarden-sdk-server.external-secrets
     - bitwarden-sdk-server.external-secrets.svc
     - bitwarden-sdk-server.external-secrets.svc.cluster.local
-  #ipAddresses:
-  #  - 10.42.3.150
   issuerRef:
     kind: ClusterIssuer
     name: bitwarden-certificate-issuer
