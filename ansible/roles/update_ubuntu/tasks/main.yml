@@ -1,0 +1,46 @@
+---
+- name: Ensure we're on Ubuntu
+  ansible.builtin.assert:
+    that:
+      - ansible_distribution == 'Ubuntu'
+    fail_msg: "This role only supports Ubuntu"
+
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: "{{ cache_valid_time }}"
+  when: cache_valid_time > 0
+  tags: update
+
+- name: Upgrade packages
+  ansible.builtin.apt:
+    upgrade: "{{ upgrade_type }}"
+  when: do_upgrade
+  register: upgrade_result
+  tags: upgrade
+
+- name: Autoremove unused packages
+  ansible.builtin.apt:
+    autoremove: true
+  when: do_autoremove
+  tags: cleanup
+
+- name: Autoclean apt cache
+  ansible.builtin.apt:
+    autoclean: true
+  when: do_autoclean
+  tags: cleanup
+
+- name: Check if reboot is required
+  ansible.builtin.stat:
+    path: /var/run/reboot-required
+  register: reboot_required
+  changed_when: false
+  tags: reboot
+
+- name: Trigger reboot handler
+  ansible.builtin.meta: flush_handlers
+  when:
+    - auto_reboot
+    - reboot_required.stat.exists
+  tags: reboot

@@ -1,0 +1,6 @@
+---
+- name: Reboot if required
+  ansible.builtin.reboot:
+    msg: "{{ reboot_msg }}"
+    timeout: "{{ reboot_timeout }}"
+  when: reboot_required.stat.exists

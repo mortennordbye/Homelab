@@ -1,0 +1,18 @@
+---
+# how old apt cache may be before re-fetch (seconds)
+cache_valid_time: 3600
+
+# whether to perform 'apt upgrade'
+do_upgrade: true
+
+# apt upgrade type: 'yes' (safe), 'dist' (full-upgrade)
+upgrade_type: 'yes'
+
+# cleanup unused packages?
+do_autoremove: true
+do_autoclean: true
+
+# reboot settings
+auto_reboot: true
+reboot_timeout: 600
+reboot_msg: "Reboot initiated by Ansible after package upgrade"
