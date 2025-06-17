@@ -1,8 +1,8 @@
 ---
 galaxy_info:
-  role_name: bootstrap
+  role_name: update_server
   author: Morten Victor Nordbye
-  description: "Bootstrap role for preparing Ubuntu-based homelab servers"
+  description: "Refresh apt cache, upgrade packages, clean up and reboot on Ubuntu servers"
   license: Apache-2.0
   min_ansible_version: "2.11"
   platforms:
