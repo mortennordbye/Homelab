@@ -27,7 +27,7 @@ ports:
     exposedPort: 443
     http3:
       enabled: true
-    advertisedPort: 443
+      advertisedPort: 443
     tls:
       enabled: true
 
