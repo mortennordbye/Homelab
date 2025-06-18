@@ -11,7 +11,7 @@ spec:
   sources:
     - repoURL: "https://semaphoreui.github.io/charts/"
       chart: semaphore
-      targetRevision: "15.1.6"
+      targetRevision: "16.0.0"
       helm:
         valueFiles:
           - $values/k8s/clusters/k3sa/helm-values/semaphore-values.yaml
