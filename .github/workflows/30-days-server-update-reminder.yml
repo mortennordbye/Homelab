@@ -1,14 +1,15 @@
-name: "Kubernetes Update Reminder (≈30 days)"
+name: "Server Update Reminder (≈30 days)"
 
 on:
   workflow_dispatch:
   schedule:
-    # 16:00 UTC on day 1 = 18:00 Europe/Oslo in summer
-    - cron: '0 16 1 * *'
+    # 16:00 UTC on the 15th of each month ≃ 18:00 Europe/Oslo
+    - cron: '0 16 15 * *'
 
 jobs:
   notify:
     runs-on: ubuntu-latest
+
     steps:
       - name: Get Discord Webhook URL from Bitwarden
         id: bw-fetch
@@ -16,7 +17,7 @@ jobs:
         with:
           access_token: ${{ secrets.BW_ACCESS_TOKEN }}
           secrets: |
-            ab7c03b3-dc21-4174-babf-b2cf00f9ae40 > HOMELAB_REMINDERS_WEBHOOK_URL
+            ab7c03b3-dc21-4174-babf-b2cf00f9ae40 > HOMELAB_SERVER_UPDATES_WEBHOOK_URL
 
       - name: Send Discord reminder
         run: |
@@ -26,17 +27,17 @@ jobs:
                  "username": "Homelab-Reminders",
                  "embeds":[
                    {
-                     "title":"🔔 Kubernetes Update Reminder",
-                     "description":"An alert for Kubernetes upkeep has been triggered.",
-                     "color":15548997,
+                     "title":"🔔 Server Update Reminder",
+                     "description":"An alert for Server Updates has been triggered.",
+                     "color":16711680,
                      "fields":[
                        {
                          "name":"📌 @everyone",
-                         "value":"• 🔄 CRDs: check & apply updates\n• 🤖 Renovate: review & merge PRs"
+                         "value":"• 🔄 Update servers"
                        },
                        {
                          "name":"⏳ Next run",
-                         "value":"Every 1st of the month at 18:00 Oslo time"
+                         "value":"Every 15th of the month at 18:00 Oslo time"
                        }
                      ],
                      "footer":{"text":"Automated Reminder • Homelab"},
@@ -44,4 +45,4 @@ jobs:
                    }
                  ]
                }' \
-               "$HOMELAB_REMINDERS_WEBHOOK_URL"
+               "$HOMELAB_SERVER_UPDATES_WEBHOOK_URL"
