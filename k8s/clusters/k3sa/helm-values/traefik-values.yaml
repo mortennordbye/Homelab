@@ -3,51 +3,23 @@ globalArguments:
   - "--global.checknewversion=false"
 
 additionalArguments:
-  - "--serversTransport.insecureSkipVerify=true"
-  - "--log.level=INFO"
-  - "--providers.kubernetescrd.allowCrossNamespace=true"
+  - "--entryPoints.web.address=:80"
+  - "--entryPoints.web.http.redirections.entryPoint.to=websecure"
+  - "--entryPoints.web.http.redirections.scheme=https"
+  - "--entryPoints.websecure.address=:443"
+  - "--entryPoints.websecure.http3.enabled=true"
+  - "--entryPoints.ssh.address=:2222"
+  - "--entryPoints.metrics.address=:8082"
 
 deployment:
   enabled: true
   replicas: 3
-  annotations: {}
-  podAnnotations: {}
-  additionalContainers: []
-  initContainers: []
-
-entryPoints:
-  web:
-    address: ":80"
-    http:
-      redirections:
-        entryPoint:
-          to: websecure
-          scheme: https
-          priority: 10
-  websecure:
-    address: ":443"
-    http3:
-      enabled: true
-    forwardedHeaders:
-      insecure: true
-    tls:
-      enabled: true
-  ssh:
-    address: ":2222"
-  metrics:
-    address: ":8082"
 
 ports:
   web:
     exposedPort: 80
   websecure:
-    port: 443
-    http3:
-      enabled: true
-    advertisedPort: 443
     exposedPort: 443
-    tls:
-      enabled: true
   ssh:
     port: 2222
     expose:
@@ -55,28 +27,14 @@ ports:
     exposedPort: 2222
     protocol: TCP
 
-ingressRoute:
-  dashboard:
-    enabled: false
+logs:
+  general:
+    level: INFO
 
-metrics:
-  prometheus:
-    entryPoint: metrics
-    service:
-      enabled: true
-      labels:
-        Release: kube-prometheus-stack
-      annotations: {}
-    serviceMonitor:
-      enabled: true
-      namespace: monitoring
-      namespaceSelector:
-        matchNames:
-          - traefik
-      additionalLabels:
-        Release: kube-prometheus-stack
-      interval: 30s
-      scrapeTimeout: 10s
+http:
+  serversTransports:
+    default:
+      insecureSkipVerify: true
 
 providers:
   kubernetesCRD:
@@ -88,19 +46,23 @@ providers:
     enabled: true
     allowExternalNameServices: true
     publishedService:
-      enabled: true
-      namespace: traefik
-      name: traefik
-
-rbac:
-  enabled: true
+      pathOverride: traefik/traefik
 
 service:
   enabled: true
   type: LoadBalancer
-  annotations: {}
-  labels: {}
   spec:
     loadBalancerIP: 10.0.0.58
-  loadBalancerSourceRanges: []
-  externalIPs: []
+
+metrics:
+  prometheus:
+    serviceMonitor:
+      enabled: true
+      namespace: monitoring
+      namespaceSelector:
+        matchNames:
+          - traefik
+      additionalLabels:
+        Release: kube-prometheus-stack
+      interval: 30s
+      scrapeTimeout: 10s
