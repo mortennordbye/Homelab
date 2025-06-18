@@ -142,14 +142,6 @@ config:
       <<: *internal-http-defaults
       url: "http://10.0.0.27:37492/login?next=/browser/"
 
-    - name: Etherpad
-      <<: *internal-http-defaults
-      url: "http://10.0.0.27:9001/"
-
-    - name: Admin-Etherpad
-      <<: *internal-http-defaults
-      url: "http://10.0.0.27:9001/admin/"
-
     - name: Sonarr
       <<: *internal-http-defaults
       url: "http://10.0.0.28:8989"
@@ -250,10 +242,6 @@ config:
       <<: *external-http-defaults
       url: "https://stage.nordbye.it/"
 
-    - name: Etherpad
-      <<: *external-http-defaults
-      url: "https://etherpad.bigd.no/"
-
     - name: Audiobookshelf
       <<: *external-http-defaults
       url: "https://audiobookshelf.bigd.no"
@@ -290,10 +278,6 @@ config:
     - name: Linbast
       <<: *internal-tcp-ssh-defaults
       url: "tcp://linbast.local.bigd.no:22"
-
-    - name: Docker-Utility
-      <<: *internal-tcp-ssh-defaults
-      url: "tcp://docker-utility.local.bigd.no:22"
 
     - name: Docker-Piracy
       <<: *internal-tcp-ssh-defaults
