@@ -1,11 +1,11 @@
 globalArguments:
   - "--global.sendanonymoususage=false"
   - "--global.checknewversion=false"
-
 additionalArguments:
   - "--entryPoints.web.address=:80"
   - "--entryPoints.web.http.redirections.entryPoint.to=websecure"
-  - "--entryPoints.web.http.redirections.scheme=https"
+  - "--entryPoints.web.http.redirections.entryPoint.scheme=https"
+  - "--entryPoints.web.http.redirections.entryPoint.priority=10"
   - "--entryPoints.websecure.address=:443"
   - "--entryPoints.websecure.http3.enabled=true"
   - "--entryPoints.ssh.address=:2222"
