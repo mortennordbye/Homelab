@@ -4,12 +4,11 @@ globalArguments:
 
 additionalArguments:
   - "--serverstransport.insecureskipverify=true"
-  - "--providers.kubernetescrd.allowcrossnamespace=true"
 
 deployment:
   enabled: true
   replicas: 3
-  
+
 logs:
   general:
     level: INFO
