@@ -3,57 +3,44 @@ globalArguments:
   - "--global.checknewversion=false"
 
 additionalArguments:
-  - "--serversTransport.insecureSkipVerify=true"
+  - "--serverstransport.insecureskipverify=true"
   - "--log.level=INFO"
-  - "--providers.kubernetescrd.allowCrossNamespace=true"
+  - "--providers.kubernetescrd.allowcrossnamespace=true"
 
 deployment:
   enabled: true
   replicas: 3
-  annotations: {}
-  podAnnotations: {}
-  additionalContainers: []
-  initContainers: []
-
-entryPoints:
-  web:
-    address: ":80"
-    http:
-      redirections:
-        entryPoint:
-          to: websecure
-          scheme: https
-          priority: 10
-  websecure:
-    address: ":443"
-    http3:
-      enabled: true
-    forwardedHeaders:
-      insecure: true
-    tls:
-      enabled: true
-  ssh:
-    address: ":2222"
-  metrics:
-    address: ":8082"
 
 ports:
   web:
+    port: 80
+    expose:
+      default: true
     exposedPort: 80
+
   websecure:
     port: 443
+    expose:
+      default: true
+    exposedPort: 443
     http3:
       enabled: true
     advertisedPort: 443
-    exposedPort: 443
     tls:
       enabled: true
+
   ssh:
     port: 2222
     expose:
       default: true
     exposedPort: 2222
     protocol: TCP
+
+  metrics:
+    port: 8082
+    expose:
+      default: false
+    exposedPort: 8082
 
 ingressRoute:
   dashboard:
@@ -84,13 +71,12 @@ providers:
     ingressClass: traefik
     allowExternalNameServices: true
     allowCrossNamespace: true
+
   kubernetesIngress:
     enabled: true
     allowExternalNameServices: true
     publishedService:
-      enabled: true
-      namespace: traefik
-      name: traefik
+      pathOverride: traefik/traefik
 
 rbac:
   enabled: true
