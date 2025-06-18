@@ -1,7 +1,6 @@
 name: "Server Update Reminder (≈30 days)"
 
 on:
-  workflow_dispatch:
   schedule:
     # 16:00 UTC on the 15th of each month ≃ 18:00 Europe/Oslo
     - cron: '0 16 15 * *'
