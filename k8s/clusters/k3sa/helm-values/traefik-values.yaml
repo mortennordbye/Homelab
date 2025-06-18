@@ -4,12 +4,16 @@ globalArguments:
 
 additionalArguments:
   - "--serverstransport.insecureskipverify=true"
-  - "--log.level=INFO"
   - "--providers.kubernetescrd.allowcrossnamespace=true"
 
 deployment:
   enabled: true
   replicas: 3
+  
+logs:
+  general:
+    level: INFO
+
 
 ports:
   web:
@@ -84,9 +88,5 @@ rbac:
 service:
   enabled: true
   type: LoadBalancer
-  annotations: {}
-  labels: {}
   spec:
     loadBalancerIP: 10.0.0.58
-  loadBalancerSourceRanges: []
-  externalIPs: []
