@@ -8,7 +8,7 @@
     mode: '0755'
   tags: bind_zones
 
-- name: render each zone file
+- name: render forward zone files
   ansible.builtin.template:
     src: zone.j2
     dest: "{{ bind_zone_manager_zone_dir }}/{{ item.zone }}.zone"
@@ -16,5 +16,16 @@
     group: bind
     mode: '0644'
   loop: "{{ bind_zone_manager_zone_defs }}"
+  notify: restart bind9
+  tags: bind_zones
+
+- name: render reverse zone files
+  ansible.builtin.template:
+    src: reverse_zone.j2
+    dest: "{{ bind_zone_manager_zone_dir }}/{{ item.zone }}.zone"
+    owner: bind
+    group: bind
+    mode: '0644'
+  loop: "{{ bind_zone_manager_reverse_zone_defs }}"
   notify: restart bind9
   tags: bind_zones

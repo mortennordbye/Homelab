@@ -5,3 +5,11 @@ zone "{{ z.zone }}" {
   allow-update { none; };
 };
 {% endfor %}
+
+{% for rz in bind_zone_manager_reverse_zone_defs %}
+zone "{{ rz.zone }}" {
+  type master;
+  file "{{ bind_zone_manager_zone_dir }}/{{ rz.zone }}.zone";
+  allow-update { none; };
+};
+{% endfor %}

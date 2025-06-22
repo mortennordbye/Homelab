@@ -16,8 +16,10 @@ bind_zone_manager_zone_dir: /etc/bind/zones
 # override this in your playbook or group_vars
 bind_zone_manager_zone_defs: []
 
+# reverse‐zone definitions
+bind_zone_manager_reverse_zone_defs: []
+
 # network ACLs
-bind_zone_manager_network: 10.0.0.0/24
+bind_zone_manager_network: 0.0.0.0/0
 bind_zone_manager_listen_ips:
   - 127.0.0.1
-  - 10.0.0.80
