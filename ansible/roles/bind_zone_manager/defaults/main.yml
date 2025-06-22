@@ -1,0 +1,23 @@
+---
+# packages to install
+bind_zone_manager_packages:
+  - bind9
+  - bind9-utils
+  - bind9-doc
+  - dnsutils
+
+# where on the control node your raw zone templates live
+bind_zone_manager_zone_src_dir: "{{ playbook_dir }}/zones"
+
+# where to publish zones on the target
+bind_zone_manager_zone_dir: /etc/bind/zones
+
+# list of zones, each with its own A- and CNAME-records
+# override this in your playbook or group_vars
+bind_zone_manager_zone_defs: []
+
+# network ACLs
+bind_zone_manager_network: 10.0.0.0/24
+bind_zone_manager_listen_ips:
+  - 127.0.0.1
+  - 10.0.0.80

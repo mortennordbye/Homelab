@@ -1,0 +1,7 @@
+{% for z in bind_zone_manager_zone_defs %}
+zone "{{ z.zone }}" {
+  type master;
+  file "{{ bind_zone_manager_zone_dir }}/{{ z.zone }}.zone";
+  allow-update { none; };
+};
+{% endfor %}

@@ -1,0 +1,20 @@
+---
+- name: ensure zone directory exists
+  ansible.builtin.file:
+    path: "{{ bind_zone_manager_zone_dir }}"
+    state: directory
+    owner: bind
+    group: bind
+    mode: '0755'
+  tags: bind_zones
+
+- name: render each zone file
+  ansible.builtin.template:
+    src: zone.j2
+    dest: "{{ bind_zone_manager_zone_dir }}/{{ item.zone }}.zone"
+    owner: bind
+    group: bind
+    mode: '0644'
+  loop: "{{ bind_zone_manager_zone_defs }}"
+  notify: restart bind9
+  tags: bind_zones

@@ -1,0 +1,4 @@
+---
+- ansible.builtin.include_tasks: install.yml
+- ansible.builtin.include_tasks: configure.yml
+- ansible.builtin.include_tasks: deploy_zones.yml

@@ -1,0 +1,21 @@
+options {
+  directory "{{ bind_zone_manager_zone_dir }}";
+  allow-query { localhost; {{ bind_zone_manager_network }}; };
+  allow-transfer { none; };
+  listen-on {
+    {% for ip in bind_zone_manager_listen_ips -%}
+    {{ ip }};
+    {% endfor -%}
+  };
+  recursion yes;
+  allow-recursion { localhost; {{ bind_zone_manager_network }}; };
+  dnssec-validation no;
+  max-cache-size 64M;
+  max-ncache-ttl 3600;
+  auth-nxdomain no;
+
+  forwarders {
+    1.1.1.1;
+    8.8.8.8;
+  };
+};
