@@ -1,6 +1,6 @@
 options {
   directory "{{ bind_zone_manager_zone_dir }}";
-  allow-query { localhost; {{ bind_zone_manager_network }}; };
+  allow-query   { localhost; {{ bind_zone_manager_network }}; };
   allow-transfer { none; };
   listen-on {
     {% for ip in bind_zone_manager_listen_ips -%}
@@ -15,7 +15,8 @@ options {
   auth-nxdomain no;
 
   forwarders {
-    1.1.1.1;
-    8.8.8.8;
+    {% for f in bind_zone_manager_forwarders -%}
+    {{ f }};
+    {% endfor -%}
   };
 };

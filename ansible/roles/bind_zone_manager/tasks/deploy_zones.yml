@@ -10,7 +10,7 @@
 
 - name: render forward zone files
   ansible.builtin.template:
-    src: zone.j2
+    src: forward_zone.j2
     dest: "{{ bind_zone_manager_zone_dir }}/{{ item.zone }}.zone"
     owner: bind
     group: bind
