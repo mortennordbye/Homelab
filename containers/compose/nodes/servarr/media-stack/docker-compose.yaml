@@ -1,0 +1,49 @@
+services:
+  plex:
+    image: ghcr.io/linuxserver/plex:latest
+    container_name: plex
+    env_file: .env
+    restart: unless-stopped
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - VERSION=docker
+    volumes:
+      - ./volumes/plex/config:/config
+      - ${MEDIA_ROOT}/series:/data/tv
+      - ${MEDIA_ROOT}/movies:/data/movies
+      - ${MEDIA_ROOT}/courses:/data/courses
+      - ${MEDIA_ROOT}/youtube:/data/youtube
+      - ${MEDIA_ROOT}/transcode_cache:/transcode
+    ports:
+      - "${PLEX_HTTP_PORT}:32400"
+      - "${PLEX_SSDP_PORT}:1900/udp"
+      - "${PLEX_DLNA_PORT}:32469"
+      - "${PLEX_MDNS_PORT}:5353/udp"
+      - "${PLEX_REMOTE_PORT}:8324"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost:32400/identity || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  tautulli:
+    image: ghcr.io/linuxserver/tautulli:latest
+    container_name: tautulli
+    env_file: .env
+    restart: unless-stopped
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ./volumes/tautulli/config:/config
+      - "./volumes/plex/config/Library Application Support/Plex Media Server/Logs:/logs:ro"
+    ports:
+      - "${TAUTULLI_HTTP_PORT}:8181"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost:8181/status || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
