@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# run "chmod +x ./scripts/docker-wireguard-pia/update_qbt_port.sh" before using it
 # required env vars provided by env_file=.env
 : "${PORT_FILE:?missing PORT_FILE}"
 : "${QBT_USER:?missing QBT_USER}"
