@@ -28,3 +28,9 @@ bootstrap_docker_user: "{{ ansible_user | default(ansible_env.USER) }}"
 
 # Setup synology NFS mount
 bootstrap_mount_synology_nfs: false
+
+# Configure system timezone
+bootstrap_set_timezone: true
+
+# Desired timezone
+bootstrap_timezone: "Europe/Oslo"

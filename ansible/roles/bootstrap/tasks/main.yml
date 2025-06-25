@@ -20,3 +20,7 @@
 - name: Include Synology NFS mount
   ansible.builtin.include_tasks: nfs_synology.yml
   when: bootstrap_mount_synology_nfs | bool
+
+- name: Include system timezone
+  ansible.builtin.include_tasks: timezone.yml
+  when: bootstrap_set_timezone | bool

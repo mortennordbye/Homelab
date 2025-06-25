@@ -34,12 +34,11 @@ services:
       - "${LAN_IP}:${RADARR_PORT}:${RADARR_PORT}"
       - "${LAN_IP}:${BAZARR_PORT}:${BAZARR_PORT}"
       - "${LAN_IP}:${READARR_PORT}:${READARR_PORT}"
-      - "${LAN_IP}:${OVERSEERR_PORT}:${OVERSEERR_PORT}"
       - "${LAN_IP}:${FLARESOLVERR_PORT}:${FLARESOLVERR_PORT}"
       - "${LAN_IP}:${TDARR_PORT}:${TDARR_PORT}"
 
   qbittorrent:
-    image: linuxserver/qbittorrent
+    image: linuxserver/qbittorrent:5.1.0
     container_name: qbittorrent
     env_file:
       - .env
@@ -192,30 +191,6 @@ services:
       - ${MEDIA_ROOT}/torrents/completed:/downloads:ro
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:${READARR_PORT}/health || exit 1"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-
-  overseerr:
-    image: ghcr.io/linuxserver/overseerr:latest
-    container_name: overseerr
-    env_file:
-      - .env
-    network_mode: "service:vpn"
-    depends_on:
-      vpn:
-        condition: service_healthy
-    restart: unless-stopped
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-    volumes:
-      - ./volumes/overseerr/config:/config
-      - ${MEDIA_ROOT}/series:/tv
-      - ${MEDIA_ROOT}/movies:/movies
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:${OVERSEERR_PORT}/api/v1/status || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
