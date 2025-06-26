@@ -190,25 +190,10 @@ prometheus:
               instance: 'docker-alfa'              
           - targets: ['10.0.0.27:9100']
             labels:
-              instance: 'docker-utility'
+              instance: 'Servarr'
           - targets: ['10.0.0.28:9100']
             labels:
-              instance: 'docker-piracy'
-          - targets: ['10.0.0.29:9100']
-            labels:
-              instance: 'qbittorrent'
-          - targets: ['10.0.0.31:9100']
-            labels:
-              instance: 'plex'
-          - targets: ['10.0.0.32:9100']
-            labels:
-              instance: 'docker-nextcloud'
-          - targets: ['10.0.0.36:9100']
-            labels:
-              instance: 'gitlab'
-          - targets: ['10.0.0.39:9100']
-            labels:
-              instance: 'nfs'
+              instance: 'Plex'
           - targets: ['10.0.0.51:9100']
             labels:
               instance: 'k3sam1'
@@ -227,9 +212,7 @@ prometheus:
           - targets: ['10.0.0.56:9100']
             labels:
               instance: 'k3saca3'
-          - targets: ['10.0.0.80:9100']
-            labels:
-              instance: 'test-vm'
+
 # ThanosRuler configuration
 thanosRuler:
   enabled: false
