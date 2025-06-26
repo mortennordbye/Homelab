@@ -37,6 +37,7 @@ services:
       - "${LAN_IP}:${FLARESOLVERR_PORT}:${FLARESOLVERR_PORT}"
       - "${LAN_IP}:${TDARR_PORT}:${TDARR_PORT}"
       - "${LAN_IP}:${HUNTARR_PORT}:${HUNTARR_PORT}"
+      - "${LAN_IP}:${YT_DLP_WEBUI_PORT}:${YT_DLP_WEBUI_PORT}"
 
   qbittorrent:
     image: linuxserver/qbittorrent:5.1.0
@@ -269,3 +270,23 @@ services:
       timeout: 10s
       start_period: 40s
       retries: 3
+
+  yt-dlp-webui:
+    image: ghcr.io/marcopiovanello/yt-dlp-web-ui:latest
+    container_name: yt-dlp-webui
+    env_file:
+      - .env
+    network_mode: "service:vpn"
+    depends_on:
+      vpn:
+        condition: service_healthy
+    restart: unless-stopped
+    volumes:
+      - "${MEDIA_ROOT}/youtube:/downloads"
+      - "./volumes/yt-dlp-webui/config:/config"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:${YT_DLP_WEBUI_PORT} || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
