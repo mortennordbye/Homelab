@@ -31,9 +31,6 @@ spec:
             - name: share
               mountPath: /audiobooks
               subPath: media/audiobooks
-            - name: share
-              mountPath: /podcasts
-              subPath: media/podcasts
             - name: config
               mountPath: /config
             - name: metadata
