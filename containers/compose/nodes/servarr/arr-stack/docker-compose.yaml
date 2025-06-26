@@ -185,7 +185,7 @@ services:
       - TZ=${TZ}
     volumes:
       - ./volumes/readarr/config:/config
-      - ${MEDIA_ROOT}/books:/books
+      - ${MEDIA_ROOT}/audiobooks:/audiobooks
       - ${MEDIA_ROOT}/torrents:/torrents:ro
       - ${MEDIA_ROOT}/torrents/download:/torrents/download:rw
       - ${MEDIA_ROOT}/torrents/completed:/downloads:ro
