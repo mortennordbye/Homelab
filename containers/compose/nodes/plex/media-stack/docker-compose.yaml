@@ -17,7 +17,7 @@ services:
       - ${MEDIA_ROOT}/movies:/movies
       - ${MEDIA_ROOT}/courses:/courses
       - ${MEDIA_ROOT}/youtube:/youtube
-      - ${MEDIA_ROOT}/transcode_cache:/transcode
+      - /tmp/plex:/transcode:rw,noexec,nosuid
     healthcheck:
       test: ["CMD-SHELL", "curl -fs http://localhost:32400/identity || exit 1"]
       interval: 30s
