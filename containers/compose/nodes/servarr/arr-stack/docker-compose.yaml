@@ -36,6 +36,7 @@ services:
       - "${LAN_IP}:${READARR_PORT}:${READARR_PORT}"
       - "${LAN_IP}:${FLARESOLVERR_PORT}:${FLARESOLVERR_PORT}"
       - "${LAN_IP}:${TDARR_PORT}:${TDARR_PORT}"
+      - "${LAN_IP}:${HUNTARR_PORT}:${HUNTARR_PORT}"
 
   qbittorrent:
     image: linuxserver/qbittorrent:5.1.0
@@ -246,4 +247,25 @@ services:
       test: ["CMD-SHELL", "curl -f --connect-timeout 5 http://localhost:${TDARR_PORT}/api/v2/status || exit 1"]
       interval: 30s
       timeout: 10s
+      retries: 3
+
+  huntarr:
+    image: ghcr.io/plexguide/huntarr:latest
+    container_name: huntarr
+    env_file:
+      - .env
+    network_mode: "service:vpn"
+    depends_on:
+      vpn:
+        condition: service_healthy
+    restart: unless-stopped
+    environment:
+      - TZ=${TZ}
+    volumes:
+      - ./volumes/huntarr/config:/config
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${HUNTARR_PORT}/health"]
+      interval: 30s
+      timeout: 10s
+      start_period: 40s
       retries: 3
