@@ -13,6 +13,7 @@ bootstrap_default_packages:
   - lsof
   - traceroute
   - dnsutils
+  - cron
 
 # Optional packages to be installed per-host/group
 bootstrap_optional_packages: []
