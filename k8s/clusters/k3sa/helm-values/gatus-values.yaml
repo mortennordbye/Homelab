@@ -144,47 +144,47 @@ config:
 
     - name: Sonarr
       <<: *internal-http-defaults
-      url: "http://10.0.0.28:8989"
+      url: "http://10.0.0.27:8989"
 
     - name: Radarr
       <<: *internal-http-defaults
-      url: "http://10.0.0.28:7878"
+      url: "http://10.0.0.27:7878"
 
     - name: Readarr
       <<: *internal-http-defaults
-      url: "http://10.0.0.28:8787"
+      url: "http://10.0.0.27:8787"
 
     - name: Bazarr
       <<: *internal-http-defaults
-      url: "http://10.0.0.28:6767"
+      url: "http://10.0.0.27:6767"
 
     - name: Prowlarr
       <<: *internal-http-defaults
-      url: "http://10.0.0.28:9696"
+      url: "http://10.0.0.27:9696"
 
     - name: Tdarr
       <<: *internal-http-defaults
-      url: "http://10.0.0.28:8265"
+      url: "http://10.0.0.27:8265"
 
     - name: FlareSolverr
       <<: *internal-http-defaults
-      url: "http://10.0.0.28:8191"
+      url: "http://10.0.0.27:8191"
 
     - name: qBittorrent
       <<: *internal-http-defaults
-      url: "http://10.0.0.29:8080"
+      url: "http://10.0.0.27:8080"
 
     - name: Plex (Internal)
       <<: *internal-http-defaults
-      url: "http://10.0.0.31:32400/web"
+      url: "http://10.0.0.28:32400/web"
 
     - name: Tautulli
       <<: *internal-http-defaults
-      url: "http://10.0.0.31:8181"
+      url: "http://10.0.0.28:8181"
 
     - name: Home Assistant
       <<: *internal-http-defaults
-      url: "http://10.0.0.38:8123"
+      url: "http://10.0.0.30:8123"
 
     - name: PBS
       <<: *internal-http-defaults
@@ -229,10 +229,6 @@ config:
     - name: Overseerr
       <<: *external-http-defaults
       url: "https://overseerr.bigd.no"
-
-    - name: Gitlab
-      <<: *external-http-defaults
-      url: "https://gitlab.bigd.no"
 
     - name: Prod-Portfolio
       <<: *external-http-defaults
@@ -290,10 +286,6 @@ config:
     - name: Plex
       <<: *internal-tcp-ssh-defaults
       url: "tcp://plex.local.bigd.no:22"
-
-    - name: Gitlab
-      <<: *internal-tcp-ssh-defaults
-      url: "tcp://gitlab.local.bigd.no:22"
 
     - name: Homeassistant
       <<: *internal-tcp-ssh-defaults
