@@ -163,7 +163,7 @@ config:
 
     - name: Bazarr
       <<: *internal-http-defaults
-      url: "http://10.0.0.27:6767"
+      url: "http://10.0.0.27:6761"
 
     - name: Prowlarr
       <<: *internal-http-defaults
