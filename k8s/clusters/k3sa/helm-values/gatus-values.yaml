@@ -1,7 +1,3 @@
-env:
-  - name: GATUS_WATCH_CONFIG
-    value: "false"
-
 deployment:
   strategy: Recreate
   annotateConfigChecksum: true
