@@ -38,6 +38,7 @@ services:
       - "${LAN_IP}:${TDARR_PORT}:${TDARR_PORT}"
       - "${LAN_IP}:${HUNTARR_PORT}:${HUNTARR_PORT}"
       - "${LAN_IP}:${YT_DLP_WEBUI_PORT}:${YT_DLP_WEBUI_PORT}"
+      - "${LAN_IP}:${CLEANUPARR_PORT=}:${CLEANUPARR_PORT=}"
 
   qbittorrent:
     image: linuxserver/qbittorrent:5.1.0
@@ -266,6 +267,30 @@ services:
       - ./volumes/huntarr/config:/config
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:${HUNTARR_PORT}/health"]
+      interval: 30s
+      timeout: 10s
+      start_period: 40s
+      retries: 3
+
+  cleanuparr:
+    image: ghcr.io/cleanuparr/cleanuparr:latest
+    container_name: cleanuparr
+    env_file:
+      - .env
+    network_mode: "service:vpn"
+    depends_on:
+      vpn:
+        condition: service_healthy
+    restart: unless-stopped
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - PORT=${CLEANUPARR_PORT}
+    volumes:
+      - ./volumes/cleanuparr/config:/config
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${CLEANUPARR_PORT}/health"]
       interval: 30s
       timeout: 10s
       start_period: 40s
