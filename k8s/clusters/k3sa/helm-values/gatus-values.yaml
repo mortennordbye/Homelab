@@ -3,6 +3,11 @@ env:
     value: "false"
 
 deployment:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
   annotateConfigChecksum: true
 
 persistence:
