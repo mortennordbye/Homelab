@@ -2,8 +2,10 @@ env:
   - name: GATUS_WATCH_CONFIG
     value: "false"
 
-deploymentStrategy: Recreate
-annotateConfigChecksum: true
+deployment:
+  strategy: Recreate
+  annotateConfigChecksum: true
+  revisionHistoryLimit: 3
 
 persistence:
   enabled: true
@@ -57,7 +59,10 @@ config:
   maintenance:
     enabled: false
     start: "23:00"
-    duration: "1h"
+    duration: "1h"deployment:
+  strategy: RollingUpdate
+  annotateConfigChecksum: true
+  revisionHistoryLimit: 10
     timezone: "Europe/Oslo"
   storage:
     type: sqlite
