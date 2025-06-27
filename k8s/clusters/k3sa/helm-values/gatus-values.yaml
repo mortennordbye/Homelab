@@ -119,6 +119,10 @@ config:
       <<: *internal-http-defaults
       url: "https://10.0.0.4:8006/#"
 
+    - name: ILO
+      <<: *internal-http-defaults
+      url: "https://10.0.0.5"
+
     - name: AdGuard Home
       <<: *internal-http-defaults
       url: "http://10.0.0.21"
