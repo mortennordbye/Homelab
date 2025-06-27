@@ -5,7 +5,7 @@ env:
 deployment:
   strategy: Recreate
   annotateConfigChecksum: true
-  revisionHistoryLimit: 3
+  revisionHistoryLimit: 2
 
 persistence:
   enabled: true
@@ -59,10 +59,7 @@ config:
   maintenance:
     enabled: false
     start: "23:00"
-    duration: "1h"deployment:
-  strategy: RollingUpdate
-  annotateConfigChecksum: true
-  revisionHistoryLimit: 10
+    duration: "1h"
     timezone: "Europe/Oslo"
   storage:
     type: sqlite
