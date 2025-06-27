@@ -1,3 +1,10 @@
+env:
+  - name: GATUS_WATCH_CONFIG
+    value: "false"
+
+deployment:
+  annotateConfigChecksum: true
+
 persistence:
   enabled: true
   size: 1Gi
