@@ -11,7 +11,7 @@ spec:
   sources:
     - repoURL: "ghcr.io/actions/actions-runner-controller-charts"
       chart: gha-runner-scale-set-controller
-      targetRevision: "0.12.0"
+      targetRevision: "0.12.1"
       helm:
         valueFiles:
           - $values/k8s/clusters/k3sa/helm-values/arc-values.yaml
