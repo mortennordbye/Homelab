@@ -22,6 +22,7 @@ services:
       - net.ipv6.conf.default.disable_ipv6=1
       - net.ipv6.conf.all.disable_ipv6=1
       - net.ipv6.conf.lo.disable_ipv6=1
+    restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "wg show wg0 endpoints || exit 1"]
       interval: 30s
