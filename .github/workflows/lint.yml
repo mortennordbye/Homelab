@@ -1,4 +1,4 @@
-name: "🧹 Lint & Docker-Test"
+name: "🧹 Lint Codebase"
 
 on:
   push:
@@ -8,23 +8,12 @@ on:
 
 jobs:
   super-linter:
-    name: Super-Linter & Docker Test
-    runs-on: arc-runner-set  # your self-hosted runner
-
+    name: Super-Linter
+    runs-on: arc-runner-set
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # ─────────────────────────────────────────────────────────────
-      # Docker sanity-check on your runner
-      - name: Verify Docker CLI
-        run: docker version
-
-      - name: Run Docker "hello-world"
-        run: docker run --rm hello-world
-
-      # ─────────────────────────────────────────────────────────────
-      # Your existing Super-Linter
       - name: Run Super-Linter
         uses: github/super-linter@v5
         env:
