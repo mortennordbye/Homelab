@@ -9,7 +9,7 @@ on:
 jobs:
   super-linter:
     name: Super-Linter
-    runs-on: arc-runner-set
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -22,3 +22,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           FILTER_REGEX_INCLUDE: '(\.github/|.*\.sh|.*\.yaml|.*\.yml|.*\.tf|Dockerfile)'
           FILTER_REGEX_EXCLUDE: '(^vendor/|^node_modules/)'
+
