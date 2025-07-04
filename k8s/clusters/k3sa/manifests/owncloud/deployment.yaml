@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: owncloud
-          image: owncloud/server:10.15.2
+          image: owncloud/server:10.15.3
           ports:
             - containerPort: 8080
           envFrom:
