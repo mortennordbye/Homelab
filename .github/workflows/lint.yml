@@ -3,6 +3,7 @@
     on:
       push: null
       pull_request: null
+      workflow_dispatch: null
     permissions: {}
     jobs:
       build:
