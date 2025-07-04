@@ -1,22 +1,26 @@
-name: "🧹 Lint Codebase"
-
-on:
-    pull_request:
-
-jobs:
-  super-linter:
-    name: Super-Linter
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Run Super-Linter
-        uses: github/super-linter@v5
-        env:
-          VALIDATE_ALL_CODEBASE: false
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          FILTER_REGEX_INCLUDE: '(\.github/|.*\.sh|.*\.yaml|.*\.yml|.*\.tf|Dockerfile)'
-          FILTER_REGEX_EXCLUDE: '(^vendor/|^node_modules/)'
-
+---
+    name: Lint
+    on:
+      push: null
+      pull_request: null
+    permissions: {}
+    jobs:
+      build:
+        name: Lint
+        runs-on: ubuntu-latest
+    
+        permissions:
+          contents: read
+          packages: read
+          statuses: write
+    
+        steps:
+          - name: Checkout code
+            uses: actions/checkout@v4
+            with:
+              fetch-depth: 0
+    
+          - name: Super-linter
+            uses: super-linter/super-linter@v7.4.0
+            env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
