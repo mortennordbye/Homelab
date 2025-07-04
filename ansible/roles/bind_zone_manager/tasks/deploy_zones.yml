@@ -1,5 +1,5 @@
 ---
-- name: ensure zone directory exists
+- name: Ensure zone directory exists
   ansible.builtin.file:
     path: "{{ bind_zone_manager_zone_dir }}"
     state: directory
@@ -8,7 +8,7 @@
     mode: '0755'
   tags: bind_zones
 
-- name: render forward zone files
+- name: Render forward zone files
   ansible.builtin.template:
     src: forward_zone.j2
     dest: "{{ bind_zone_manager_zone_dir }}/{{ item.zone }}.zone"
@@ -19,7 +19,7 @@
   notify: restart bind9
   tags: bind_zones
 
-- name: render reverse zone files
+- name: Render reverse zone files
   ansible.builtin.template:
     src: reverse_zone.j2
     dest: "{{ bind_zone_manager_zone_dir }}/{{ item.zone }}.zone"

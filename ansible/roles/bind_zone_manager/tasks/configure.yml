@@ -1,6 +1,6 @@
 ---
 - block:
-    - name: deploy named.conf.options
+    - name: Deploy named.conf.options
       ansible.builtin.template:
         src: named.conf.options.j2
         dest: /etc/bind/named.conf.options
@@ -9,7 +9,7 @@
         mode: '0644'
       notify: restart bind9
 
-    - name: deploy named.conf.local
+    - name: Deploy named.conf.local
       ansible.builtin.template:
         src: named.conf.local.j2
         dest: /etc/bind/named.conf.local
