@@ -1,0 +1,50 @@
+{
+  "folders": [
+    { "name": "ansible",    "path": "ansible" },
+    { "name": "containers", "path": "containers" },
+    { "name": "k8s",        "path": "k8s" },
+    { "name": "github",     "path": ".github" },
+    { "name": "root",       "path": "." }
+  ],
+  "settings": {
+    "files.associations": {
+      "*.yaml": "yaml",
+      "*.yml": "yaml",
+      "*.tf": "terraform",
+      "*.tfvars": "terraform",
+      "Tiltfile": "python"
+    },
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.rulers": [120],
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": { "source.fixAll": true },
+    "[yaml]": { "editor.formatOnSave": false },
+    "[terraform]": {
+      "editor.formatOnSave": true,
+      "editor.defaultFormatter": "opentofu.vscode-opentofu"
+    },
+    "terraform.experimentalFeatures.validateOnSave": true,
+    "yaml.format.enable": true,
+    "yaml.validate": true,
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "search.exclude": {
+      "**/.git": true,
+      "**/node_modules": true,
+      "**/*.tfstate*": true
+    },
+    "extensions.ignoreRecommendations": false
+  },
+  "extensions": {
+    "recommendations": [
+      "redhat.vscode-yaml",
+      "opentofu.vscode-opentofu",
+      "esbenp.prettier-vscode",
+      "chrischinchilla.vale-vscode",
+      "elagil.pre-commit-helper",
+      "github.vscode-pull-request-github"
+    ]
+  }
+}
