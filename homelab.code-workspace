@@ -1,10 +1,25 @@
 {
   "folders": [
-    { "name": "ansible",    "path": "ansible" },
-    { "name": "containers", "path": "containers" },
-    { "name": "k8s",        "path": "k8s" },
-    { "name": "github",     "path": ".github" },
-    { "name": "root",       "path": "." }
+    {
+      "name": "ansible",
+      "path": "ansible"
+    },
+    {
+      "name": "containers",
+      "path": "containers"
+    },
+    {
+      "name": "k8s",
+      "path": "k8s"
+    },
+    {
+      "name": "github",
+      "path": ".github"
+    },
+    {
+      "name": "root",
+      "path": "."
+    }
   ],
   "settings": {
     "files.associations": {
@@ -16,10 +31,16 @@
     },
     "editor.insertSpaces": true,
     "editor.tabSize": 2,
-    "editor.rulers": [120],
+    "editor.rulers": [
+      120
+    ],
     "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": { "source.fixAll": true },
-    "[yaml]": { "editor.formatOnSave": false },
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit"
+    },
+    "[yaml]": {
+      "editor.formatOnSave": false
+    },
     "[terraform]": {
       "editor.formatOnSave": true,
       "editor.defaultFormatter": "opentofu.vscode-opentofu"
