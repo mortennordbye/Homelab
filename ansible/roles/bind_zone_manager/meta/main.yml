@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: bind-zone-manager
+  role_name: bind_zone_manager
   author: Morten Victor Nordbye
   description: "Manage BIND forward and reverse DNS zones with customizable A and CNAME records."
   license: Apache-2.0
