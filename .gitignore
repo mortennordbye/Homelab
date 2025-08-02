@@ -1,63 +1,35 @@
-# -----------------------------------------------------------------------------
-# Environment / secret files
-# -----------------------------------------------------------------------------
-# Docker-compose .env files
+# Secrets & env files
 .env
 **/*.env
-
-# any other secret/credentials files
 *.key
 *.pem
 
-# -----------------------------------------------------------------------------
-# OS / editor / IDE cruft
-# -----------------------------------------------------------------------------
-# macOS
+# OS/editor files
 .DS_Store
-
-# Windows
 Thumbs.db
-
-# Vim swap/temp
 .*.swp
 *~
-
-# VS Code / JetBrains
 .vscode/
 .idea/
 
-# -----------------------------------------------------------------------------
-# Logs & runtime data
-# -----------------------------------------------------------------------------
-# logs
+# Logs
 logs/
 *.log
-
-# Compose project local override
 docker-compose.override.yml
 
-# -----------------------------------------------------------------------------
 # Terraform & Ansible
-# -----------------------------------------------------------------------------
-# Terraform state & plans
 *.tfstate
 *.tfstate.*
 *.tfplan
-
-# Ansible vault passwords (if you happen to store them here)
 vault_password.txt
+.ansible
 
-# -----------------------------------------------------------------------------
-# Build artifacts & caches
-# -----------------------------------------------------------------------------
-# Node.js
+# Build & cache
 node_modules/
-
-# Python
 __pycache__/
 *.py[cod]
 
-# Archive files
+# Archives
 *.zip
 *.tar.gz
 *.tgz
