@@ -20,7 +20,7 @@ spec:
         fsGroup: 1000
       containers:
         - name: audiobookshelf
-          image: ghcr.io/advplyr/audiobookshelf:2.26.1
+          image: ghcr.io/advplyr/audiobookshelf:2.26.3
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
