@@ -1,5 +1,6 @@
 ---
-- block:
+- tags: bind_install
+  block:
     - name: Install BIND9 packages
       ansible.builtin.package:
         name: "{{ bind_zone_manager_packages }}"
@@ -10,4 +11,3 @@
         name: bind9
         enabled: true
         state: started
-  tags: bind_install

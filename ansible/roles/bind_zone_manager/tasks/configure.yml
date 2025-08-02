@@ -1,5 +1,6 @@
 ---
-- block:
+- tags: bind_config
+  block:
     - name: Deploy named.conf.options
       ansible.builtin.template:
         src: named.conf.options.j2
@@ -17,4 +18,3 @@
         group: bind
         mode: '0644'
       notify: restart bind9
-  tags: bind_config
