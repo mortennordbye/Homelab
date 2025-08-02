@@ -16,6 +16,9 @@
     line: "10.0.0.2:/volume1/shared-data /mnt/nfs nfs _netdev,auto,vers=3,proto=tcp,hard,intr,rsize=131072,wsize=131072,noatime,nodiratime,actimeo=60 0 0"
     state: present
     create: yes
+    owner: root
+    group: root
+    mode: '0644'
     validate: '/bin/mount -a -f -t nfs -T %s'
 
 - name: Mount all filesystems from fstab
