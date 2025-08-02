@@ -5,10 +5,10 @@
   "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
   "labels": ["dependencies"],
   "kubernetes": {
-    "managerFilePatterns": ["^k8s/.*\\.ya?ml$"]
+    "fileMatch": ["^k8s/.*\\.ya?ml$"]
   },
   "helm-values": {
-    "managerFilePatterns": [
+    "fileMatch": [
       "(^|/)values\\.ya?ml$",
       "^k8s/clusters/k3sa/helm-values/.+-values\\.ya?ml$"
     ],
@@ -16,7 +16,7 @@
     "pinDigests": false
   },
   "argocd": {
-    "managerFilePatterns": ["^k8s/argo/applications/.+\\.ya?ml$"]
+    "fileMatch": ["^k8s/argo/applications/.+\\.ya?ml$"]
   },
   "packageRules": [
     {
