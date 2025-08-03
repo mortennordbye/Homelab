@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: it-tools
+  namespace: it-tools
+  labels:
+    app: it-tools
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: it-tools
+  template:
+    metadata:
+      labels:
+        app: it-tools
+    spec:
+      containers:
+        - name: it-tools
+          image: ghcr.io/corentinth/it-tools:2024.10.22-7ca5933
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          resources: {}
