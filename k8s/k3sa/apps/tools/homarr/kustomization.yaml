@@ -4,6 +4,8 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - homarr-db-ext-secret.yaml
+  
+namespace: homarr
 
 helmCharts:
   - name: homarr
