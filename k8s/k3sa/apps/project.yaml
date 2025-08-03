@@ -34,7 +34,7 @@ spec:
     - kind: allow
       schedule: '* * * * *'
       duration: 24h
-      apps:
+      applications:
         - '*'
       manualSync: true
   orphanedResources:
