@@ -1,0 +1,8 @@
+DISABLE_ERRORS: true
+
+ENABLE_LINTERS:
+  - markdown
+  - yaml
+  - json
+  - ansible
+  - dockerfile
