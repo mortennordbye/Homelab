@@ -76,4 +76,5 @@ reposerver:
       scrapeTimeout: 10s
 
 configs:
-  repositories:
+  cm:
+    kustomize.buildOptions: '--enable-helm'
