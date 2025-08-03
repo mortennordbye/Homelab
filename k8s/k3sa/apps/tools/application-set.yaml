@@ -35,7 +35,6 @@ spec:
             factor: 2
             maxDuration: 3m
         syncOptions:
-          - CreateNamespace=true
           - ApplyOutOfSyncOnly=true
           - PruneLast=true
           - ServerSideApply=true
