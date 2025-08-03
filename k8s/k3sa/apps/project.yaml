@@ -1,41 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: apps
+  name: applications
   namespace: argo-cd
-  labels:
-    app.kubernetes.io/part-of: apps
-    app.kubernetes.io/managed-by: argo-d
-  annotations:
-    argocd.argoproj.io/sync-wave: "0"
 spec:
-  description: apps components managed through GitOps (all resources allowed)
   sourceRepos:
-    - '*'
+    - 'https://github.com/mortennordbye/Homelab.git'
   destinations:
-    - server: '*'
-      namespace: '*'
+    - namespace: 'argo-cd'
+      server: '*'
   clusterResourceWhitelist:
-    - group: "*"
-      kind: "*"
-  namespaceResourceWhitelist:
-    - group: "*"
-      kind: "*"
-  roles:
-    - name: admin
-      description: Full permissions
-      policies:
-        - p, proj:apps:admin, apps, *, *, allow
-    - name: readonly
-      description: Read-only access
-      policies:
-        - p, proj:apps:readonly, apps, get, *, allow
-  syncWindows:
-    - kind: allow
-      schedule: '* * * * *'
-      duration: 24h
-      applications:
-        - '*'
-      manualSync: true
-  orphanedResources:
-    warn: true
+    - group: '*'
+      kind: '*'

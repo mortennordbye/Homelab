@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: applications
+  name: tools
   namespace: argo-cd
 spec:
   generators:
@@ -9,14 +9,14 @@ spec:
         repoURL: https://github.com/mortennordbye/Homelab.git
         revision: HEAD
         directories:
-          - path: k8s/k3sa/apps/*
+          - path: k8s/k3sa/apps/tools/*
   template:
     metadata:
       name: '{{ path.basename }}'
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
-      project: applications
+      project: tools
       source:
         repoURL: https://github.com/mortennordbye/Homelab.git
         targetRevision: HEAD

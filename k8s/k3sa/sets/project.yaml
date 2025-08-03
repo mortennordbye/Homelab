@@ -1,17 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: tools
+  name: app-of-apps
   namespace: argo-cd
 spec:
   sourceRepos:
     - 'https://github.com/mortennordbye/Homelab.git'
   destinations:
     - namespace: 'argo-cd'
-      server: '*'
-    - namespace: 'it-tools'
-      server: '*'
-    - namespace: 'omni-tools'
       server: '*'
   clusterResourceWhitelist:
     - group: '*'

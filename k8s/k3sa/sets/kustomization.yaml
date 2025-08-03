@@ -4,4 +4,4 @@ namespace: argo-cd
 
 resources:
   - project.yaml
-  - application-set.yaml
+  - applications.yaml
