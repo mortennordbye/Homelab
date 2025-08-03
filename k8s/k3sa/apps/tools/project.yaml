@@ -13,6 +13,8 @@ spec:
       server: '*'
     - namespace: 'omni-tools'
       server: '*'
+    - namespace: 'homarr'
+      server: '*'
   clusterResourceWhitelist:
     - group: '*'
       kind: '*'
