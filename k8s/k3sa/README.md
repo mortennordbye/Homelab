@@ -1,0 +1,1 @@
+kubectl apply -k sets

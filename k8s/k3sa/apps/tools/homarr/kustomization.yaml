@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace.yaml
+  - homarr-db-ext-secret.yaml
+
+helmCharts:
+  - name: homarr
+    repo: https://homarr-labs.github.io/charts/
+    includeCRDs: true
+    namespace: homarr
+    version: 5.2.2
+    releaseName: homarr
+    valuesFile: ./values.yaml
