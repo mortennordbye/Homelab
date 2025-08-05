@@ -11,6 +11,8 @@ spec:
       server: '*'
     - namespace: 'audiobookshelf'
       server: '*'
+    - namespace: 'owncloud'
+      server: '*'
   clusterResourceWhitelist:
     - group: '*'
       kind: '*'
