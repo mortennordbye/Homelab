@@ -9,7 +9,7 @@ spec:
         repoURL: https://github.com/mortennordbye/Homelab.git
         revision: HEAD
         directories:
-          - path: k8s/k3sa/apps/media/*
+          - path: k8s/k3sa/apps/*
   template:
     metadata:
       name: '{{ path.basename }}'
