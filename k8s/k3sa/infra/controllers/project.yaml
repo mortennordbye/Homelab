@@ -17,6 +17,17 @@ spec:
       server: '*'
     - namespace: 'cert-manager'
       server: '*'
+    - namespace: 'external-secrets'
+      server: '*'
+    - namespace: 'arc-systems'
+      server: '*'
+    - namespace: 'arc-runners'
+      server: '*'
+    - namespace: 'syno-nfs-prov'
+      server: '*'
+    - namespace: 'system-upgrade'
+      server: '*'
   clusterResourceWhitelist:
     - group: '*'
       kind: '*'
+      
