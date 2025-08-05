@@ -13,6 +13,8 @@ spec:
       server: '*'
     - namespace: 'reflector'
       server: '*'
+    - namespace: 'semaphore'
+      server: '*'
   clusterResourceWhitelist:
     - group: '*'
       kind: '*'
