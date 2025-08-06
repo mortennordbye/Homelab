@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace.yaml
+  
+namespace: syno-nfs-prov
+
+helmCharts:
+  - name: syno-nfs-prov
+    repo: https://twin.github.io/helm-charts
+    includeCRDs: true
+    namespace: syno-nfs-prov
+    version: 4.0.18
+    releaseName: nfs-subdir-external-provisioner
+    valuesFile: ./values.yaml

@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: storage
+  namespace: argo-cd
+spec:
+  sourceRepos:
+    - 'https://github.com/mortennordbye/Homelab.git'
+  destinations:
+    - namespace: 'argo-cd'
+      server: '*'
+    - namespace: 'syno-nfs-prov'
+      server: '*'
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
