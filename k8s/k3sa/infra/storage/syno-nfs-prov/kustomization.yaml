@@ -7,10 +7,10 @@ resources:
 namespace: syno-nfs-prov
 
 helmCharts:
-  - name: syno-nfs-prov
+  - name: nfs-subdir-external-provisioner
     repo: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/
     includeCRDs: true
     namespace: syno-nfs-prov
     version: 4.0.18
-    releaseName: nfs-subdir-external-provisioner
+    releaseName: syno-nfs-prov
     valuesFile: ./values.yaml
