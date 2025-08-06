@@ -8,7 +8,7 @@ namespace: syno-nfs-prov
 
 helmCharts:
   - name: syno-nfs-prov
-    repo: https://twin.github.io/helm-charts
+    repo: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/
     includeCRDs: true
     namespace: syno-nfs-prov
     version: 4.0.18
