@@ -9,6 +9,9 @@ spec:
   destinations:
     - namespace: 'argo-cd'
       server: '*'
+    - namespace: 'metallb-system'
+      server: '*'
   clusterResourceWhitelist:
     - group: '*'
       kind: '*'
+      
