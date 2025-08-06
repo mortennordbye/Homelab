@@ -11,7 +11,8 @@ spec:
       server: '*'
     - namespace: 'metallb-system'
       server: '*'
+    - namespace: 'traefik'
+      server: '*'
   clusterResourceWhitelist:
     - group: '*'
       kind: '*'
-      

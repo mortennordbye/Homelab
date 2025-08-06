@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: traefik
+
+resources:
+  - namespace.yaml
+  - dashboard/ingress.yaml
+  - dashboard/middleware.yaml
+  - dashboard/secret-dashboard.yaml
+  - middleware/default-headers.yaml
+  - ingresses/https/external/overseerr.bigd.no.yaml
+  - ingresses/https/internal/coder.local.bigd.no.yaml
+  - ingresses/https/internal/hyper1.local.bigd.no.yaml
+  - ingresses/https/internal/spotify.local.bigd.no.yaml
+
+helmCharts:
+  - name: traefik
+    repo: https://traefik.github.io/charts
+    includeCRDs: true
+    namespace: traefik
+    version: 37.0.0
+    releaseName: traefik
+    valuesFile: ./values.yaml
