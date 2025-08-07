@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: portfolio-prod
-  namespace: prod-portfolio
+  name: portfolio
+  namespace: portfolio
   labels:
-    app: prod-portfolio
+    app: portfolio
 spec:
   replicas: 2
   revisionHistoryLimit: 3
   selector:
     matchLabels:
-      app: prod-portfolio
+      app: portfolio
   template:
     metadata:
       labels:
-        app: prod-portfolio
+        app: portfolio
     spec:
       containers:
         - name: portfolio

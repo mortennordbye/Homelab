@@ -9,7 +9,7 @@ spec:
   destinations:
     - namespace: 'argo-cd'
       server: '*'
-    - namespace: 'prod-portfolio'
+    - namespace: 'portfolio'
       server: '*'
     - namespace: 'stage-portfolio'
       server: '*'
