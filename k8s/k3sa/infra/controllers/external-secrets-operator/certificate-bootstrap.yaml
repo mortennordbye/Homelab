@@ -1,13 +1,18 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: bitwarden-tls-certs
+  name: bitwarden-bootstrap-certificate
   namespace: external-secrets
 spec:
+  commonName: cert-manager-bitwarden-tls  # Required by iOS
+  isCA: true
   secretName: bitwarden-tls-certs
+  subject:
+    organizations:
+      - external-secrets.io
   dnsNames:
-    - bitwarden-sdk-server.external-secrets.svc.cluster.local
     - external-secrets-bitwarden-sdk-server.external-secrets.svc.cluster.local
+    - bitwarden-sdk-server.external-secrets.svc.cluster.local
     - localhost
   ipAddresses:
     - 127.0.0.1
@@ -17,6 +22,6 @@ spec:
     encoding: PKCS8
     size: 2048
   issuerRef:
-    name: bitwarden-certificate-issuer
+    name: bitwarden-bootstrap-issuer
     kind: ClusterIssuer
     group: cert-manager.io
