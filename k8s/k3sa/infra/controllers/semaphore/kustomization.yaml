@@ -13,6 +13,6 @@ helmCharts:
     repo: https://semaphoreui.github.io/charts/
     includeCRDs: true
     namespace: semaphore
-    version: 16.0.0
+    version: 16.0.2
     releaseName: semaphore
     valuesFile: ./values.yaml
