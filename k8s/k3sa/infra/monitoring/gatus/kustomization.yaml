@@ -13,6 +13,6 @@ helmCharts:
     repo: https://twin.github.io/helm-charts
     includeCRDs: true
     namespace: monitoring
-    version: 1.3.0
+    version: 1.3.1
     releaseName: gatus
     valuesFile: ./values.yaml
