@@ -6,10 +6,17 @@ metadata:
 spec:
   secretName: bitwarden-tls-certs
   dnsNames:
-    - bitwarden-sdk-server
-    - bitwarden-sdk-server.external-secrets
-    - bitwarden-sdk-server.external-secrets.svc
     - bitwarden-sdk-server.external-secrets.svc.cluster.local
+    - external-secrets-bitwarden-sdk-server.external-secrets.svc.cluster.local
+    - localhost
+  ipAddresses:
+    - 127.0.0.1
+    - ::1
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS8
+    size: 2048
   issuerRef:
-    kind: ClusterIssuer
     name: bitwarden-certificate-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io
