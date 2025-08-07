@@ -1,0 +1,4 @@
+kind: ConfigMap
+metadata:
+  name: default-controller-env
+  namespace: system-upgrade
