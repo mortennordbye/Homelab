@@ -17,7 +17,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: bitwarden-bootstrap-certificate
-  namespace: cert-manager
+  namespace: external-secrets
 spec:
   # this is discouraged but required by ios
   commonName: cert-manager-bitwarden-tls
