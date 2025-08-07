@@ -1,44 +1,32 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
-  "enabledManagers": ["kubernetes", "helm-values", "argocd", "github-actions"],
-  "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
-  "labels": ["dependencies"],
-  "kubernetes": {
-    "fileMatch": ["^k8s/.*\\.ya?ml$"]
+  "extends": [
+    "config:recommended",
+    ":rebaseStalePrs"
+  ],
+  "kustomize": {
+    "managerFilePatterns": [
+      "/(^|/)kustomization\\.ya?ml(\\.j2)?$/"
+    ]
   },
-  "helm-values": {
-    "fileMatch": [
-      "(^|/)values\\.ya?ml$",
-      "^k8s/clusters/k3sa/helm-values/.+-values\\.ya?ml$"
-    ],
-    "commitMessageTopic": "helm values {{depName}}",
-    "pinDigests": false
-  },
-  "argocd": {
-    "fileMatch": ["^k8s/argo/applications/.+\\.ya?ml$"]
-  },
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/\\.yaml$/",
+      ],
+      "matchStrings": [
+        "(?<currentValue>[\\w+\\.\\-]*)['\",;]*\\s*#\\s?renovate: (?<datasource>\\S+)=(?<depName>\\S+)\\s?(registry=(?<registryUrl>\\S+))?\\s?(versioning=(?<versioning>\\S+))?"
+      ]
+    }
+  ],
   "packageRules": [
     {
-      "matchManagers": ["kubernetes"],
-      "groupName": "K8s image updates",
-      "schedule": ["at any time"]
-    },
-    {
-      "matchManagers": ["helm-values"],
-      "groupName": "Helm values image updates",
-      "schedule": ["at any time"]
-    },
-    {
-      "matchManagers": ["argocd"],
-      "groupName": "ArgoCD chart updates",
-      "schedule": ["at any time"]
-    },
-    {
-      "matchManagers": ["github-actions"],
+      "matchManagers": [
+        "github-actions"
+      ],
       "groupName": "GitHub Actions",
-      "groupSlug": "github-actions",
-      "schedule": ["at any time"]
+      "groupSlug": "github-actions"
     }
   ]
 }
