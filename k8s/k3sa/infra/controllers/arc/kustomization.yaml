@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace.yaml
+  - arc-github-ext-secret.yaml
+  - sa-cluster-admin.yaml
+
+namespace: arc-systems
+
+helmCharts:
+  - name: gha-runner-scale-set-controller
+    repo: ghcr.io/actions/actions-runner-controller-charts
+    includeCRDs: true
+    namespace: arc-systems
+    version: 0.12.1
+    releaseName: arc
+    valuesFile: ./values.yaml

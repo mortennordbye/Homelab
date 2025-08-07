@@ -27,6 +27,8 @@ spec:
       server: '*'
     - namespace: 'system-upgrade'
       server: '*'
+    - namespace: 'kube-system'
+      server: '*'
   clusterResourceWhitelist:
     - group: '*'
       kind: '*'
