@@ -42,7 +42,7 @@ services:
       - "${LAN_IP}:${CLEANUPARR_PORT}:${CLEANUPARR_PORT}"
 
   qbittorrent:
-    image: linuxserver/qbittorrent:5.1.0
+    image: linuxserver/qbittorrent:20.04.1
     container_name: qbittorrent
     env_file:
       - .env
