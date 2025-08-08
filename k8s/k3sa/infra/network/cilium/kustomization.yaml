@@ -4,7 +4,7 @@ kind: Kustomization
 helmCharts:
   - name: cilium
     repo: https://helm.cilium.io
-    version: 1.16.1 # renovate: github-releases=cilium/cilium
+    version: 1.18.0 # renovate: github-releases=cilium/cilium
     releaseName: "cilium"
     includeCRDs: true
     namespace: kube-system
