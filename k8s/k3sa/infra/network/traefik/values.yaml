@@ -13,6 +13,8 @@ deployment:
 logs:
   general:
     level: INFO
+  access:
+    enabled: true
 
 ports:
   web:
