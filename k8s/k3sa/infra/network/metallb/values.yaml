@@ -1,2 +1,4 @@
+crds:
+  enabled: true
 speaker:
   enabled: true

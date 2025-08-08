@@ -10,7 +10,7 @@ namespace: metallb-system
 helmCharts:
   - name: metallb
     repo: https://metallb.github.io/metallb
-    includeCRDs: true
+    includeCRDs: false
     namespace: metallb-system
     version: 0.15.2
     releaseName: metallb
