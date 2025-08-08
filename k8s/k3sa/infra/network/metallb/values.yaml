@@ -1,4 +1,4 @@
 crds:
-  enabled: true
+  enabled: false
 speaker:
   enabled: true
