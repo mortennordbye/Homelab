@@ -10,7 +10,7 @@ namespace: argo-cd
 helmCharts:
   - name: argo-cd
     repo: https://argoproj.github.io/argo-helm
-    includeCRDs: true
+    includeCRDs: false
     namespace: argo-cd
     version: 8.2.5
     releaseName: argo-cd

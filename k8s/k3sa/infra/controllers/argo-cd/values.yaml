@@ -1,3 +1,5 @@
+crds:
+  install: false
 server:
   service:
     type: LoadBalancer
