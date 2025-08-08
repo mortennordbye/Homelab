@@ -13,6 +13,8 @@ spec:
       server: '*'
     - namespace: 'traefik'
       server: '*'
+    - namespace: 'kube-system'
+      server: '*'
   clusterResourceWhitelist:
     - group: '*'
       kind: '*'
