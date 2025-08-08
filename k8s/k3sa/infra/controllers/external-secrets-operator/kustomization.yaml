@@ -12,7 +12,7 @@ namespace: external-secrets
 helmCharts:
   - name: external-secrets
     repo: https://charts.external-secrets.io/
-    includeCRDs: true
+    includeCRDs: false
     namespace: external-secrets
     version: 0.19.0
     releaseName: external-secrets-operator
