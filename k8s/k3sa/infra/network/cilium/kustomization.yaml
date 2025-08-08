@@ -9,6 +9,6 @@ helmCharts:
     repo: https://helm.cilium.io
     version: 1.18.0
     releaseName: "cilium"
-    includeCRDs: true
+    includeCRDs: false
     namespace: kube-system
     valuesFile: ./values.yaml
