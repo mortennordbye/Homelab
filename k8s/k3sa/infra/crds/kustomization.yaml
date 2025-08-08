@@ -2,7 +2,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- https://github.com/cert-manager/cert-manager/releases/download/v1.18.2/cert-manager.crds.yaml # renovate: https://charts.jetstack.io
-- https://raw.githubusercontent.com/external-secrets/external-secrets/v0.17.0/deploy/crds/bundle.yaml # renovate: https://charts.external-secrets.io
+- https://github.com/cert-manager/cert-manager/releases/download/v1.18.2/cert-manager.crds.yaml # renovate: github-releases=cert-manager/cert-manager
+- https://raw.githubusercontent.com/external-secrets/external-secrets/v0.17.0/deploy/crds/bundle.yaml # renovate: github-releases=external-secrets/external-secrets
 - https://github.com/rancher/system-upgrade-controller/releases/download/v0.16.0/crd.yaml # renovate: github-releases=rancher/system-upgrade-controller
 - https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.84.1/stripped-down-crds.yaml # renovate: github-releases=prometheus-operator/prometheus-operator
+- https://raw.githubusercontent.com/argoproj/argo-cd/v3.0.12/manifests/crds/application-crd.yaml # renovate: github-releases=argoproj/argo-cd
+- https://raw.githubusercontent.com/argoproj/argo-cd/v3.0.12/manifests/crds/applicationset-crd.yaml # renovate: github-releases=argoproj/argo-cd
+- https://raw.githubusercontent.com/argoproj/argo-cd/v3.0.12/manifests/crds/appproject-crd.yaml # renovate: github-releases=argoproj/argo-cd
