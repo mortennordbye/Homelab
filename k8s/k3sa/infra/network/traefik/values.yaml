@@ -14,7 +14,7 @@ logs:
   general:
     level: INFO
   access:
-    enabled: true
+    enabled: false
 
 ports:
   web:
