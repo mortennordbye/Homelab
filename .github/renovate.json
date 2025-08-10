@@ -27,6 +27,12 @@
       ],
       "groupName": "GitHub Actions",
       "groupSlug": "github-actions"
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["linuxserver/qbittorrent"],
+      "matchPaths": ["containers/compose/nodes/servarr/arr-stack/docker-compose.yaml"],
+      "enabled": false
     }
   ]
 }
