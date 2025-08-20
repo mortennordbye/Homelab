@@ -16,11 +16,6 @@ spec:
       labels:
         app: stage-portfolio
     spec:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
       containers:
         - name: portfolio
           image: ghcr.io/mortennordbye/portfolio:stage
@@ -28,9 +23,4 @@ spec:
           ports:
             - containerPort: 80
           resources: {}
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - ALL
-            readOnlyRootFilesystem: true
+
