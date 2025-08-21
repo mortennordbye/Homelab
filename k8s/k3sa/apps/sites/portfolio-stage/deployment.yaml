@@ -3,8 +3,6 @@ kind: Deployment
 metadata:
   name: portfolio-stage
   namespace: stage-portfolio
-  labels:
-    app: stage-portfolio
 spec:
   replicas: 1
   revisionHistoryLimit: 3
@@ -18,15 +16,11 @@ spec:
     spec:
       terminationGracePeriodSeconds: 15
       automountServiceAccountToken: false
-      hostNetwork: false
-      hostPID: false
-      hostIPC: false
       enableServiceLinks: false
       securityContext:
-        seccompProfile:
-          type: RuntimeDefault
+        seccompProfile: { type: RuntimeDefault }
         runAsNonRoot: true
-        runAsUser: 101     # nginx user in official nginx:alpine
+        runAsUser: 101
         runAsGroup: 101
       containers:
         - name: portfolio
@@ -42,24 +36,19 @@ spec:
             runAsNonRoot: true
             runAsUser: 101
             runAsGroup: 101
-            capabilities:
-              drop: ["ALL"]
-            seccompProfile:
-              type: RuntimeDefault
+            capabilities: { drop: ["ALL"] }
+            seccompProfile: { type: RuntimeDefault }
+          volumeMounts:
+            - name: nginx-cache
+              mountPath: /var/cache/nginx
           resources:
-            requests:
-              cpu: 50m
-              memory: 64Mi
-            limits:
-              cpu: 200m
-              memory: 256Mi
+            requests: { cpu: 50m, memory: 64Mi }
+            limits:   { cpu: 200m, memory: 256Mi }
           livenessProbe:
             httpGet:
               path: /healthz
               port: http
-              httpHeaders:
-                - name: Host
-                  value: stage.nordbye.it
+              httpHeaders: [{ name: Host, value: stage.nordbye.it }]
             initialDelaySeconds: 10
             periodSeconds: 15
             failureThreshold: 3
@@ -67,9 +56,11 @@ spec:
             httpGet:
               path: /healthz
               port: http
-              httpHeaders:
-                - name: Host
-                  value: stage.nordbye.it
+              httpHeaders: [{ name: Host, value: stage.nordbye.it }]
             initialDelaySeconds: 5
             periodSeconds: 15
             failureThreshold: 3
+      volumes:
+        - name: nginx-cache
+          emptyDir:
+            medium: Memory
