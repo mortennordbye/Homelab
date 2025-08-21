@@ -36,7 +36,8 @@ spec:
           image: ghcr.io/mortennordbye/portfolio:stage
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - name: http
+              containerPort: 8080
           securityContext:
             readOnlyRootFilesystem: true # Protect root FS from writes.
             allowPrivilegeEscalation: false # Block privilege escalation.
