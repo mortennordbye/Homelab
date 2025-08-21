@@ -15,8 +15,14 @@ spec:
     metadata:
       labels:
         app: stage-portfolio
+      annotations:
+        container.apparmor.security.beta.kubernetes.io/portfolio: runtime/default
     spec:
       automountServiceAccountToken: false
+      hostNetwork: false
+      hostPID: false
+      hostIPC: false
+      enableServiceLinks: false
       securityContext:
         seccompProfile:
           type: RuntimeDefault
@@ -43,6 +49,8 @@ spec:
                 - ALL
               add:
                 - NET_BIND_SERVICE
+            seccompProfile:
+              type: RuntimeDefault
           volumeMounts:
             - name: nginx-cache
               mountPath: /var/cache/nginx
@@ -50,7 +58,13 @@ spec:
               mountPath: /var/run
             - name: tmp
               mountPath: /tmp
-          resources: {}
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
           livenessProbe:
             httpGet:
               path: /
