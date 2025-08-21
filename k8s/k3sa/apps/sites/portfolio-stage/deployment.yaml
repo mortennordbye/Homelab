@@ -15,22 +15,19 @@ spec:
     metadata:
       labels:
         app: stage-portfolio
-      annotations:
-        container.apparmor.security.beta.kubernetes.io/portfolio: runtime/default # Constrain syscalls with AppArmor
     spec:
-      automountServiceAccountToken: false # Disable auto-mount of service account token
-      hostNetwork: false # Disallow host network
-      hostPID: false # Disallow sharing host PID namespace
-      hostIPC: false # Disallow sharing host IPC namespace
-      enableServiceLinks: false # Prevent auto-injected service env vars
+      terminationGracePeriodSeconds: 15
+      automountServiceAccountToken: false
+      hostNetwork: false
+      hostPID: false
+      hostIPC: false
+      enableServiceLinks: false
       securityContext:
         seccompProfile:
-          type: RuntimeDefault # Use default seccomp profile.
-        runAsNonRoot: true # Ensure pod does not run as root.
-        runAsUser: 1000 # Run as non-root user/group ID.
-        runAsGroup: 1000 # Run as non-root user/group ID.
-        fsGroup: 1000 # Group ID for mounted volumes.
-        fsGroupChangePolicy: "OnRootMismatch" # Apply fsGroup only if root-owned.
+          type: RuntimeDefault
+        runAsNonRoot: true
+        runAsUser: 101     # nginx user in official nginx:alpine
+        runAsGroup: 101
       containers:
         - name: portfolio
           image: ghcr.io/mortennordbye/portfolio:stage
@@ -39,24 +36,16 @@ spec:
             - name: http
               containerPort: 8080
           securityContext:
-            readOnlyRootFilesystem: true # Protect root FS from writes.
-            allowPrivilegeEscalation: false # Block privilege escalation.
-            privileged: false # Prevent privileged mode.
-            runAsNonRoot: true # Enforce non-root execution.
-            runAsUser: 1000
-            runAsGroup: 1000
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            privileged: false
+            runAsNonRoot: true
+            runAsUser: 101
+            runAsGroup: 101
             capabilities:
-              drop:
-                - ALL # Drop all Linux capabilities.
+              drop: ["ALL"]
             seccompProfile:
-              type: RuntimeDefault # Enforce seccomp at container level.
-          volumeMounts:
-            - name: nginx-cache
-              mountPath: /var/cache/nginx
-            - name: nginx-run
-              mountPath: /var/run
-            - name: tmp
-              mountPath: /tmp
+              type: RuntimeDefault
           resources:
             requests:
               cpu: 50m
@@ -84,10 +73,3 @@ spec:
             initialDelaySeconds: 5
             periodSeconds: 15
             failureThreshold: 3
-      volumes:
-        - name: nginx-cache
-          emptyDir: {}
-        - name: nginx-run
-          emptyDir: {}
-        - name: tmp
-          emptyDir: {}
