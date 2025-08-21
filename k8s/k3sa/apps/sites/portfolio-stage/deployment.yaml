@@ -68,6 +68,9 @@ spec:
             httpGet:
               path: /healthz
               port: http
+              httpHeaders:
+                - name: Host
+                  value: stage.nordbye.it
             initialDelaySeconds: 10
             periodSeconds: 15
             failureThreshold: 3
@@ -75,6 +78,9 @@ spec:
             httpGet:
               path: /healthz
               port: http
+              httpHeaders:
+                - name: Host
+                  value: stage.nordbye.it
             initialDelaySeconds: 5
             periodSeconds: 15
             failureThreshold: 3
