@@ -16,6 +16,6 @@ spec:
           namespace: traefik
       services:
         - name: nordbye-service-stage
-          port: 80
+          port: 8080
   tls:
     secretName: nordbye-it-tls
