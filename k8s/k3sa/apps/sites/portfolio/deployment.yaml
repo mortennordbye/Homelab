@@ -3,10 +3,8 @@ kind: Deployment
 metadata:
   name: portfolio
   namespace: portfolio
-  labels:
-    app: portfolio
 spec:
-  replicas: 2
+  replicas: 1
   revisionHistoryLimit: 3
   selector:
     matchLabels:
@@ -16,10 +14,53 @@ spec:
       labels:
         app: portfolio
     spec:
+      terminationGracePeriodSeconds: 15
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      securityContext:
+        seccompProfile: { type: RuntimeDefault }
+        runAsNonRoot: true
+        runAsUser: 101
+        runAsGroup: 101
       containers:
         - name: portfolio
           image: ghcr.io/mortennordbye/portfolio:prod
           imagePullPolicy: Always
           ports:
-            - containerPort: 80
-          resources: {}
+            - name: http
+              containerPort: 8080
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            privileged: false
+            runAsNonRoot: true
+            runAsUser: 101
+            runAsGroup: 101
+            capabilities: { drop: ["ALL"] }
+            seccompProfile: { type: RuntimeDefault }
+          volumeMounts:
+            - name: nginx-cache
+              mountPath: /var/cache/nginx
+          resources:
+            requests: { cpu: 50m, memory: 64Mi }
+            limits:   { cpu: 200m, memory: 256Mi }
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+              httpHeaders: [{ name: Host, value: nordbye.it }]
+            initialDelaySeconds: 10
+            periodSeconds: 15
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+              httpHeaders: [{ name: Host, value: nordbye.it }]
+            initialDelaySeconds: 5
+            periodSeconds: 15
+            failureThreshold: 3
+      volumes:
+        - name: nginx-cache
+          emptyDir:
+            medium: Memory
