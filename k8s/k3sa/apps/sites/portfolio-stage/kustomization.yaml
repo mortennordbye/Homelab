@@ -4,5 +4,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - deployment.yaml
-  - ingressroute.yaml
   - service.yaml
+  - ingressroute.yaml
+  - middleware.yaml
+  - ciliumnetworkpolicy.yaml
