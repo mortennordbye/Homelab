@@ -1,0 +1,39 @@
+driver:
+  enabled: true
+  kind: ebpf
+
+# The collector is the component that captures system calls.
+# For k3s, we need to point it to the k3s containerd socket.
+collector:
+  enabled: true
+  socket: /run/k3s/containerd/containerd.sock
+
+# Enable TTY for better log output from Falco pods.
+tty: true
+
+# Falcosidekick is a companion that can forward Falco events to various outputs.
+falcosidekick:
+  enabled: true
+  webui:
+    enabled: false # Set to true to deploy the Falcosidekick UI
+  config:
+    # Add custom fields to events, useful for filtering in downstream systems.
+    customfields: "cluster:homelab"
+    # No outputs configured by default, events will be logged.
+    # You can add outputs for Slack, Loki, Grafana, etc. here.
+
+# Enable Prometheus metrics endpoint.
+metrics:
+  enabled: true
+
+# Required for Falcosidekick to communicate with Falco.
+services:
+  falcounixsocket:
+    enabled: true
+
+# Create a ServiceMonitor for Prometheus to scrape metrics.
+serviceMonitor:
+  enabled: true
+  namespace: monitoring
+  additionalLabels:
+    Release: kube-prometheus-stack

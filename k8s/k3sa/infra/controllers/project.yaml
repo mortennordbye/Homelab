@@ -5,31 +5,32 @@ metadata:
   namespace: argo-cd
 spec:
   sourceRepos:
-    - 'https://github.com/mortennordbye/Homelab.git'
+    - "https://github.com/mortennordbye/Homelab.git"
   destinations:
-    - namespace: 'argo-cd'
-      server: '*'
-    - namespace: 'monitoring'
-      server: '*'
-    - namespace: 'reflector'
-      server: '*'
-    - namespace: 'semaphore'
-      server: '*'
-    - namespace: 'cert-manager'
-      server: '*'
-    - namespace: 'external-secrets'
-      server: '*'
-    - namespace: 'arc-systems'
-      server: '*'
-    - namespace: 'arc-runners'
-      server: '*'
-    - namespace: 'syno-nfs-prov'
-      server: '*'
-    - namespace: 'system-upgrade'
-      server: '*'
-    - namespace: 'kube-system'
-      server: '*'
+    - namespace: "argo-cd"
+      server: "*"
+    - namespace: "monitoring"
+      server: "*"
+    - namespace: "reflector"
+      server: "*"
+    - namespace: "semaphore"
+      server: "*"
+    - namespace: "cert-manager"
+      server: "*"
+    - namespace: "falco"
+      server: "*"
+    - namespace: "external-secrets"
+      server: "*"
+    - namespace: "arc-systems"
+      server: "*"
+    - namespace: "arc-runners"
+      server: "*"
+    - namespace: "syno-nfs-prov"
+      server: "*"
+    - namespace: "system-upgrade"
+      server: "*"
+    - namespace: "kube-system"
+      server: "*"
   clusterResourceWhitelist:
-    - group: '*'
-      kind: '*'
-      
+    - group: "*"
+      kind: "*"
