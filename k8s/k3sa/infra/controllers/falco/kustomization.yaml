@@ -11,6 +11,6 @@ helmCharts:
     repo: https://falcosecurity.github.io/charts
     includeCRDs: true
     namespace: falco
-    version: "4.2.1"
+    version: "6.2.5"
     releaseName: falco
     valuesFile: ./values.yaml
