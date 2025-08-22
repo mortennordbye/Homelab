@@ -1,6 +1,20 @@
 # Loki for homelab without object storage
 deploymentMode: SingleBinary
 
+singleBinary:
+  replicas: 1
+  persistence:
+    enabled: true
+    size: 20Gi
+    storageClass: syno-nfs
+
+read:
+  replicas: 0
+write:
+  replicas: 0
+backend:
+  replicas: 0
+
 loki:
   auth_enabled: false
   useTestSchema: true
@@ -21,12 +35,6 @@ loki:
     filesystem:
       chunks_directory: /var/loki/chunks
       rules_directory: /var/loki/rules
-
-singleBinary:
-  persistence:
-    enabled: true
-    size: 20Gi
-    storageClass: syno-nfs
 
 gateway:
   enabled: true
