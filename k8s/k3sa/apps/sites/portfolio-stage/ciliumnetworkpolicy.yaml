@@ -1,3 +1,15 @@
+# To test this policy, you can verify that traffic from an unauthorized pod is blocked.
+# 1. Run a temporary pod in a different namespace:
+#    kubectl run net-test --image=ghcr.io/nicolaka/netshoot:v0.14 --namespace=default -- /bin/sh -c "sleep infinity"
+#
+# 2. Get the service ClusterIP for this application:
+#    kubectl get svc -n stage-portfolio nordbye-service-stage
+#
+# 3. Attempt to connect from the test pod (this should time out):
+#    kubectl exec -it -n default net-test -- curl -m 5 http://<CLUSTER_IP>:8080/healthz
+#
+# 4. Clean up the test pod:
+#    kubectl delete pod net-test -n default
 apiVersion: "cilium.io/v2"
 kind: CiliumNetworkPolicy
 metadata:
