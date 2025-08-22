@@ -3,6 +3,13 @@ deploymentMode: SingleBinary
 
 singleBinary:
   replicas: 1
+  resources:
+    requests:
+      cpu: 50m
+      memory: 256Mi
+    limits:
+      cpu: 300m
+      memory: 512Mi
   persistence:
     enabled: true
     size: 20Gi
