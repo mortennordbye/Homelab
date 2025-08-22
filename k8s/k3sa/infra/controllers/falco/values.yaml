@@ -1,39 +1,84 @@
+serviceAccount:
+  create: true
+
+rbac:
+  create: true
+
+controller:
+  kind: daemonset
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 512Mi
+  limits:
+    cpu: 1000m
+    memory: 1024Mi
+
+tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/control-plane
+
+tty: false
+
 driver:
   enabled: true
-  kind: ebpf
-
-# The collector is the component that captures system calls.
-# For k3s, we need to point it to the k3s containerd socket.
-collector:
-  enabled: true
-  socket: /run/k3s/containerd/containerd.sock
-
-# Enable TTY for better log output from Falco pods.
-tty: true
-
-# Falcosidekick is a companion that can forward Falco events to various outputs.
-falcosidekick:
-  enabled: true
-  webui:
-    enabled: false # Set to true to deploy the Falcosidekick UI
-  config:
-    # Add custom fields to events, useful for filtering in downstream systems.
-    customfields: "cluster:homelab"
-    # No outputs configured by default, events will be logged.
-    # You can add outputs for Slack, Loki, Grafana, etc. here.
-
-# Enable Prometheus metrics endpoint.
-metrics:
-  enabled: true
-
-# Required for Falcosidekick to communicate with Falco.
-services:
-  falcounixsocket:
+  kind: modern_ebpf
+  modernEbpf:
+    leastPrivileged: true
+    bufSizePreset: 4
+    dropFailedExit: false
+    cpusForEachBuffer: 2
+  loader:
     enabled: true
 
-# Create a ServiceMonitor for Prometheus to scrape metrics.
-serviceMonitor:
+collectors:
   enabled: true
-  namespace: monitoring
-  additionalLabels:
-    Release: kube-prometheus-stack
+  containerEngine:
+    enabled: true
+    labelMaxLen: 100
+    withSize: false
+    hooks: ["create"]
+    engines:
+      cri:
+        enabled: true
+        sockets: ["/run/k3s/containerd/containerd.sock"]
+      containerd:
+        enabled: false
+
+falco:
+  rules_files:
+    - /etc/falco/falco_rules.yaml
+    - /etc/falco/falco_rules.local.yaml
+    - /etc/falco/rules.d
+  rule_matching: first
+
+  priority: warning
+  json_output: true
+  json_include_output_fields_property: true
+
+  stdout_output:
+    enabled: true
+  syslog_output:
+    enabled: false
+
+  webserver:
+    enabled: true
+    listen_port: 8765
+    prometheus_metrics_enabled: false
+    ssl_enabled: false
+
+  grpc:
+    enabled: false
+    bind_address: "unix:///run/falco/falco.sock"
+
+metrics:
+  enabled: false
+
+serviceMonitor:
+  create: false
+
+falcosidekick:
+  enabled: false
