@@ -55,7 +55,7 @@ falco:
     - /etc/falco/rules.d
   rule_matching: first
 
-  priority: warning
+  priority: notice
   json_output: true
   json_include_output_fields_property: true
 
