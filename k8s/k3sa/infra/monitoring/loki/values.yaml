@@ -87,7 +87,7 @@ ingress:
     compactor:
       - /loki/api/v1/delete
 
-  storage:
+storage:
     type: filesystem
     filesystem:
       chunks_directory: /var/loki/chunks
