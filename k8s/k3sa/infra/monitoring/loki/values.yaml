@@ -14,7 +14,7 @@ singleBinary:
     enabled: true
     size: 20Gi
     storageClass: syno-nfs
-    
+
 memcached:
   enabled: false
 
@@ -40,6 +40,53 @@ loki:
     volume_enabled: true
   ui:
     enabled: true
+ingress:
+  enabled: true
+  ingressClassName: "traefik"
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    traefik.ingress.kubernetes.io/router.middlewares: "traefik-traefik-default-headers@kubernetescrd"
+  hosts:
+    - loki.local.bigd.no
+  tls:
+    - hosts:
+        - loki.local.bigd.no
+      secretName: local-bigd-tls
+  paths:
+    distributor:
+      - /api/prom/push
+      - /loki/api/v1/push
+      - /otlp/v1/logs
+      - /ui
+    queryFrontend:
+      - /api/prom/query
+      - /api/prom/label
+      - /api/prom/series
+      - /api/prom/tail
+      - /loki/api/v1/query
+      - /loki/api/v1/query_range
+      - /loki/api/v1/tail
+      - /loki/api/v1/label
+      - /loki/api/v1/labels
+      - /loki/api/v1/series
+      - /loki/api/v1/index/stats
+      - /loki/api/v1/index/volume
+      - /loki/api/v1/index/volume_range
+      - /loki/api/v1/format_query
+      - /loki/api/v1/detected_field
+      - /loki/api/v1/detected_fields
+      - /loki/api/v1/detected_labels
+      - /loki/api/v1/patterns
+    ruler:
+      - /api/prom/rules
+      - /api/prom/api/v1/rules
+      - /api/prom/api/v1/alerts
+      - /loki/api/v1/rules
+      - /prometheus/api/v1/rules
+      - /prometheus/api/v1/alerts
+    compactor:
+      - /loki/api/v1/delete
+
   storage:
     type: filesystem
     filesystem:
