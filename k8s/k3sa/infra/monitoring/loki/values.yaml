@@ -14,6 +14,9 @@ singleBinary:
     enabled: true
     size: 20Gi
     storageClass: syno-nfs
+    
+memcached:
+  enabled: false
 
 read:
   replicas: 0
