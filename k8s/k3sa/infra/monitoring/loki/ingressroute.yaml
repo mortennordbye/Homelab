@@ -1,0 +1,47 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: loki
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/instance: loki
+    app.kubernetes.io/name: loki
+    app.kubernetes.io/version: "3.5.3"
+    helm.sh/chart: loki-6.37.0
+  annotations:
+    argocd.argoproj.io/tracking-id: loki:traefik.containo.us/IngressRoute:monitoring/loki
+spec:
+  entryPoints:
+    - websecure
+  tls:
+    secretName: local-bigd-tls
+  routes:
+    - match: "Host(`loki.local.bigd.no`) && PathPrefix(`/ui`)"
+      kind: Rule
+      services:
+        - name: loki
+          port: 3100
+
+    - match: "Host(`loki.local.bigd.no`) && PathPrefix(`/otlp/v1/logs`)"
+      kind: Rule
+      services:
+        - name: loki
+          port: 3100
+
+    - match: "Host(`loki.local.bigd.no`) && PathPrefix(`/api/prom/`)"
+      kind: Rule
+      services:
+        - name: loki
+          port: 3100
+
+    - match: "Host(`loki.local.bigd.no`) && PathPrefix(`/prometheus/api/v1/`)"
+      kind: Rule
+      services:
+        - name: loki
+          port: 3100
+
+    - match: "Host(`loki.local.bigd.no`) && PathPrefix(`/loki/api/v1/`)"
+      kind: Rule
+      services:
+        - name: loki
+          port: 3100
