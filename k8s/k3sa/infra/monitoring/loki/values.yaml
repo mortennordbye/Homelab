@@ -40,6 +40,12 @@ loki:
     volume_enabled: true
   ui:
     enabled: true
+
+  storage:
+    type: filesystem
+    filesystem:
+      chunks_directory: /var/loki/chunks
+      rules_directory: /var/loki/rules
 ingress:
   enabled: true
   ingressClassName: "traefik"
@@ -86,13 +92,6 @@ ingress:
       - /prometheus/api/v1/alerts
     compactor:
       - /loki/api/v1/delete
-
-storage:
-    type: filesystem
-    filesystem:
-      chunks_directory: /var/loki/chunks
-      rules_directory: /var/loki/rules
-
 gateway:
   enabled: true
   service:
