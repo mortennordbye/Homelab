@@ -20,7 +20,7 @@ server:
     extraTls:
       - hosts:
           - argocd.local.bigd.no
-        secretName: local-bigd-tls
+        secretName: local-bigd-no-tls
   metrics:
     enabled: true
     service:
