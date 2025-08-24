@@ -11,6 +11,6 @@ helmCharts:
     repo: https://kyverno.github.io/kyverno/
     includeCRDs: true
     namespace: kyverno
-    version: 2.5.4
+    version: 2.7.5
     releaseName: kyverno
     valuesFile: ./values.yamla
