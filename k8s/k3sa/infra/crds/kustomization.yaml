@@ -47,3 +47,12 @@ resources:
 - https://raw.githubusercontent.com/cilium/cilium/v1.18.0/pkg/k8s/apis/cilium.io/client/crds/v2/ciliumnetworkpolicies.yaml # renovate: github-releases=cilium/cilium
 - https://raw.githubusercontent.com/cilium/cilium/v1.18.0/pkg/k8s/apis/cilium.io/client/crds/v2/ciliumnodeconfigs.yaml # renovate: github-releases=cilium/cilium
 - https://raw.githubusercontent.com/cilium/cilium/v1.18.0/pkg/k8s/apis/cilium.io/client/crds/v2/ciliumnodes.yaml # renovate: github-releases=cilium/cilium
+
+# --- kyverno ---
+- https://github.com/kyverno/kyverno/releases/download/v1.15.1/kyverno.io_cleanuppolicies.yaml # renovate: github-releases=kyverno/kyverno
+- https://github.com/kyverno/kyverno/releases/download/v1.15.1/kyverno.io_clustercleanuppolicies.yaml # renovate: github-releases=kyverno/kyverno
+- https://github.com/kyverno/kyverno/releases/download/v1.15.1/kyverno.io_clusterpolicies.yaml # renovate: github-releases=kyverno/kyverno
+- https://github.com/kyverno/kyverno/releases/download/v1.15.1/kyverno.io_globalcontextentries.yaml # renovate: github-releases=kyverno/kyverno
+- https://github.com/kyverno/kyverno/releases/download/v1.15.1/kyverno.io_policies.yaml  # renovate: github-releases=kyverno/kyverno
+- https://github.com/kyverno/kyverno/releases/download/v1.15.1/kyverno.io_policyexceptions.yaml # renovate: github-releases=kyverno/kyverno
+- https://github.com/kyverno/kyverno/releases/download/v1.15.1/kyverno.io_updaterequests.yaml # renovate: github-releases=kyverno/kyverno
