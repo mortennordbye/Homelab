@@ -1,5 +1,4 @@
-replicaCount: 2
-webhooksFailurePolicy: Fail
+replicaCount: 1
 resources:
   requests:
     cpu: 100m
