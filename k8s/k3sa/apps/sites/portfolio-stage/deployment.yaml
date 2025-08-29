@@ -4,7 +4,7 @@ metadata:
   name: portfolio-stage
   namespace: stage-portfolio
 spec:
-  replicas: 1
+  replicas: 3
   revisionHistoryLimit: 3
   selector:
     matchLabels:
