@@ -16,7 +16,7 @@
     group: bind
     mode: '0644'
   loop: "{{ bind_zone_manager_zone_defs }}"
-  notify: restart bind9
+  notify: Restart bind9
   tags: bind_zones
 
 - name: Render reverse zone files
@@ -27,5 +27,5 @@
     group: bind
     mode: '0644'
   loop: "{{ bind_zone_manager_reverse_zone_defs }}"
-  notify: restart bind9
+  notify: Restart bind9
   tags: bind_zones

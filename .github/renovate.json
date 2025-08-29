@@ -13,7 +13,7 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "/\\.yaml$/",
+        "/\\.yaml$/"
       ],
       "matchStrings": [
         "(?<currentValue>[\\w+\\.\\-]*)['\",;]*\\s*#\\s?renovate: (?<datasource>\\S+)=(?<depName>\\S+)\\s?(registry=(?<registryUrl>\\S+))?\\s?(versioning=(?<versioning>\\S+))?"
@@ -27,6 +27,18 @@
       ],
       "groupName": "GitHub Actions",
       "groupSlug": "github-actions"
+    },
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchPackageNames": [
+        "linuxserver/qbittorrent"
+      ],
+      "matchFileNames": [
+        "containers/compose/nodes/servarr/arr-stack/docker-compose.yaml"
+      ],
+      "enabled": false
     }
   ]
 }

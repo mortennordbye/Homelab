@@ -8,7 +8,7 @@
         owner: root
         group: bind
         mode: '0644'
-      notify: restart bind9
+      notify: Restart bind9
 
     - name: Deploy named.conf.local
       ansible.builtin.template:
@@ -17,4 +17,4 @@
         owner: root
         group: bind
         mode: '0644'
-      notify: restart bind9
+      notify: Restart bind9

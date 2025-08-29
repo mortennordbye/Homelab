@@ -2,11 +2,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: nordbye-service-stage
-  namespace: stage-portfolio 
+  namespace: stage-portfolio
 spec:
   selector:
     app: stage-portfolio
   ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 8080

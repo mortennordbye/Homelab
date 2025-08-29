@@ -16,7 +16,7 @@ ingress:
   tls:
     - hosts:
         - semaphore.local.bigd.no
-      secretName: local-bigd-tls
+      secretName: local-bigd-no-tls
 
 persistence:
   enabled: true

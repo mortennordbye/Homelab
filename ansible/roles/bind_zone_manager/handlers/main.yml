@@ -1,5 +1,5 @@
 ---
 - name: Restart bind9
-  ansible.builtin.systemd:
+  ansible.builtin.systemd_service:
     name: bind9
     state: restarted
