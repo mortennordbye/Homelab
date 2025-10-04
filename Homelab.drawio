@@ -1,0 +1,41 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:143.0) Gecko/20100101 Firefox/143.0" version="28.2.5">
+  <diagram name="Home" id="30-Tt9NE4u_cW5eCb92I">
+    <mxGraphModel dx="180" dy="694" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Q5DaKckmjncQYjnSBQdU-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="Q5DaKckmjncQYjnSBQdU-1" target="Q5DaKckmjncQYjnSBQdU-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Q5DaKckmjncQYjnSBQdU-1" value="Internet" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=left;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/internet_globe.svg;labelPosition=right;verticalLabelPosition=top;verticalAlign=bottom;" vertex="1" parent="1">
+          <mxGeometry x="1260" y="20" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="S_Dw8AdSrTLTYOOq0gJy-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="Q5DaKckmjncQYjnSBQdU-5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1130" y="265" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Q5DaKckmjncQYjnSBQdU-5" value="&lt;div&gt;Ubiquiti UniFi&lt;/div&gt;&lt;div&gt;Cloud fiber gateway&lt;/div&gt;" style="sketch=0;verticalLabelPosition=top;sketch=0;aspect=fixed;html=1;verticalAlign=bottom;strokeColor=none;fillColor=#000000;align=left;outlineConnect=0;pointerEvents=1;shape=mxgraph.citrix2.router;labelPosition=right;" vertex="1" parent="1">
+          <mxGeometry x="1260" y="240" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Q5DaKckmjncQYjnSBQdU-7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=8;" edge="1" parent="1" source="Q5DaKckmjncQYjnSBQdU-6" target="Q5DaKckmjncQYjnSBQdU-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Q5DaKckmjncQYjnSBQdU-12" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;Ethernet&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Q5DaKckmjncQYjnSBQdU-7">
+          <mxGeometry x="-0.0905" relative="1" as="geometry">
+            <mxPoint x="-25" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Q5DaKckmjncQYjnSBQdU-6" value="&lt;div&gt;Modem(Telia)&lt;/div&gt;" style="sketch=0;verticalLabelPosition=top;sketch=0;aspect=fixed;html=1;verticalAlign=bottom;strokeColor=none;fillColor=#000000;align=left;outlineConnect=0;pointerEvents=1;shape=mxgraph.citrix2.router;labelPosition=right;" vertex="1" parent="1">
+          <mxGeometry x="1260" y="120" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Q5DaKckmjncQYjnSBQdU-14" value="Coax" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="1260" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="S_Dw8AdSrTLTYOOq0gJy-8" value="&lt;div&gt;Ubiquiti UniFi U6+&lt;/div&gt;" style="html=1;verticalLabelPosition=top;align=left;labelBackgroundColor=#ffffff;verticalAlign=bottom;strokeWidth=2;strokeColor=#0080F0;shadow=0;dashed=0;shape=mxgraph.ios7.icons.wifi;pointerEvents=1;labelPosition=right;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="240" width="49.7" height="41" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
