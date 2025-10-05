@@ -23,6 +23,9 @@ docker-compose.override.yml
 *.tfplan
 vault_password.txt
 .ansible
+azure/portfolio/terraform/.terraform/providers/registry.terraform.io/hashicorp/azurerm/4.47.0/darwin_arm64/terraform-provider-azurerm_v4.47.0_x5
+azure/portfolio/terraform/.terraform/providers/registry.terraform.io/hashicorp/azurerm/4.47.0/darwin_arm64/LICENSE.txt
+azure/portfolio/terraform/.terraform.lock.hcl
 
 # Build & cache
 node_modules/
