@@ -12,6 +12,6 @@ helmCharts:
     repo: https://homarr-labs.github.io/charts/
     includeCRDs: true
     namespace: homarr
-    version: 7.1.0
+    version: 7.2.0
     releaseName: homarr
     valuesFile: ./values.yaml
