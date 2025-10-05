@@ -11,6 +11,6 @@ helmCharts:
     repo: https://emberstack.github.io/helm-charts
     includeCRDs: true
     namespace: reflector
-    version: 9.1.25
+    version: 9.1.33
     releaseName: reflector
     valuesFile: ./values.yaml
