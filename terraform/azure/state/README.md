@@ -1,100 +1,59 @@
-# Azure Storage Account - Homelab Terraform
+# Azure Terraform State Backend
+This Terraform configuration provisions the Azure resources (Resource Group, Storage Account, Container) required for a secure remote state backend.
+## Prerequisites
 
-Terraform configuration to create an Azure Storage Account for hosting remote state files.
+* Terraform ≥ 1.9.0
+* Azure CLI
+* Active Azure subscription
 
-## Quick Start
+## Deployment
 
-### Prerequisites
-
-- [Terraform](https://www.terraform.io/downloads) >= 1.9.0
-- [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) installed and configured
-- An active Azure subscription
-
-### Step 1: Authentication
+### 1. Authenticate
 
 ```bash
-# Login to Azure
 az login
-
-# Set your subscription (if you have multiple)
-az account set --subscription "Your Subscription Name"
-
-# Verify your subscription
-az account show
+az account set --subscription "<Your-Subscription-ID-or-Name>"
 ```
 
-### Step 2: Configure Variables
+### 2. Configure Variables
 
 ```bash
-# Copy the example file
 cp terraform.tfvars.example terraform.tfvars
-
-# Edit terraform.tfvars with your values
-nano terraform.tfvars
 ```
 
-**Required variables:**
+**Required:** `subscription_id` — your Azure subscription ID
 
-- `subscription_id` - Your Azure subscription ID
-
-### Step 3: Deploy
+### 3. Deploy
 
 ```bash
-# Initialize Terraform (downloads providers)
 terraform init
-
-# Validate configuration
 terraform fmt && terraform validate
-
-# Preview changes
 terraform plan
-
-# Apply configuration
 terraform apply
 ```
 
-### Step 4: Verify Deployment
+---
 
-```bash
-# View outputs
-terraform output
+## Migrate State to Azure
 
-# View sensitive outputs (access key)
-terraform output -json storage_account_primary_access_key
-
-# Save all outputs to file
-terraform output -json > outputs.json
-```
-
-## 🔄 Migrating to Azure Backend
-
-After initial deployment, migrate your state file to Azure:
-
-### Step 1: Backup Local State
+### 1. Backup
 
 ```bash
 cp terraform.tfstate terraform.tfstate.backup
 ```
 
-### Step 2: Update versions.tf
+### 2. Update Backend
 
-In `version.tf`, comment out the `local` backend and uncomment the `azurerm` backend block.
+Edit `versions.tf`:
 
 ```hcl
-# backend "local" {
-#   path = "terraform.tfstate"
-# }
-
-backend "azurerm" {
-  # Configuration will be provided via backend.conf
-}
+# backend "local" { path = "terraform.tfstate" }
+backend "azurerm" {}
 ```
 
-### Step 3: Migrate State
+### 3. Configure & Migrate
 
-First, ensure your `backend.conf` file is populated with the correct resource names from the `terraform output` of the previous step.
-
-**backend.conf:**
+Fill `backend.conf` with values from `terraform output`:
 
 ```hcl
 resource_group_name  = ""
@@ -103,252 +62,118 @@ container_name       = ""
 key                  = ""
 ```
 
-Now, run `terraform init` with the `-backend-config` flag. Terraform will detect the backend change and prompt you to migrate the state.
+Then migrate:
 
 ```bash
-# Re-initialize with migration
 terraform init -migrate-state -backend-config=backend.conf
-
-# Verify migration
-terraform plan  # Should show no changes
+terraform plan  # should show no changes
 ```
 
-### Step 4: Test Remote State
+### 4. Verify Remote State
 
 ```bash
-# Remove local state file
 rm terraform.tfstate terraform.tfstate.backup
-
-# Pull state from remote
 terraform state pull > remote.tfstate
 ```
 
-## 📊 Resource Naming Convention
+---
 
-This configuration uses Azure best practices for naming:
+## Naming Convention
 
-| Resource Type   | Pattern                                   | Example                        |
-| --------------- | ----------------------------------------- | ------------------------------ |
-| Resource Group  | `rg-{env}-{project}-{purpose}-{instance}` | `rg-homelab-infra-storage-001` |
-| Storage Account | `st{env}{project}{purpose}{instance}`     | `sthomelabtf001`               |
-| Container       | Descriptive name                          | `tfstate`                      |
+| Resource        | Pattern                             | Example                        |
+| --------------- | ----------------------------------- | ------------------------------ |
+| Resource Group  | `rg-{env}-{project}-{purpose}-{id}` | `rg-homelab-infra-storage-001` |
+| Storage Account | `st{env}{project}{purpose}{id}`     | `sthomelabtf001`               |
+| Container       | Descriptive                         | `tfstate`                      |
 
-## 🏷️ Tagging Strategy
+---
 
-All resources are tagged with:
+## Tagging
 
-- `Environment` - homelab, dev, staging, prod
-- `Project` - Project identifier
-- `Owner` - Resource owner
-- `ManagedBy` - Terraform
-- `CostCenter` - Homelab
-- `CreatedDate` - Creation timestamp
-- `Repository` - homelab-terraform
+Common tags:
 
-Plus resource-specific tags:
+* `Environment`, `Project`, `Owner`, `ManagedBy`, `CostCenter`, `CreatedDate`, `Repository`
+  Extra: `Purpose`, `DataType`, `Criticality`
 
-- `Purpose` - Resource purpose
-- `DataType` - Type of data stored
-- `Criticality` - Importance level
+---
 
-## 🔐 Security Features
+## Security
 
-✅ **Network Security**
+* HTTPS-only access
+* TLS ≥ 1.2
+* Blob versioning & 30-day soft delete
+* Change feed enabled
+* Private container
+* Shared keys enabled (Terraform required)
+* No public blob access
+* Resource group deletion lock
 
-- HTTPS-only traffic enforcement
+---
 
-✅ **Data Protection**
+## Cost Estimate (monthly)
 
-- TLS 1.2 minimum encryption
-- Blob versioning enabled
-- Soft delete (30-day retention)
-- Change feed for audit trail
-- Private container access
+| Item                  | Est. Cost       |
+| --------------------- | --------------- |
+| Storage Account (LRS) | ~$0.50          |
+| Data (50GB)           | ~$1.00          |
+| Ops                   | ~$0.10          |
+| **Total**             | **$0.60–$2.00** |
 
-✅ **Access Control**
+Costs vary by file size, ops count, and egress volume.
 
-- Shared access keys enabled (required for Terraform)
-- No public blob access
-- Resource group deletion protection
+---
 
-## 💰 Cost Estimation
+## Variables
 
-**Monthly costs (approximate):**
+| Variable                 | Description           | Default / Example                      |
+| ------------------------ | --------------------- | -------------------------------------- |
+| `subscription_id`        | Azure subscription ID | `00000000-0000-0000-0000-000000000000` |
+| `location`               | Azure region          | `norwayeast`                           |
+| `environment`            | Environment name      | `homelab`                              |
+| `project_name`           | Project identifier    | `infra`                                |
+| `owner`                  | Resource owner        | `mnordbye`                        |
+| `blob_retention_days`    | Soft delete retention | `30`                                   |
+| `version_retention_days` | Version cleanup       | `90`                                   |
 
-- Storage Account (LRS, Standard): ~$0.50
-- Storage capacity (first 50GB): ~$1.00/50GB
-- Operations: ~$0.10
+---
 
-**Total estimated cost: $0.60 - $2.00/month**
+## Troubleshooting
 
-Factors affecting cost:
+| Issue                        | Cause                            | Fix                                               |
+| ---------------------------- | -------------------------------- | ------------------------------------------------- |
+| **Access denied**            | Auth or role issue               | Re-login, check permissions                       |
+| **Name conflict**            | Storage account name taken       | Change `project_name`                             |
+| **State lock**               | Locked by another process        | `terraform force-unlock <LOCK_ID>`                |
+| **Backend migration failed** | Wrong config or interrupted init | Restore backup, run `terraform init -reconfigure` |
 
-- Amount of state file storage
-- Number of state operations
-- Data egress (usually minimal)
+---
 
-## 🔧 Configuration Variables
+## Maintenance
 
-### Required Variables
-
-| Variable          | Description           | Example                                |
-| ----------------- | --------------------- | -------------------------------------- |
-| `subscription_id` | Azure subscription ID | `00000000-0000-0000-0000-000000000000` |
-
-### Optional Variables
-
-| Variable                 | Description           | Default         |
-| ------------------------ | --------------------- | --------------- |
-| `location`               | Azure region          | `norwayeast`    |
-| `environment`            | Environment name      | `homelab`       |
-| `project_name`           | Project identifier    | `infra`         |
-| `owner`                  | Resource owner        | `homelab-admin` |
-| `blob_retention_days`    | Soft delete retention | `30`            |
-| `version_retention_days` | Version cleanup       | `90`            |
-
-## 📝 Common Commands
+### Update Provider
 
 ```bash
-# Format code
-terraform fmt -recursive
-
-# Validate configuration
-terraform validate
-
-# Plan changes
-terraform plan
-
-# Apply changes
-terraform apply
-
-# Destroy resources (careful!)
-terraform destroy
-
-# Show current state
-terraform show
-
-# List resources
-terraform state list
-
-# View specific resource
-terraform state show azurerm_storage_account.tfstate
-```
-
-## 🔍 Troubleshooting
-
-### Issue: Access Denied
-
-### Issue: Storage Account Name Conflict
-
-**Problem:** Storage account name already exists globally
-
-**Solution:**
-
-```bash
-# Update project_name in terraform.tfvars
-# Storage account names must be globally unique
-```
-
-### Issue: State Lock Error
-
-**Problem:** State file is locked
-
-**Solution:**
-
-```bash
-# Force unlock (only if you're sure no other process is running)
-terraform force-unlock <LOCK_ID>
-```
-
-### Issue: Backend Migration Failed
-
-**Problem:** Can't migrate to Azure backend
-
-**Solution:**
-
-```bash
-# Restore from backup
-cp terraform.tfstate.backup terraform.tfstate
-
-# Re-configure backend
-terraform init -reconfigure
-```
-
-## 🔄 Updating Configuration
-
-### Update Azure Provider Version
-
-```bash
-# Update version in versions.tf
-# Then run:
 terraform init -upgrade
 ```
 
-### Update IP Allowlist
+### Destroy Resources
 
 ```bash
-# Edit terraform.tfvars
-# Add new IP to allowed_ip_addresses
-
-# Apply changes
-terraform apply
-```
-
-### Change Retention Periods
-
-```bash
-# Edit terraform.tfvars
-# Update blob_retention_days or version_retention_days
-
-# Apply changes
-terraform apply
-```
-
-## 🗑️ Cleanup
-
-To remove all resources:
-
-```bash
-# Preview destruction
 terraform plan -destroy
-
-# Destroy resources
 terraform destroy
-
-# Remove Terraform files
-rm -rf .terraform/
-rm terraform.tfstate*
-rm .terraform.lock.hcl
+rm -rf .terraform/ terraform.tfstate* .terraform.lock.hcl
 ```
 
-## 📚 Additional Resources
+---
 
-- [Terraform Azure Backend Documentation](https://developer.hashicorp.com/terraform/language/settings/backends/azurerm)
-- [Azure Storage Security Best Practices](https://learn.microsoft.com/en-us/azure/storage/common/storage-security-guide)
-- [Terraform Best Practices](https://www.terraform-best-practices.com/)
-- [Azure Naming Conventions](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming)
+## References
 
-## 🤝 Contributing
-
-This is a homelab project, but feel free to adapt it for your needs:
-
-1. Fork the repository
-2. Make your changes
-3. Test thoroughly
-4. Submit improvements
-
-## 📄 License
-
-This configuration is provided as-is for homelab use.
-
-## 🆘 Support
-
-- Check Azure status: https://status.azure.com
-- Terraform documentation: https://www.terraform.io/docs
-- Azure CLI reference: https://docs.microsoft.com/en-us/cli/azure/
+* [Terraform Azure Backend](https://developer.hashicorp.com/terraform/language/settings/backends/azurerm)
+* [Azure Storage Security](https://learn.microsoft.com/en-us/azure/storage/common/storage-security-guide)
+* [Terraform Best Practices](https://www.terraform-best-practices.com/)
+* [Azure Naming](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming)
 
 ---
 
 **Last Updated:** 2025-11-07
-**Terraform Version:** >= 1.9.0
-**Azure Provider:** ~> 4.0
+**Terraform:** ≥ 1.9.0 **Azure Provider:** ~> 4.0
