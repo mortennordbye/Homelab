@@ -46,7 +46,6 @@ terraform {
 State file paths:
 
 - `critical/do-not-delete-state-backend.tfstate` - This backend (DO NOT DELETE)
-- `core/*` - Core infrastructure
 - `proxmox/*` - Proxmox resources
 
 ## Resources Created
