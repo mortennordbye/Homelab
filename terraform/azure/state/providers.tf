@@ -7,5 +7,4 @@ provider "azurerm" {
 
   use_cli         = true
   subscription_id = var.subscription_id
-
 }
