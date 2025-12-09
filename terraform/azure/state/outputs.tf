@@ -4,6 +4,6 @@ output "backend_config" {
     resource_group_name  = azurerm_resource_group.homelab.name
     storage_account_name = azurerm_storage_account.tfstate.name
     container_name       = azurerm_storage_container.tfstate.name
-    key                  = "core/state-backend.tfstate"
+    key                  = "critical/do-not-delete-state-backend.tfstate"
   }
 }
