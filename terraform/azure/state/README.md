@@ -36,7 +36,7 @@ Add to your Terraform projects:
 terraform {
   backend "azurerm" {
     resource_group_name  = "rg-tfstate-homelab"
-    storage_account_name = "sttfstatemvn001"
+    storage_account_name = "sttfstatemvnhomelab"
     container_name       = "tfstate"
     key                  = "workloads/myproject/terraform.tfstate"
   }
@@ -51,13 +51,13 @@ State file paths:
 ## Resources Created
 
 - Resource Group: `rg-tfstate-homelab` (Sweden Central)
-- Storage Account: `sttfstatemvn001` (LRS, versioning enabled)
+- Storage Account: `sttfstatemvnhomelab` (LRS, versioning enabled)
 - Container: `tfstate` (private)
 - Lifecycle: Delete versions after 7 days
 
 ## Verify
 
 ```bash
-az storage blob list --account-name sttfstatemvn001 --container-name tfstate --output table
+az storage blob list --account-name sttfstatemvnhomelab --container-name tfstate --output table
 terraform state pull
 ```
