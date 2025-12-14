@@ -16,7 +16,7 @@ spec:
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
-      project: infrastructure
+      project: infra
       source:
         repoURL: https://github.com/mortennordbye/Homelab.git
         targetRevision: HEAD

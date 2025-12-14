@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: applications
+  name: apps
   namespace: argocd
 spec:
   generators:
@@ -16,7 +16,7 @@ spec:
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
-      project: applications
+      project: apps
       source:
         repoURL: https://github.com/mortennordbye/Homelab.git
         targetRevision: HEAD

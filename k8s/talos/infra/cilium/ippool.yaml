@@ -5,7 +5,7 @@ metadata:
   namespace: kube-system
 spec:
   blocks:
-    - cidr: 10.3.10.100/29 # Adjust to your IP range
+    - cidr: 10.3.10.100/29
 ---
 apiVersion: cilium.io/v2alpha1
 kind: CiliumL2AnnouncementPolicy
