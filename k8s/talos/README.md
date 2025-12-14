@@ -62,7 +62,7 @@ helm repo update
 # Install ArgoCD
 helm install argo-cd argo/argo-cd \
   --namespace argocd \
-  --version 8.2.7 \
+  --version 9.1.7 \
   --values k8s/talos/infra/argocd/values.yaml
 
 # Apply projects
