@@ -35,9 +35,9 @@ loadBalancer:
 
 # Monitoring
 prometheus:
-  enabled: true
+  enabled: false
   serviceMonitor:
-    enabled: true
+    enabled: false
 
 # Resource limits
 resources:
