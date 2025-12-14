@@ -56,8 +56,7 @@ operator:
 # Load Balancer IP Address Management
 loadBalancer:
   algorithm: maglev
-  mode: dsr
-
+  mode: snat
 # Monitoring
 prometheus:
   enabled: false
