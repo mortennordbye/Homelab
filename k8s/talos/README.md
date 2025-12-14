@@ -19,6 +19,7 @@ k8s/talos/
 │   ├── sealed-secrets/
 │   ├── reflector/
 │   ├── cilium/
+│   ├── metrics-server/
 │   ├── metallb/
 │   ├── traefik/
 │   ├── external-dns/
