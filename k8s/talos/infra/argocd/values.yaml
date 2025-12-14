@@ -1,0 +1,34 @@
+global:
+  domain: argocd.local.bigd.no
+
+crds:
+  install: true
+
+configs:
+  params:
+    server.insecure: true
+  cm:
+    kustomize.buildOptions: "--enable-helm"
+
+server:
+  replicas: 1
+  ingress:
+    enabled: false
+
+dex:
+  enabled: false
+
+notifications:
+  enabled: true
+
+applicationSet:
+  enabled: true
+
+redis-ha:
+  enabled: false
+
+controller:
+  replicas: 1
+
+repoServer:
+  replicas: 1

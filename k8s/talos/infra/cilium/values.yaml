@@ -1,0 +1,49 @@
+# Talos-specific Cilium configuration
+k8sServiceHost: localhost
+k8sServicePort: 7445
+
+# CNI mode
+cni:
+  exclusive: false
+
+# IPAM
+ipam:
+  mode: kubernetes
+
+# Replace kube-proxy
+kubeProxyReplacement: true
+bpf:
+  masquerade: true
+
+# Hubble (observability)
+hubble:
+  enabled: true
+  relay:
+    enabled: true
+  ui:
+    enabled: true
+
+# Operator
+operator:
+  replicas: 1
+  rollOutPods: true
+
+# Load Balancer IP Address Management
+loadBalancer:
+  algorithm: maglev
+  mode: dsr
+
+# Monitoring
+prometheus:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+
+# Resource limits
+resources:
+  limits:
+    cpu: 4000m
+    memory: 4Gi
+  requests:
+    cpu: 100m
+    memory: 512Mi
