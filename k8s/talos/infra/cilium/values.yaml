@@ -1,4 +1,10 @@
 # Talos-specific Cilium configuration
+# Cluster identification
+cluster:
+  name: hyper-cluster
+  id: 1
+
+# KubePrism endpoint for accessing Kubernetes API via host networking
 k8sServiceHost: localhost
 k8sServicePort: 7445
 
@@ -6,19 +12,28 @@ k8sServicePort: 7445
 cni:
   exclusive: false
 
-# IPAM
+# IPAM - Use Kubernetes Host Scope IPAM (Talos assigns PodCIDRs to nodes)
 ipam:
   mode: kubernetes
 
 # Replace kube-proxy
 kubeProxyReplacement: true
+
+# eBPF configuration
 bpf:
   masquerade: true
+  # REQUIRED for Talos 1.8+: Host Legacy Routing must be enabled
+  # This is needed for Talos's "Forwarding kube-dns to Host DNS" feature
+  # Without this, DNS resolution will not work
+  hostLegacyRouting: true
 
 # Talos-specific security context and cgroup settings
 securityContext:
   capabilities:
     ciliumAgent:
+      # REQUIRED capabilities for Cilium on Talos
+      # NOTE: SYS_MODULE is intentionally EXCLUDED as Talos doesn't allow
+      # loading kernel modules by Kubernetes workloads
       - CHOWN
       - KILL
       - NET_ADMIN
@@ -35,40 +50,127 @@ securityContext:
       - SYS_ADMIN
       - SYS_RESOURCE
 
+# Cgroup configuration for Talos
+# Reuse the cgroupv2 mount that Talos already provides
 cgroup:
   autoMount:
-    enabled: false
-  hostRoot: /sys/fs/cgroup
+    enabled: false  # Talos manages cgroup mounting
+  hostRoot: /sys/fs/cgroup  # Talos cgroupv2 mount point
 
 # Hubble (observability)
 hubble:
   enabled: true
+  # Enhanced metrics - Disabled until Prometheus is installed
+  metrics:
+    enabled: []
+    enableOpenMetrics: false
+    port: 9965
+    serviceMonitor:
+      enabled: false
+    dashboards:
+      enabled: false
   relay:
     enabled: true
+    rollOutPods: true
+    prometheus:
+      enabled: false
+      port: 9966
+      serviceMonitor:
+        enabled: false
   ui:
     enabled: true
+    rollOutPods: true
 
 # Operator
 operator:
   replicas: 1
   rollOutPods: true
+  # CRITICAL: Allow operator to schedule during initial cluster bootstrap
+  # Without these tolerations, operator won't schedule until nodes are Ready
+  # But nodes can't become Ready until Cilium is working (circular dependency)
+  tolerations:
+    - operator: Exists  # Tolerate all taints to allow bootstrap
+  # Monitoring - Disabled until Prometheus is installed
+  prometheus:
+    enabled: false
+    metricsService: false
+    port: 9963
+    serviceMonitor:
+      enabled: false
+  dashboards:
+    enabled: false
+  # Resource limits for operator
+  resources:
+    limits:
+      cpu: 250m
+      memory: 128Mi
+    requests:
+      cpu: 25m
+      memory: 64Mi
 
-# Load Balancer IP Address Management
+# Routing mode - Use native routing for best performance
+# Native routing is required for DSR mode and recommended for Talos
+routingMode: native
+autoDirectNodeRoutes: true
+ipv4NativeRoutingCIDR: 10.244.0.0/16  # Must match your cluster pod CIDR
+
+# Load Balancer configuration
 loadBalancer:
   algorithm: maglev
-  mode: dsr
+  mode: dsr  # Direct Server Return for better performance with native routing
 
-# Monitoring
+# L2 Announcements for LoadBalancer services
+# This handles LoadBalancer IP announcements on your local network
+l2announcements:
+  enabled: true
+
+# BGP Control Plane v2 - Disabled (not needed for homelab)
+# Enable this if you need to peer with external routers
+bgpControlPlane:
+  enabled: false
+
+# External IPs support
+externalIPs:
+  enabled: true
+
+# Gateway API support - Disabled, using Traefik instead
+gatewayAPI:
+  enabled: false
+
+# Monitoring - Disabled until Prometheus is installed
 prometheus:
   enabled: false
+  metricsService: false
+  port: 9962
   serviceMonitor:
     enabled: false
+    trustCRDsExist: false
 
-# Resource limits
+# Grafana dashboards - Disabled until Prometheus/Grafana is installed
+dashboards:
+  enabled: false
+
+# Auto-restart pods when ConfigMap changes
+rollOutCiliumPods: true
+
+# K8s API client rate limiting
+k8sClientRateLimit:
+  qps: 20
+  burst: 100
+
+# Envoy proxy configuration
+envoy:
+  prometheus:
+    enabled: false
+    port: "9964"
+    serviceMonitor:
+      enabled: false
+
+# Resource limits for Cilium agent
 resources:
   limits:
-    cpu: 4000m
-    memory: 4Gi
+    cpu: 500m
+    memory: 512Mi
   requests:
     cpu: 100m
-    memory: 512Mi
+    memory: 256Mi

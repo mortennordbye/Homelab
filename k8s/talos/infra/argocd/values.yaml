@@ -12,6 +12,9 @@ configs:
 
 server:
   replicas: 1
+  service:
+    type: LoadBalancer
+    loadBalancerIP: 10.3.10.100
   ingress:
     enabled: false
 
