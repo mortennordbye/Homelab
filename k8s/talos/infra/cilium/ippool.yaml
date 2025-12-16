@@ -1,4 +1,4 @@
-apiVersion: cilium.io/v2alpha1
+apiVersion: cilium.io/v2
 kind: CiliumLoadBalancerIPPool
 metadata:
   name: default-pool
@@ -7,7 +7,7 @@ spec:
   blocks:
     - cidr: 10.3.10.100/29
 ---
-apiVersion: cilium.io/v2alpha1
+apiVersion: cilium.io/v2
 kind: CiliumL2AnnouncementPolicy
 metadata:
   name: default-l2-policy
