@@ -1,10 +1,8 @@
-# Skip TLS verification for kubelet certificates
 args:
   - --kubelet-insecure-tls
   - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
   - --metric-resolution=15s
 
-# Resource limits
 resources:
   requests:
     cpu: 50m
@@ -13,8 +11,7 @@ resources:
     cpu: 200m
     memory: 256Mi
 
-# High availability
-replicas: 2
+replicas: 1
 
 affinity:
   podAntiAffinity:
