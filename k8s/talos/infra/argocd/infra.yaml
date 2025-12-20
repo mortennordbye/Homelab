@@ -23,7 +23,6 @@ spec:
         path: "{{ path }}"
       destination:
         name: in-cluster
-        namespace: argocd
       syncPolicy:
         automated:
           prune: true

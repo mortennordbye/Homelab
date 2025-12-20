@@ -10,7 +10,7 @@ resources:
   - issuers/letsencrypt-prod.yaml
 
 namespace: cert-manager
-
+# kubectl create secret generic cloudflare-token-secret --from-literal=cloudflare-token=YOUR_TOKEN -n cert-manager
 helmCharts:
   - name: cert-manager
     repo: https://charts.jetstack.io
