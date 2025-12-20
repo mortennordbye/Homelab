@@ -5,11 +5,9 @@ resources:
   - namespace.yaml
 #  - cloudflare-token-secret.yaml
   - certificates/bigd-no.yaml
-  - certificates/local-bigd-no-stage.yaml
   - certificates/local-bigd-no.yaml
   - certificates/nordbye-it.yml
   - issuers/letsencrypt-prod.yaml
-  - issuers/letsencrypt-stage.yaml
 
 namespace: cert-manager
 
