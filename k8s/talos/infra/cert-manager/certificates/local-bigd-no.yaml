@@ -1,16 +1,16 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: local-bigd-no-stage
+  name: local-bigd-no
   namespace: cert-manager
   annotations:
-    argocd.argoproj.io/sync-wave: "101"
+    argocd.argoproj.io/sync-wave: "201"
 spec:
-  secretName: local-bigd-no-stage-tls
+  secretName: local-bigd-no-tls
   issuerRef:
-    name: letsencrypt-stage
+    name: letsencrypt-prod
     kind: ClusterIssuer
   commonName: "*.local.bigd.no"
   dnsNames:
-  - "local.bigd.no"
-  - "*.local.bigd.no"
+    - "local.bigd.no"
+    - "*.local.bigd.no"

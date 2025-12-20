@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
-  - cloudflare-token-secret.yaml
+#  - cloudflare-token-secret.yaml
   - certificates/bigd-no.yaml
   - certificates/local-bigd-no-stage.yaml
   - certificates/local-bigd-no.yaml
@@ -16,8 +16,8 @@ namespace: cert-manager
 helmCharts:
   - name: cert-manager
     repo: https://charts.jetstack.io
-    includeCRDs: false
+    includeCRDs: true
     namespace: cert-manager
-    version: v1.18.2
+    version: 1.19.2
     releaseName: cert-manager
     valuesFile: ./values.yaml
