@@ -7,7 +7,6 @@ deployment:
 
 api:
   dashboard: true
-  insecure: true
 
 providers:
   kubernetesGateway:
@@ -65,12 +64,6 @@ ports:
     protocol: TCP
     expose:
       default: true
-  traefik:
-    port: 9000
-    exposedPort: 9000
-    protocol: TCP
-    expose:
-      default: true
 
 service:
   type: LoadBalancer
@@ -79,7 +72,9 @@ service:
 
 ingressRoute:
   dashboard:
-    enabled: false
+    enabled: true
+    entryPoints: ["websecure"]
+    matchRule: Host(`traefik.local.bigd.no`)
 
 logs:
   general:
