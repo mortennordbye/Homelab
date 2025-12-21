@@ -3,13 +3,7 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
-  - plex-pvc.yaml
-  - plex-deployment.yaml
-  - plex-service.yaml
-  - tautulli-pvc.yaml
-  - tautulli-deployment.yaml
-  - tautulli-service.yaml
-  - overseerr-pvc.yaml
-  - overseerr-deployment.yaml
-  - overseerr-service.yaml
+  - plex.yaml
+  - tautulli.yaml
+  - overseerr.yaml
   - httproutes.yaml
