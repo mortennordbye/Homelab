@@ -34,9 +34,14 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
-            - name: media
-              mountPath: /media
-              readOnly: true
+            - name: media-series
+              mountPath: /tv
+            - name: media-movies
+              mountPath: /movies
+            - name: media-courses
+              mountPath: /courses
+            - name: media-youtube
+              mountPath: /youtube
             - name: transcode
               mountPath: /transcode
           livenessProbe:
@@ -57,9 +62,25 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: plex-config
-        - name: media
+        - name: media-series
           nfs:
             server: nas.local.bigd.no
-            path: /volume1/media
+            path: /volume1/shared-data/media/series
+            readOnly: true
+        - name: media-movies
+          nfs:
+            server: nas.local.bigd.no
+            path: /volume1/shared-data/media/movies
+            readOnly: true
+        - name: media-courses
+          nfs:
+            server: nas.local.bigd.no
+            path: /volume1/shared-data/media/courses
+            readOnly: true
+        - name: media-youtube
+          nfs:
+            server: nas.local.bigd.no
+            path: /volume1/shared-data/media/youtube
+            readOnly: true
         - name: transcode
           emptyDir: {}
