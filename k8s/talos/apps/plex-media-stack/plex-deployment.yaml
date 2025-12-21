@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: plex
-          image: ghcr.io/linuxserver/plex:1.42.1
+          image: ghcr.io/linuxserver/plex:1.42.2
           env:
             - name: PUID
               value: "1000"
