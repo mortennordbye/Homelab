@@ -64,6 +64,12 @@ ports:
     protocol: TCP
     expose:
       default: true
+  traefik:
+    port: 9000
+    exposedPort: 9000
+    protocol: TCP
+    expose:
+      default: true
 
 service:
   type: LoadBalancer
@@ -72,11 +78,7 @@ service:
 
 ingressRoute:
   dashboard:
-    enabled: true
-    entryPoints: ["websecure"]
-    matchRule: Host(`traefik.local.bigd.no`)
-    tls:
-      secretName: local-bigd-no-tls
+    enabled: false
 
 logs:
   general:
