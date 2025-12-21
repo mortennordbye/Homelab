@@ -33,20 +33,20 @@ gateway:
       protocol: HTTPS
       namespacePolicy:
         from: All
-      mode: Terminate
-      certificateRefs:
-        - group: ""
-          kind: Secret
-          name: bigd-no-tls
-          namespace: cert-manager
-        - group: ""
-          kind: Secret
-          name: local-bigd-no-tls
-          namespace: cert-manager
-        - group: ""
-          kind: Secret
-          name: nordbye-it-tls
-          namespace: cert-manager
+      tls:
+        certificateRefs:
+          - group: ""
+            kind: Secret
+            name: bigd-no-tls
+            namespace: cert-manager
+          - group: ""
+            kind: Secret
+            name: local-bigd-no-tls
+            namespace: cert-manager
+          - group: ""
+            kind: Secret
+            name: nordbye-it-tls
+            namespace: cert-manager
 
 gatewayClass:
   enabled: true
