@@ -9,7 +9,7 @@ spec:
       kind: Gateway
       name: traefik-gateway
       namespace: traefik
-      sectionName: websecure
+      sectionName: nordbye-it
   hostnames:
     - stage.nordbye.it
   rules:

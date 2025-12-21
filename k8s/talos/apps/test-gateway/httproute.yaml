@@ -9,7 +9,7 @@ spec:
       kind: Gateway
       name: traefik-gateway
       namespace: traefik
-      sectionName: websecure
+      sectionName: local-bigd-no
   hostnames:
     - test.local.bigd.no
   rules:

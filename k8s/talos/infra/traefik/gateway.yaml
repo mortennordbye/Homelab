@@ -12,9 +12,23 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
-    - name: websecure
+    - name: local-bigd-no
       protocol: HTTPS
       port: 8443
+      hostname: "*.local.bigd.no"
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        certificateRefs:
+          - group: ""
+            kind: Secret
+            name: local-bigd-no-tls
+            namespace: cert-manager
+    - name: bigd-no
+      protocol: HTTPS
+      port: 8443
+      hostname: "*.bigd.no"
       allowedRoutes:
         namespaces:
           from: All
@@ -24,10 +38,15 @@ spec:
             kind: Secret
             name: bigd-no-tls
             namespace: cert-manager
-          - group: ""
-            kind: Secret
-            name: local-bigd-no-tls
-            namespace: cert-manager
+    - name: nordbye-it
+      protocol: HTTPS
+      port: 8443
+      hostname: "*.nordbye.it"
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        certificateRefs:
           - group: ""
             kind: Secret
             name: nordbye-it-tls
