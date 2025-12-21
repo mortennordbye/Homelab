@@ -5,9 +5,9 @@ env:
   TZ: "Europe/Oslo"
 
 envSecrets:
-  dbCredentials:
+  dbEncryption:
     existingSecret: homarr-db-secret
-    dbEncryptionKey: db-encryption-key
+    key: db-encryption-key
 
 persistence:
   homarrDatabase:
