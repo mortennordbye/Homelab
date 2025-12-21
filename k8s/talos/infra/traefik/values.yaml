@@ -32,13 +32,16 @@ gateway:
         from: All
       mode: Terminate
       certificateRefs:
-        - kind: Secret
+        - group: ""
+          kind: Secret
           name: bigd-no-tls
           namespace: cert-manager
-        - kind: Secret
+        - group: ""
+          kind: Secret
           name: local-bigd-no-tls
           namespace: cert-manager
-        - kind: Secret
+        - group: ""
+          kind: Secret
           name: nordbye-it-tls
           namespace: cert-manager
 
