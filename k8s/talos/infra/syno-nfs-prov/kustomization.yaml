@@ -3,7 +3,7 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
-  
+
 namespace: syno-nfs-prov
 
 helmCharts:

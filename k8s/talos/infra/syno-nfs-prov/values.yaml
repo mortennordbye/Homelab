@@ -1,8 +1,8 @@
 replicaCount: 1
 
 nfs:
-  server: "10.0.0.2"
-  path: "/volume1/k8s-volumes/k3sa"
+  server: "10.3.10.10"
+  path: "/volume1/k8s-volumes/talos"
 
 storageClass:
   create: true
