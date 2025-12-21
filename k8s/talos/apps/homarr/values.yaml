@@ -29,14 +29,17 @@ httproute:
   hostnames:
     - hub.bigd.no
   rules:
-    - matches:
+    - backendRefs:
+        - group: ""
+          kind: Service
+          name: homarr
+          port: 7575
+          weight: 1
+      matches:
         - path:
             type: PathPrefix
             value: /
       filters: []
-      backendRefs:
-        - name: homarr
-          port: 7575
 
 ingress:
   enabled: false
