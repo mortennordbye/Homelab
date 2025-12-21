@@ -48,16 +48,18 @@ spec:
             httpGet:
               path: /identity
               port: 32400
-            initialDelaySeconds: 30
+            initialDelaySeconds: 120
             periodSeconds: 30
-            timeoutSeconds: 10
-            failureThreshold: 3
+            timeoutSeconds: 30
+            failureThreshold: 5
           readinessProbe:
             httpGet:
               path: /identity
               port: 32400
-            initialDelaySeconds: 10
+            initialDelaySeconds: 60
             periodSeconds: 10
+            timeoutSeconds: 30
+            failureThreshold: 10
       volumes:
         - name: config
           persistentVolumeClaim:
