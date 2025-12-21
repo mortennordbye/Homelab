@@ -15,7 +15,6 @@ spec:
       labels:
         app: plex
     spec:
-      hostNetwork: true
       containers:
         - name: plex
           image: ghcr.io/linuxserver/plex:1.42.1

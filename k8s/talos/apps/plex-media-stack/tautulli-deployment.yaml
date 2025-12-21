@@ -15,7 +15,6 @@ spec:
       labels:
         app: tautulli
     spec:
-      hostNetwork: true
       containers:
         - name: tautulli
           image: ghcr.io/linuxserver/tautulli:latest

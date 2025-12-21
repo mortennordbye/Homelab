@@ -15,7 +15,6 @@ spec:
       labels:
         app: overseerr
     spec:
-      hostNetwork: true
       containers:
         - name: overseerr
           image: ghcr.io/linuxserver/overseerr:latest
