@@ -1,0 +1,71 @@
+globalArguments:
+  - "--global.checknewversion=false"
+  - "--global.sendanonymoususage=false"
+
+providers:
+  kubernetesGateway:
+    enabled: true
+    experimentalChannel: true
+  kubernetesCRD:
+    enabled: true
+    allowCrossNamespace: true
+  kubernetesIngress:
+    enabled: true
+
+gateway:
+  enabled: true
+  name: traefik-gateway
+  listeners:
+    web:
+      port: 8000
+      hostname: ""
+      protocol: HTTP
+      namespacePolicy:
+    websecure:
+      port: 8443
+      hostname: ""
+      protocol: HTTPS
+      namespacePolicy:
+      mode: Terminate
+      certificateRefs:
+        - kind: Secret
+          name: bigd-no-tls
+          namespace: cert-manager
+        - kind: Secret
+          name: local-bigd-no-tls
+          namespace: cert-manager
+        - kind: Secret
+          name: nordbye-it-tls
+          namespace: cert-manager
+
+gatewayClass:
+  enabled: true
+
+ports:
+  web:
+    port: 8000
+    exposedPort: 80
+    protocol: TCP
+    expose:
+      default: true
+  websecure:
+    port: 8443
+    exposedPort: 443
+    protocol: TCP
+    expose:
+      default: true
+
+service:
+  type: LoadBalancer
+  spec:
+    loadBalancerIP: 10.3.10.101
+
+ingressRoute:
+  dashboard:
+    enabled: false
+
+logs:
+  general:
+    level: INFO
+  access:
+    enabled: true
