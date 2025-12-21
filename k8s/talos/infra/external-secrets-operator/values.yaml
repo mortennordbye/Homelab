@@ -3,3 +3,5 @@ bitwarden-sdk-server:
   enabled: true
 
 installCRDs: true
+
+replicaCount: 1
