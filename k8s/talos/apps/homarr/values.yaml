@@ -35,11 +35,8 @@ httproute:
             value: /
       filters: []
       backendRefs:
-        - group: ""
-          kind: Service
-          name: homarr
+        - name: homarr
           port: 7575
-          weight: 1
 
 ingress:
   enabled: false
