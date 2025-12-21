@@ -7,8 +7,6 @@ resources:
   - bitwarden-certificate.yaml
   - clustersecretstore-bitwarden.yaml
 
-namespace: external-secrets
-
 helmCharts:
   - name: external-secrets
     repo: https://charts.external-secrets.io/
