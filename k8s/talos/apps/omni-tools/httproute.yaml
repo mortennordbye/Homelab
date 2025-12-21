@@ -1,0 +1,25 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: omni-tools
+  namespace: omni-tools
+spec:
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: traefik-gateway
+      namespace: traefik
+      sectionName: bigd-no
+  hostnames:
+    - omni-tools.bigd.no
+  rules:
+    - backendRefs:
+        - group: ""
+          kind: Service
+          name: omni-tools-service
+          port: 80
+          weight: 1
+      matches:
+        - path:
+            type: PathPrefix
+            value: /

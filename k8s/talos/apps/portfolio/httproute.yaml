@@ -1,23 +1,24 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: test-app
-  namespace: test-gateway
+  name: nordbye
+  namespace: portfolio
 spec:
   parentRefs:
     - group: gateway.networking.k8s.io
       kind: Gateway
       name: traefik-gateway
       namespace: traefik
-      sectionName: local-bigd-no
+      sectionName: nordbye-it
   hostnames:
-    - test.local.bigd.no
+    - nordbye.it
+    - www.nordbye.it
   rules:
     - backendRefs:
         - group: ""
           kind: Service
-          name: test-app
-          port: 80
+          name: nordbye-service
+          port: 8080
           weight: 1
       matches:
         - path:
