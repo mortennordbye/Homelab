@@ -9,6 +9,7 @@ configs:
     server.insecure: true
   cm:
     kustomize.buildOptions: "--enable-helm"
+    exec.enabled: "true"
 
 server:
   replicas: 1

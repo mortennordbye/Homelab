@@ -2,6 +2,9 @@ globalArguments:
   - "--global.checknewversion=false"
   - "--global.sendanonymoususage=false"
 
+deployment:
+  replicas: 1
+
 providers:
   kubernetesGateway:
     enabled: true
