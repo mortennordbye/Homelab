@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: overseerr
+  namespace: plex-media-stack
+spec:
+  selector:
+    app: overseerr
+  ports:
+    - protocol: TCP
+      port: 5055
+      targetPort: 5055
