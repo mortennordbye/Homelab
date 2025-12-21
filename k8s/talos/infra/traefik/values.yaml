@@ -18,34 +18,7 @@ providers:
     enabled: true
 
 gateway:
-  enabled: true
-  name: traefik-gateway
-  listeners:
-    web:
-      port: 8000
-      hostname: ""
-      protocol: HTTP
-      namespacePolicy:
-        from: All
-    websecure:
-      port: 8443
-      hostname: ""
-      protocol: HTTPS
-      namespacePolicy:
-        from: All
-      certificateRefs:
-        - group: ""
-          kind: Secret
-          name: bigd-no-tls
-          namespace: cert-manager
-        - group: ""
-          kind: Secret
-          name: local-bigd-no-tls
-          namespace: cert-manager
-        - group: ""
-          kind: Secret
-          name: nordbye-it-tls
-          namespace: cert-manager
+  enabled: false
 
 gatewayClass:
   enabled: true

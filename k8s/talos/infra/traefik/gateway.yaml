@@ -1,0 +1,34 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: traefik-gateway
+  namespace: traefik
+spec:
+  gatewayClassName: traefik
+  listeners:
+    - name: web
+      protocol: HTTP
+      port: 8000
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: websecure
+      protocol: HTTPS
+      port: 8443
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        certificateRefs:
+          - group: ""
+            kind: Secret
+            name: bigd-no-tls
+            namespace: cert-manager
+          - group: ""
+            kind: Secret
+            name: local-bigd-no-tls
+            namespace: cert-manager
+          - group: ""
+            kind: Secret
+            name: nordbye-it-tls
+            namespace: cert-manager
