@@ -3,8 +3,8 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
-  - certificate-bootstrap.yaml
-  - clusterissuer-bootstrap.yaml
+  - cluster_issuer.yaml
+  - bitwarden-certificate.yaml
   - clustersecretstore-bitwarden.yaml
 
 namespace: external-secrets
