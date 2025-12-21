@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - gateway.yaml
+  - http-redirect.yaml
 
 helmCharts:
   - name: traefik
