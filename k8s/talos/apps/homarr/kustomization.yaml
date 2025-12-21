@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - homarr-db-ext-secret.yaml
+  - httproute.yaml
 
 namespace: homarr
 

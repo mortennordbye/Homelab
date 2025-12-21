@@ -19,27 +19,7 @@ rbac:
   enabled: true
 
 httproute:
-  enabled: true
-  parentRefs:
-    - group: gateway.networking.k8s.io
-      kind: Gateway
-      name: traefik-gateway
-      namespace: traefik
-      sectionName: bigd-no
-  hostnames:
-    - hub.bigd.no
-  rules:
-    - backendRefs:
-        - group: ""
-          kind: Service
-          name: homarr
-          port: 7575
-          weight: 1
-      matches:
-        - path:
-            type: PathPrefix
-            value: /
-      filters: []
+  enabled: false
 
 ingress:
   enabled: false
