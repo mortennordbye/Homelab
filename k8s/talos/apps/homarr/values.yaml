@@ -18,6 +18,24 @@ persistence:
 rbac:
   enabled: true
 
+httproute:
+  enabled: true
+  parentRefs:
+    - name: traefik-gateway
+      namespace: traefik
+      sectionName: bigd-no
+  hostnames:
+    - hub.bigd.no
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      filters: []
+      backendRefs:
+        - name: homarr
+          port: 7575
+
 ingress:
   enabled: false
 
