@@ -8,6 +8,7 @@ resources:
   - certificates/local-bigd-no.yaml
   - certificates/nordbye-it.yml
   - issuers/letsencrypt-prod.yaml
+  - reference-grant.yaml
 
 namespace: cert-manager
 # kubectl create secret generic cloudflare-token-secret --from-literal=cloudflare-token=YOUR_TOKEN -n cert-manager
