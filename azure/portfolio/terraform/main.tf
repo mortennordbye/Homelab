@@ -18,49 +18,74 @@ resource "azurerm_resource_group" "rg" {
   tags     = local.tags
 }
 
-resource "azurerm_log_analytics_workspace" "law" {
-  name                = local.law_name
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-  sku                 = "PerGB2018"
-  retention_in_days   = 30
-  tags                = local.tags
-}
-
 resource "azurerm_container_app_environment" "env" {
   name                       = local.env_name
   location                   = azurerm_resource_group.rg.location
   resource_group_name        = azurerm_resource_group.rg.name
-  log_analytics_workspace_id = azurerm_log_analytics_workspace.law.id
   tags                       = local.tags
 }
 
 resource "azurerm_container_app" "app" {
-  name                         = local.app_name
-  container_app_environment_id = azurerm_container_app_environment.env.id
+  name                         = "ca-${var.project}-web"
   resource_group_name          = azurerm_resource_group.rg.name
+  container_app_environment_id = azurerm_container_app_environment.env.id
   revision_mode                = "Single"
   tags                         = local.tags
 
   template {
-    min_replicas = 1
-    max_replicas = 2
+    min_replicas                     = 1
+    max_replicas                     = 2
+    termination_grace_period_seconds = 15
 
     container {
       name   = "web"
-      image  = var.image
+      image  = var.image # e.g. ghcr.io/mortennordbye/portfolio:latest
       cpu    = 0.25
       memory = "0.5Gi"
+
+      # Writable scratch for nginx temp files (equivalent to k8s emptyDir)
+      volume_mounts {
+        name = "nginx-cache"
+        path = "/var/cache/nginx"
+      }
+
+      readiness_probe {
+        transport               = "HTTP"
+        port                    = var.container_port # 8080
+        path                    = "/healthz"
+        initial_delay           = 2
+        interval_seconds        = 10
+        timeout                 = 3
+        failure_count_threshold = 3
+        success_count_threshold = 1
+      }
+
+      liveness_probe {
+        transport               = "HTTP"
+        port                    = var.container_port
+        path                    = "/healthz"
+        initial_delay           = 10
+        interval_seconds        = 15
+        timeout                 = 3
+        failure_count_threshold = 3
+      }
+    }
+
+    # Define the EmptyDir volume
+    volume {
+      name         = "nginx-cache"
+      storage_type = "EmptyDir"
     }
   }
 
   ingress {
     external_enabled = true
-    target_port      = var.container_port
+    target_port      = var.container_port # 8080
     transport        = "auto"
+
     traffic_weight {
-      percentage      = 100
       latest_revision = true
+      percentage      = 100
     }
   }
 }

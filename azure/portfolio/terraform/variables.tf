@@ -1,3 +1,11 @@
+variable "subscription_id" {
+  type = string
+}
+
+variable "tenant_id" {
+  type = string
+}
+
 variable "project" {
   type    = string
   default = "portfolio"
@@ -25,5 +33,5 @@ variable "image" {
 
 variable "container_port" {
   type    = number
-  default = 80
+  default = 8080
 }

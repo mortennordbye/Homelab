@@ -1,6 +1,6 @@
 services:
   plex:
-    image: ghcr.io/linuxserver/plex:latest
+    image: ghcr.io/linuxserver/plex:1.42.1
     container_name: plex
     env_file: .env
     network_mode: host
