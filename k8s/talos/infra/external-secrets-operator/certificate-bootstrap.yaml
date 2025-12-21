@@ -4,13 +4,15 @@ metadata:
   name: bitwarden-bootstrap-certificate
   namespace: external-secrets
 spec:
-  commonName: cert-manager-bitwarden-tls  # Required by iOS
+  commonName: cert-manager-bitwarden-tls # Required by iOS
   isCA: true
   secretName: bitwarden-tls-certs
   subject:
     organizations:
       - external-secrets.io
   dnsNames:
+    - external-secrets-operator-webhook.external-secrets.svc
+    - external-secrets-operator-webhook.external-secrets.svc.cluster.local
     - external-secrets-bitwarden-sdk-server.external-secrets.svc.cluster.local
     - bitwarden-sdk-server.external-secrets.svc.cluster.local
     - localhost
