@@ -1,0 +1,26 @@
+replicaCount: 1
+strategyType: RollingUpdate
+
+env:
+  TZ: "Europe/Oslo"
+
+envSecrets:
+  dbCredentials:
+    existingSecret: homarr-db-secret
+    dbEncryptionKey: db-encryption-key
+
+persistence:
+  homarrDatabase:
+    enabled: true
+    storageClassName: syno-nfs
+    size: "1Gi"
+
+rbac:
+  enabled: true
+
+ingress:
+  enabled: false
+
+service:
+  type: ClusterIP
+  port: 3000

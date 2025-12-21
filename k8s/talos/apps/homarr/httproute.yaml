@@ -1,0 +1,25 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: homarr
+  namespace: homarr
+spec:
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: traefik-gateway
+      namespace: traefik
+      sectionName: bigd-no
+  hostnames:
+    - hub.bigd.no
+  rules:
+    - backendRefs:
+        - group: ""
+          kind: Service
+          name: homarr
+          port: 3000
+          weight: 1
+      matches:
+        - path:
+            type: PathPrefix
+            value: /

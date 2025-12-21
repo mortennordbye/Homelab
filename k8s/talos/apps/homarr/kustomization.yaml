@@ -4,7 +4,8 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - homarr-db-ext-secret.yaml
-  
+  - httproute.yaml
+
 namespace: homarr
 
 helmCharts:
@@ -12,6 +13,6 @@ helmCharts:
     repo: https://homarr-labs.github.io/charts/
     includeCRDs: true
     namespace: homarr
-    version: 7.1.0
+    version: 8.6.0
     releaseName: homarr
     valuesFile: ./values.yaml
