@@ -5,6 +5,9 @@ globalArguments:
 deployment:
   replicas: 1
 
+api:
+  dashboard: true
+
 providers:
   kubernetesGateway:
     enabled: true
@@ -69,7 +72,11 @@ service:
 
 ingressRoute:
   dashboard:
-    enabled: false
+    enabled: true
+    entryPoints: ["websecure"]
+    matchRule: Host(`traefik.local.bigd.no`)
+    tls:
+      secretName: local-bigd-no-tls
 
 logs:
   general:
