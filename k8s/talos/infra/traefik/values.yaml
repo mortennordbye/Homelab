@@ -24,11 +24,13 @@ gateway:
       hostname: ""
       protocol: HTTP
       namespacePolicy:
+        from: All
     websecure:
       port: 8443
       hostname: ""
       protocol: HTTPS
       namespacePolicy:
+        from: All
       mode: Terminate
       certificateRefs:
         - kind: Secret
