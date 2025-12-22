@@ -4,8 +4,8 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - project-homelab.yaml
-  - apps.yaml
-  - infra.yaml
+#  - apps.yaml
+#  - infra.yaml
 
 
 namespace: argocd
