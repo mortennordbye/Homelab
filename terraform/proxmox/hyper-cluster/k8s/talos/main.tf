@@ -1,5 +1,3 @@
-# Terraform providers for Talos Kubernetes on Proxmox
-
 terraform {
   required_version = ">= 1.13.0"
 
@@ -24,21 +22,8 @@ terraform {
       source  = "hashicorp/local"
       version = "~> 2.5"
     }
-    kubectl = {
-      source  = "gavinbunney/kubectl"
-      version = "~> 1.19"
-    }
   }
-
 }
-
-# Remote state example (optional):
-# backend "azurerm" {
-#   resource_group_name  = "rg-tfstate-homelab"
-#   storage_account_name = "sttfstatemvnhomelab"
-#   container_name       = "tfstate"
-#   key                  = "proxmox/hyper-cluster/k8s/talos.tfstate"
-# }
 
 provider "proxmox" {
   endpoint  = var.proxmox_endpoint
@@ -56,8 +41,4 @@ provider "helm" {
   kubernetes {
     config_path = "${path.module}/kubeconfig"
   }
-}
-
-provider "kubectl" {
-  config_path = "${path.module}/kubeconfig"
 }

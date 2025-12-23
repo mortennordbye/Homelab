@@ -1,21 +1,14 @@
-# Talos cluster configuration and bootstrap
-
 locals {
-  # Separate nodes by type
-  control_plane_nodes = { for k, v in var.nodes : k => v if v.node_type == "controlplane" }
-  worker_nodes        = { for k, v in var.nodes : k => v if v.node_type == "worker" }
-
-  # API endpoint (VIP or first control plane IP)
+  control_plane_nodes    = { for k, v in var.nodes : k => v if v.node_type == "controlplane" }
+  worker_nodes           = { for k, v in var.nodes : k => v if v.node_type == "worker" }
   first_control_plane_ip = values(local.control_plane_nodes)[0].ip
   kubernetes_endpoint    = coalesce(var.cluster_vip, local.first_control_plane_ip)
 }
 
-# Generate Talos machine secrets
 resource "talos_machine_secrets" "cluster" {
   talos_version = var.talos_version
 }
 
-# Create custom Talos image (Intel microcode + QEMU guest agent)
 resource "talos_image_factory_schematic" "this" {
   schematic = yamlencode({
     customization = {
@@ -29,7 +22,6 @@ resource "talos_image_factory_schematic" "this" {
   })
 }
 
-# Download Talos image to Proxmox
 resource "proxmox_virtual_environment_download_file" "talos_image" {
   node_name               = values(var.nodes)[0].proxmox_node
   content_type            = "iso"
@@ -38,9 +30,12 @@ resource "proxmox_virtual_environment_download_file" "talos_image" {
   url                     = "https://factory.talos.dev/image/${talos_image_factory_schematic.this.id}/${var.talos_version}/nocloud-amd64.raw.gz"
   decompression_algorithm = "gz"
   overwrite               = false
+
+  lifecycle {
+    ignore_changes = [file_name, url]
+  }
 }
 
-# Generate machine configurations for control plane nodes
 data "talos_machine_configuration" "controlplane" {
   for_each = local.control_plane_nodes
 
@@ -84,7 +79,6 @@ data "talos_machine_configuration" "controlplane" {
   ]
 }
 
-# Generate machine configurations for worker nodes
 data "talos_machine_configuration" "worker" {
   for_each = local.worker_nodes
 
@@ -124,10 +118,8 @@ data "talos_machine_configuration" "worker" {
   ]
 }
 
-# Apply configurations to control plane VMs
 resource "talos_machine_configuration_apply" "controlplane" {
-  depends_on = [proxmox_virtual_environment_vm.talos_nodes]
-  for_each   = local.control_plane_nodes
+  for_each = local.control_plane_nodes
 
   endpoint                    = each.value.ip
   node                        = each.value.ip
@@ -139,18 +131,10 @@ resource "talos_machine_configuration_apply" "controlplane" {
     create = "10m"
     update = "10m"
   }
-
-  lifecycle {
-    replace_triggered_by = [
-      proxmox_virtual_environment_vm.talos_nodes[each.key]
-    ]
-  }
 }
 
-# Apply configurations to worker VMs
 resource "talos_machine_configuration_apply" "worker" {
-  depends_on = [proxmox_virtual_environment_vm.talos_nodes]
-  for_each   = local.worker_nodes
+  for_each = local.worker_nodes
 
   endpoint                    = each.value.ip
   node                        = each.value.ip
@@ -162,15 +146,8 @@ resource "talos_machine_configuration_apply" "worker" {
     create = "10m"
     update = "10m"
   }
-
-  lifecycle {
-    replace_triggered_by = [
-      proxmox_virtual_environment_vm.talos_nodes[each.key]
-    ]
-  }
 }
 
-# Bootstrap the first control plane node
 resource "talos_machine_bootstrap" "cluster" {
   depends_on           = [talos_machine_configuration_apply.controlplane]
   endpoint             = local.first_control_plane_ip
@@ -182,27 +159,12 @@ resource "talos_machine_bootstrap" "cluster" {
   }
 }
 
-# Generate Talos client configuration
 data "talos_client_configuration" "cluster" {
   cluster_name         = var.cluster_name
   client_configuration = talos_machine_secrets.cluster.client_configuration
   endpoints            = [for node in var.nodes : node.ip]
 }
 
-# Wait for cluster health (commented: CNI set to "none", check would fail before Cilium installation)
-# data "talos_cluster_health" "cluster" {
-#   depends_on = [talos_machine_bootstrap.cluster]
-#
-#   client_configuration = talos_machine_secrets.cluster.client_configuration
-#   control_plane_nodes  = [for node in var.nodes : node.ip]
-#   endpoints            = [for node in var.nodes : node.ip]
-#
-#   timeouts = {
-#     read = "10m"
-#   }
-# }
-
-# Generate kubeconfig
 resource "talos_cluster_kubeconfig" "cluster" {
   depends_on = [talos_machine_bootstrap.cluster]
 

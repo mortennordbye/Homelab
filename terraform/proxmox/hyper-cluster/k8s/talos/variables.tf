@@ -1,66 +1,62 @@
-# Input variables for Talos cluster deployment
-
-# Proxmox Connection
 variable "proxmox_endpoint" {
-  description = "URL of the Proxmox API endpoint"
+  description = "Proxmox API URL"
   type        = string
 }
 
 variable "proxmox_api_token" {
-  description = "Proxmox API token (format: user@realm!tokenid=secret)"
+  description = "API token (user@realm!tokenid=secret)"
   type        = string
   sensitive   = true
 }
 
 variable "proxmox_insecure" {
-  description = "Whether to skip TLS verification for Proxmox API"
+  description = "Skip TLS verification"
   type        = bool
   default     = true
 }
 
 variable "proxmox_ssh_username" {
-  description = "SSH username for Proxmox host"
+  description = "SSH username"
   type        = string
   default     = "root"
 }
 
 variable "proxmox_ssh_password" {
-  description = "SSH password for Proxmox host (leave empty to use SSH agent)"
+  description = "SSH password (empty = use agent)"
   type        = string
   sensitive   = true
   default     = ""
 }
 
 variable "proxmox_iso_storage" {
-  description = "Proxmox storage pool for ISO images"
+  description = "ISO storage pool"
   type        = string
   default     = "local"
 }
 
-# Cluster Configuration
 variable "cluster_name" {
-  description = "Name of the Talos cluster"
+  description = "Cluster name"
   type        = string
 }
 
 variable "cluster_vip" {
-  description = "Virtual IP address for the cluster control plane"
+  description = "Control plane VIP"
   type        = string
 }
 
 variable "network_gateway" {
-  description = "Network gateway IP address"
+  description = "Gateway IP"
   type        = string
 }
 
 variable "network_subnet_mask" {
-  description = "Network subnet mask"
+  description = "Subnet mask"
   type        = string
   default     = "24"
 }
 
 variable "talos_version" {
-  description = "Talos Linux version"
+  description = "Talos version"
   type        = string
 }
 
@@ -69,9 +65,8 @@ variable "kubernetes_version" {
   type        = string
 }
 
-# Node Configuration
 variable "nodes" {
-  description = "Configuration for cluster nodes"
+  description = "Node configuration"
   type = map(object({
     proxmox_node = string
     ip           = string
@@ -83,4 +78,16 @@ variable "nodes" {
     datastore    = string
     node_type    = string
   }))
+}
+
+variable "enable_talos_upgrade" {
+  description = "Enable Talos upgrade"
+  type        = bool
+  default     = false
+}
+
+variable "enable_kubernetes_upgrade" {
+  description = "Enable Kubernetes upgrade"
+  type        = bool
+  default     = false
 }

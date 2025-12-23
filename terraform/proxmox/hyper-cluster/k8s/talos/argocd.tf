@@ -1,17 +1,5 @@
-# ArgoCD installation
-# Bootstrap via Terraform, lifecycle.ignore_changes allows self-management
-
-# Wait 60s for Cilium
-resource "time_sleep" "wait_for_cilium" {
-  depends_on = [helm_release.cilium]
-
-  create_duration = "60s"
-}
-
-# Install ArgoCD
 resource "helm_release" "argocd" {
-  depends_on = [time_sleep.wait_for_cilium]
-
+  depends_on       = [null_resource.cilium_manifests]
   name             = "argocd"
   repository       = "https://argoproj.github.io/argo-helm"
   chart            = "argo-cd"
@@ -23,25 +11,25 @@ resource "helm_release" "argocd" {
   wait_for_jobs    = true
   timeout          = 600
 
-  # Allow ArgoCD self-management
   lifecycle {
-    ignore_changes = [version, values]
+    ignore_changes = all
   }
-  values = [file("${path.module}/../../../../../k8s/talos/infra/argocd/values.yaml")]
 
-  # Apply ArgoCD project and apps after CRDs are installed
+  values = [file("${path.module}/../../../../../k8s/talos/infra/argocd/values.yaml")]
+}
+
+resource "null_resource" "argocd_manifests" {
+  depends_on = [helm_release.argocd]
+
   provisioner "local-exec" {
-    command = "sleep 30 && kubectl apply -f ${path.module}/../../../../../k8s/talos/infra/argocd/project-homelab.yaml --kubeconfig=${path.module}/kubeconfig && kubectl apply -f ${path.module}/../../../../../k8s/talos/infra/argocd/infra.yaml --kubeconfig=${path.module}/kubeconfig"
+    command = <<-EOT
+      kubectl --kubeconfig=${path.module}/kubeconfig apply -f ${path.module}/../../../../../k8s/talos/infra/argocd/project-infra.yaml
+      kubectl --kubeconfig=${path.module}/kubeconfig apply -f ${path.module}/../../../../../k8s/talos/infra/argocd/project-apps.yaml
+      kubectl --kubeconfig=${path.module}/kubeconfig apply -f ${path.module}/../../../../../k8s/talos/infra/argocd/infra.yaml
+    EOT
   }
 }
 
-output "argocd_info" {
-  description = "ArgoCD access information"
-  value = {
-    namespace       = helm_release.argocd.namespace
-    status          = helm_release.argocd.status
-    loadbalancer_ip = "10.3.10.100"
-    message         = "Access ArgoCD: https://10.3.10.100 or http://10.3.10.100 (insecure mode enabled)"
-    password        = "Get initial password: kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d"
-  }
+output "argocd_url" {
+  value = "https://10.3.10.100"
 }

@@ -1,0 +1,8 @@
+apiVersion: cilium.io/v2
+kind: CiliumLoadBalancerIPPool
+metadata:
+  name: default-pool
+  namespace: kube-system
+spec:
+  blocks:
+    - cidr: 10.3.10.100/29

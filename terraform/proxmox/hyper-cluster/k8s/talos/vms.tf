@@ -1,5 +1,3 @@
-# VM definitions for Talos cluster nodes
-
 resource "proxmox_virtual_environment_vm" "talos_nodes" {
   for_each = var.nodes
 
@@ -59,5 +57,13 @@ resource "proxmox_virtual_environment_vm" "talos_nodes" {
         gateway = var.network_gateway
       }
     }
+  }
+
+  # Ignore changes to disk file_id since we handle upgrades via talosctl
+  # This prevents VM recreation when the Talos image version changes
+  lifecycle {
+    ignore_changes = [
+      disk[0].file_id,
+    ]
   }
 }
