@@ -3,6 +3,7 @@ resource "proxmox_virtual_environment_vm" "talos_nodes" {
 
   name        = each.key
   node_name   = each.value.proxmox_node
+  migrate     = true
   vm_id       = each.value.vmid
   description = "Talos Kubernetes ${each.value.node_type == "controlplane" ? "Control Plane" : "Worker"} Node"
   tags        = ["kubernetes", "talos", each.value.node_type]
@@ -34,12 +35,12 @@ resource "proxmox_virtual_environment_vm" "talos_nodes" {
     datastore_id = each.value.datastore
     interface    = "scsi0"
     size         = each.value.disk_size_gb
-    file_format  = "raw"          # Best performance for VMs
-    iothread     = true           # Enable I/O threads for better concurrency
-    cache        = "writethrough" # Safe caching mode
-    discard      = "on"           # TRIM support for thin provisioning
-    ssd          = true           # Enable SSD optimizations
-    file_id      = proxmox_virtual_environment_download_file.talos_image.id
+    file_format  = "raw"
+    iothread     = true
+    cache        = "writethrough"
+    discard      = "on"
+    ssd          = true
+    file_id      = proxmox_virtual_environment_download_file.talos_image[each.value.proxmox_node].id
   }
 
   boot_order = ["scsi0"] # Boot from disk only
@@ -59,11 +60,9 @@ resource "proxmox_virtual_environment_vm" "talos_nodes" {
     }
   }
 
-  # Ignore changes to disk file_id since we handle upgrades via talosctl
-  # This prevents VM recreation when the Talos image version changes
   lifecycle {
     ignore_changes = [
-      disk[0].file_id,
+      disk[0].file_id, # Upgrades via talosctl
     ]
   }
 }

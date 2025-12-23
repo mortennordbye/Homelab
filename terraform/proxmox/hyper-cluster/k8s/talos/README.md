@@ -25,6 +25,11 @@ terraform apply
 
 Talos upgrades: ctrl-1 → ctrl-2 → ctrl-3 → worker-1 → worker-2 → worker-3
 
+**Version sources:**
+
+- Talos: https://github.com/siderolabs/talos/releases
+- Kubernetes: https://kubernetes.io/releases/
+
 ## Update Apps
 
 Edit values:
@@ -33,6 +38,25 @@ Edit values:
 - `k8s/talos/infra/argocd/values.yaml`
 
 ArgoCD syncs automatically.
+
+## Migrate VM to New Node
+
+Edit `terraform.tfvars` and change `proxmox_node`:
+
+```hcl
+nodes = {
+  "talos-ctrl-01" = {
+    proxmox_node = "hyper2"  # Changed from hyper1
+    # ... rest unchanged
+  }
+}
+```
+
+```bash
+terraform apply
+```
+
+Terraform will live migrate the VM to the new node. No downtime if shared storage is used.
 
 ## Access
 

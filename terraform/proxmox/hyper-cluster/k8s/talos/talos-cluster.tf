@@ -24,7 +24,9 @@ resource "talos_image_factory_schematic" "this" {
 }
 
 resource "proxmox_virtual_environment_download_file" "talos_image" {
-  node_name               = values(var.nodes)[0].proxmox_node
+  for_each = toset(distinct([for node in var.nodes : node.proxmox_node]))
+
+  node_name               = each.key
   content_type            = "iso"
   datastore_id            = var.proxmox_iso_storage
   file_name               = "talos-${var.talos_version}-${talos_image_factory_schematic.this.id}.img"
