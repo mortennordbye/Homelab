@@ -1,3 +1,4 @@
+# Wait for Kubernetes API readiness
 resource "time_sleep" "wait_for_kubernetes" {
   depends_on      = [talos_machine_bootstrap.cluster]
   create_duration = "90s"
@@ -23,17 +24,20 @@ resource "helm_release" "cilium" {
   wait_for_jobs    = true
   timeout          = 600
 
+  # Allow ArgoCD to manage after bootstrap
   lifecycle {
     ignore_changes = [version, values]
   }
   values = [file("${path.module}/../../../../../k8s/talos/infra/cilium/values.yaml")]
 }
 
+# Wait for CRD registration
 resource "time_sleep" "wait_for_cilium_crds" {
   depends_on      = [helm_release.cilium]
   create_duration = "120s"
 }
 
+# Apply manifests via kubectl (provider timing issue workaround)
 resource "null_resource" "cilium_manifests" {
   depends_on = [time_sleep.wait_for_cilium_crds]
 

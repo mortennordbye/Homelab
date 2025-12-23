@@ -13,7 +13,7 @@ resource "null_resource" "upgrade_kubernetes" {
       terraform output -raw talosconfig > talosconfig
       export TALOSCONFIG=./talosconfig
 
-      [ "${var.enable_talos_upgrade}" = "true" ] && sleep 120
+      [ "${var.enable_talos_upgrade}" = "true" ] && sleep 120  # Wait after Talos upgrade
 
       talosctl upgrade-k8s \
         --endpoints ${values(local.control_plane_nodes)[0].ip} \

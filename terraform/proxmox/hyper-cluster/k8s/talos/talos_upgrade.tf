@@ -1,3 +1,4 @@
+# Sequential upgrade: ctrl-1 → ctrl-2 → ctrl-3 → worker-1 → worker-2 → worker-3
 resource "null_resource" "upgrade_ctrl_1" {
   count = var.enable_talos_upgrade ? 1 : 0
 

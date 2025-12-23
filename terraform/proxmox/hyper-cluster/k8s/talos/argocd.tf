@@ -11,6 +11,7 @@ resource "helm_release" "argocd" {
   wait_for_jobs    = true
   timeout          = 600
 
+  # Allow ArgoCD self-management after bootstrap
   lifecycle {
     ignore_changes = all
   }

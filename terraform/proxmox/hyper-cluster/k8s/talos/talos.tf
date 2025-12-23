@@ -9,6 +9,7 @@ resource "talos_machine_secrets" "cluster" {
   talos_version = var.talos_version
 }
 
+# Custom image with Intel microcode and QEMU guest agent
 resource "talos_image_factory_schematic" "this" {
   schematic = yamlencode({
     customization = {
@@ -31,6 +32,7 @@ resource "proxmox_virtual_environment_download_file" "talos_image" {
   decompression_algorithm = "gz"
   overwrite               = false
 
+  # Ignore changes - upgrades done via talosctl
   lifecycle {
     ignore_changes = [file_name, url]
   }
@@ -68,11 +70,11 @@ data "talos_machine_configuration" "controlplane" {
         allowSchedulingOnControlPlanes = true
         network = {
           cni = {
-            name = "none"
+            name = "none" # Cilium installed via Helm
           }
         }
         proxy = {
-          disabled = true
+          disabled = true # Cilium kube-proxy replacement
         }
       }
     })
