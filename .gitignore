@@ -34,3 +34,7 @@ vault_passaword.txt
 *.zip
 *.tar.gz
 *.tgz
+# Application folders
+arr-stack/
+qbittorrent-vpn/
+kubernetes/
