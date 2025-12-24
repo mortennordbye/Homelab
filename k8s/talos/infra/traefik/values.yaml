@@ -38,9 +38,7 @@ ports:
       default: true
 
 service:
-  type: LoadBalancer
-  spec:
-    loadBalancerIP: 10.3.10.101
+  enabled: false
 
 ingressRoute:
   dashboard:

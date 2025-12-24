@@ -1,0 +1,29 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: traefik-gateway-private
+  namespace: traefik
+  annotations:
+    traefik.io/service.serversscheme: h2c
+spec:
+  gatewayClassName: traefik
+  listeners:
+    - name: web
+      protocol: HTTP
+      port: 8000
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: local-bigd-no
+      protocol: HTTPS
+      port: 8443
+      hostname: "*.local.bigd.no"
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        certificateRefs:
+          - group: ""
+            kind: Secret
+            name: local-bigd-no-tls
+            namespace: cert-manager

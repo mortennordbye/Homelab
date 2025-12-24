@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik-public
+  namespace: traefik
+  annotations:
+    traefik.io/service-type: LoadBalancer
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 10.3.10.101
+  selector:
+    app.kubernetes.io/name: traefik
+  ports:
+    - name: web
+      port: 80
+      targetPort: 8000
+      protocol: TCP
+    - name: websecure
+      port: 443
+      targetPort: 8443
+      protocol: TCP

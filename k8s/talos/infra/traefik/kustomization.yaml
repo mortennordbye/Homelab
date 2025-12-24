@@ -6,9 +6,11 @@ commonAnnotations:
 
 resources:
   - namespace.yaml
-  - gateway.yaml
+  - gateway-public.yaml
+  - gateway-private.yaml
+  - service-public.yaml
+  - service-private.yaml
   - http-redirect.yaml
-  - middleware-local-only.yaml
 
 helmCharts:
   - name: traefik
