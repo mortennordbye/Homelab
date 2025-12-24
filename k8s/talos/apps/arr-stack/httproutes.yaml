@@ -5,15 +5,24 @@ metadata:
   namespace: arr-stack
 spec:
   parentRefs:
-    - name: traefik-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: traefik-gateway
       namespace: traefik
       sectionName: local-bigd-no
   hostnames:
     - "sonarr.local.bigd.no"
   rules:
-    - backendRefs:
-        - name: sonarr
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - group: ""
+          kind: Service
+          name: sonarr
           port: 8989
+          weight: 1
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
@@ -22,15 +31,24 @@ metadata:
   namespace: arr-stack
 spec:
   parentRefs:
-    - name: traefik-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: traefik-gateway
       namespace: traefik
       sectionName: local-bigd-no
   hostnames:
     - "radarr.local.bigd.no"
   rules:
-    - backendRefs:
-        - name: radarr
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - group: ""
+          kind: Service
+          name: radarr
           port: 7878
+          weight: 1
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
@@ -39,15 +57,24 @@ metadata:
   namespace: arr-stack
 spec:
   parentRefs:
-    - name: traefik-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: traefik-gateway
       namespace: traefik
       sectionName: local-bigd-no
   hostnames:
     - "bazarr.local.bigd.no"
   rules:
-    - backendRefs:
-        - name: bazarr
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - group: ""
+          kind: Service
+          name: bazarr
           port: 6767
+          weight: 1
 # ---
 # apiVersion: gateway.networking.k8s.io/v1
 # kind: HTTPRoute
@@ -73,15 +100,24 @@ metadata:
   namespace: arr-stack
 spec:
   parentRefs:
-    - name: traefik-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: traefik-gateway
       namespace: traefik
       sectionName: local-bigd-no
   hostnames:
     - "flaresolverr.local.bigd.no"
   rules:
-    - backendRefs:
-        - name: flaresolverr
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - group: ""
+          kind: Service
+          name: flaresolverr
           port: 8191
+          weight: 1
 # ---
 # apiVersion: gateway.networking.k8s.io/v1
 # kind: HTTPRoute
