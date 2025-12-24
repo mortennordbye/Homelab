@@ -61,6 +61,6 @@ tmp/
 *.tgz
 
 # Application folders
-arr-stack/
+#arr-stack/
 qbittorrent-vpn/
 kubernetes/

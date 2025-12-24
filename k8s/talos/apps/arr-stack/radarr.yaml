@@ -1,0 +1,101 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: radarr-config
+  namespace: arr-stack
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: syno-nfs
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: radarr
+  namespace: arr-stack
+spec:
+  selector:
+    app: radarr
+  ports:
+    - name: http
+      port: 7878
+      targetPort: 7878
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radarr
+  namespace: arr-stack
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: radarr
+  template:
+    metadata:
+      labels:
+        app: radarr
+    spec:
+      containers:
+        - name: radarr
+          image: ghcr.io/linuxserver/radarr:5.18.0.9801
+          ports:
+            - containerPort: 7878
+              name: http
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "Europe/Oslo"
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: movies
+              mountPath: /movies
+            - name: torrents
+              mountPath: /torrents
+              readOnly: true
+            - name: torrents-download
+              mountPath: /torrents/download
+            - name: downloads
+              mountPath: /downloads
+              readOnly: true
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: 7878
+            initialDelaySeconds: 60
+            timeoutSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: 7878
+            initialDelaySeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: radarr-config
+        - name: movies
+          nfs:
+            server: nas.local.bigd.no
+            path: /volume1/shared-data/media/movies
+        - name: torrents
+          nfs:
+            server: nas.local.bigd.no
+            path: /volume1/shared-data/media/torrents
+        - name: torrents-download
+          nfs:
+            server: nas.local.bigd.no
+            path: /volume1/shared-data/media/torrents/download
+        - name: downloads
+          nfs:
+            server: nas.local.bigd.no
+            path: /volume1/shared-data/media/torrents/completed

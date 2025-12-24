@@ -1,0 +1,101 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sonarr-config
+  namespace: arr-stack
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: syno-nfs
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sonarr
+  namespace: arr-stack
+spec:
+  selector:
+    app: sonarr
+  ports:
+    - name: http
+      port: 8989
+      targetPort: 8989
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sonarr
+  namespace: arr-stack
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sonarr
+  template:
+    metadata:
+      labels:
+        app: sonarr
+    spec:
+      containers:
+        - name: sonarr
+          image: ghcr.io/linuxserver/sonarr:4.0.12.2769
+          ports:
+            - containerPort: 8989
+              name: http
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "Europe/Oslo"
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: tv
+              mountPath: /tv
+            - name: torrents
+              mountPath: /torrents
+              readOnly: true
+            - name: torrents-download
+              mountPath: /torrents/download
+            - name: downloads
+              mountPath: /downloads
+              readOnly: true
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8989
+            initialDelaySeconds: 60
+            timeoutSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8989
+            initialDelaySeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: sonarr-config
+        - name: tv
+          nfs:
+            server: nas.local.bigd.no
+            path: /volume1/shared-data/media/series
+        - name: torrents
+          nfs:
+            server: nas.local.bigd.no
+            path: /volume1/shared-data/media/torrents
+        - name: torrents-download
+          nfs:
+            server: nas.local.bigd.no
+            path: /volume1/shared-data/media/torrents/download
+        - name: downloads
+          nfs:
+            server: nas.local.bigd.no
+            path: /volume1/shared-data/media/torrents/completed

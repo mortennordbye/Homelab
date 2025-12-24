@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: huntarr-config
+  namespace: arr-stack
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: syno-nfs
+  resources:
+    requests:
+      storage: 500Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: huntarr
+  namespace: arr-stack
+spec:
+  selector:
+    app: huntarr
+  ports:
+    - name: http
+      port: 7879
+      targetPort: 7879
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: huntarr
+  namespace: arr-stack
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: huntarr
+  template:
+    metadata:
+      labels:
+        app: huntarr
+    spec:
+      containers:
+        - name: huntarr
+          image: ghcr.io/plexguide/huntarr:1.0.0
+          ports:
+            - containerPort: 7879
+              name: http
+          env:
+            - name: TZ
+              value: "Europe/Oslo"
+          volumeMounts:
+            - name: config
+              mountPath: /config
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 7879
+            initialDelaySeconds: 60
+            timeoutSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 7879
+            initialDelaySeconds: 40
+            timeoutSeconds: 10
+            failureThreshold: 3
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: huntarr-config

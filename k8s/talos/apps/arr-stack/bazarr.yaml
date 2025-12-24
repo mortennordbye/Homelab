@@ -1,0 +1,107 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: bazarr-config
+  namespace: arr-stack
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: syno-nfs
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bazarr
+  namespace: arr-stack
+spec:
+  selector:
+    app: bazarr
+  ports:
+    - name: http
+      port: 6767
+      targetPort: 6767
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bazarr
+  namespace: arr-stack
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bazarr
+  template:
+    metadata:
+      labels:
+        app: bazarr
+    spec:
+      containers:
+        - name: bazarr
+          image: ghcr.io/linuxserver/bazarr:1.5.1
+          ports:
+            - containerPort: 6767
+              name: http
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "Europe/Oslo"
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: tv
+              mountPath: /tv
+            - name: movies
+              mountPath: /movies
+            - name: torrents
+              mountPath: /torrents
+              readOnly: true
+            - name: torrents-download
+              mountPath: /torrents/download
+            - name: downloads
+              mountPath: /downloads
+              readOnly: true
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 6767
+            initialDelaySeconds: 60
+            timeoutSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 6767
+            initialDelaySeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: bazarr-config
+        - name: tv
+          nfs:
+            server: nas.local.bigd.no
+            path: /volume1/shared-data/media/series
+        - name: movies
+          nfs:
+            server: nas.local.bigd.no
+            path: /volume1/shared-data/media/movies
+        - name: torrents
+          nfs:
+            server: nas.local.bigd.no
+            path: /volume1/shared-data/media/torrents
+        - name: torrents-download
+          nfs:
+            server: nas.local.bigd.no
+            path: /volume1/shared-data/media/torrents/download
+        - name: downloads
+          nfs:
+            server: nas.local.bigd.no
+            path: /volume1/shared-data/media/torrents/completed

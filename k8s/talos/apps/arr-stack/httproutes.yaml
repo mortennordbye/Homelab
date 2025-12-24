@@ -1,0 +1,135 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: sonarr
+  namespace: arr-stack
+spec:
+  parentRefs:
+    - name: traefik-gateway
+      namespace: traefik
+      sectionName: local-bigd-no
+  hostnames:
+    - "sonarr.local.bigd.no"
+  rules:
+    - backendRefs:
+        - name: sonarr
+          port: 8989
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: radarr
+  namespace: arr-stack
+spec:
+  parentRefs:
+    - name: traefik-gateway
+      namespace: traefik
+      sectionName: local-bigd-no
+  hostnames:
+    - "radarr.local.bigd.no"
+  rules:
+    - backendRefs:
+        - name: radarr
+          port: 7878
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: bazarr
+  namespace: arr-stack
+spec:
+  parentRefs:
+    - name: traefik-gateway
+      namespace: traefik
+      sectionName: local-bigd-no
+  hostnames:
+    - "bazarr.local.bigd.no"
+  rules:
+    - backendRefs:
+        - name: bazarr
+          port: 6767
+# ---
+# apiVersion: gateway.networking.k8s.io/v1
+# kind: HTTPRoute
+# metadata:
+#   name: readarr
+#   namespace: arr-stack
+# spec:
+#   parentRefs:
+#     - name: traefik-gateway
+#       namespace: traefik
+#       sectionName: local-bigd-no
+#   hostnames:
+#     - "readarr.local.bigd.no"
+#   rules:
+#     - backendRefs:
+#         - name: readarr
+#           port: 8787
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: flaresolverr
+  namespace: arr-stack
+spec:
+  parentRefs:
+    - name: traefik-gateway
+      namespace: traefik
+      sectionName: local-bigd-no
+  hostnames:
+    - "flaresolverr.local.bigd.no"
+  rules:
+    - backendRefs:
+        - name: flaresolverr
+          port: 8191
+# ---
+# apiVersion: gateway.networking.k8s.io/v1
+# kind: HTTPRoute
+# metadata:
+#   name: tdarr
+#   namespace: arr-stack
+# spec:
+#   parentRefs:
+#     - name: traefik-gateway
+#       namespace: traefik
+#       sectionName: local-bigd-no
+#   hostnames:
+#     - "tdarr.local.bigd.no"
+#   rules:
+#     - backendRefs:
+#         - name: tdarr
+#           port: 8265
+# ---
+# apiVersion: gateway.networking.k8s.io/v1
+# kind: HTTPRoute
+# metadata:
+#   name: huntarr
+#   namespace: arr-stack
+# spec:
+#   parentRefs:
+#     - name: traefik-gateway
+#       namespace: traefik
+#       sectionName: local-bigd-no
+#   hostnames:
+#     - "huntarr.local.bigd.no"
+#   rules:
+#     - backendRefs:
+#         - name: huntarr
+#           port: 7879
+# ---
+# apiVersion: gateway.networking.k8s.io/v1
+# kind: HTTPRoute
+# metadata:
+#   name: cleanuparr
+#   namespace: arr-stack
+# spec:
+#   parentRefs:
+#     - name: traefik-gateway
+#       namespace: traefik
+#       sectionName: local-bigd-no
+#   hostnames:
+#     - "cleanuparr.local.bigd.no"
+#   rules:
+#     - backendRefs:
+#         - name: cleanuparr
+#           port: 5030
