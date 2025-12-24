@@ -21,6 +21,9 @@ override.tf.json
 # Cluster Credentials (highly sensitive)
 talosconfig
 kubeconfig
+machine-secrets.yaml
+controlplane.yaml
+worker.yaml
 
 # Crash Logs and Debug Files
 crash.log

@@ -126,8 +126,34 @@ talosctl --talosconfig=./talosconfig -n 10.3.10.30 config new talosconfig-new --
 **Renew kubeconfig (before expiration):**
 
 ```bash
-talosctl --talosconfig=./talosconfig kubeconfig ./kubeconfig --nodes 10.3.10.30 --force
+talosctl --talosconfig=./talosconfig --endpoints 10.3.10.30 kubeconfig ./kubeconfig --nodes 10.3.10.30 --force
 ```
+
+## Certificate Recovery (After Expiration)
+
+If certificates expire, recreate them using the secrets stored in Terraform state.
+
+**Export secrets and generate new configs:**
+
+```bash
+# Convert Terraform secrets to talosctl format
+./convert-secrets.sh > machine-secrets.yaml
+
+# Generate new configs with existing secrets
+talosctl gen config --with-secrets machine-secrets.yaml hyper-cluster https://10.3.10.30:6443 --force
+
+# Test access
+export TALOSCONFIG=./talosconfig
+talosctl --endpoints 10.3.10.30 --nodes 10.3.10.30 health
+
+# Generate kubeconfig
+talosctl --endpoints 10.3.10.30 kubeconfig ./kubeconfig --nodes 10.3.10.30 --force
+
+# Clean up temporary files
+rm -f machine-secrets.yaml controlplane.yaml worker.yaml
+```
+
+The `convert-secrets.sh` script extracts machine secrets from Terraform state and converts them to the format expected by talosctl.
 
 ## Access
 
@@ -135,7 +161,7 @@ talosctl --talosconfig=./talosconfig kubeconfig ./kubeconfig --nodes 10.3.10.30 
 # Talos
 terraform output -raw talosconfig > talosconfig
 export TALOSCONFIG=./talosconfig
-talosctl --endpoints 10.3.10.30 health
+talosctl --endpoints 10.3.10.30 --nodes 10.3.10.30 health
 
 # Kubernetes
 export KUBECONFIG=./kubeconfig
