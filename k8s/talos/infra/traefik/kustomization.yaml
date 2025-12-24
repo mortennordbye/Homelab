@@ -8,6 +8,7 @@ resources:
   - namespace.yaml
   - gateway.yaml
   - http-redirect.yaml
+  - middleware-local-only.yaml
 
 helmCharts:
   - name: traefik

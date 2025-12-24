@@ -3,6 +3,8 @@ kind: HTTPRoute
 metadata:
   name: sonarr
   namespace: arr-stack
+  annotations:
+    traefik.io/router.middlewares: traefik-local-network-only@kubernetescrd
 spec:
   parentRefs:
     - group: gateway.networking.k8s.io
