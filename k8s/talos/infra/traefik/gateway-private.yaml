@@ -27,9 +27,3 @@ spec:
             kind: Secret
             name: local-bigd-no-tls
             namespace: cert-manager
-  infrastructure:
-    parametersRef:
-      group: traefik.io
-      kind: Middleware
-      name: redirect-to-https
-      namespace: traefik
