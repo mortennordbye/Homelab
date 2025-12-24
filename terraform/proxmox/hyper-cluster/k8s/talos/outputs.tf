@@ -24,3 +24,9 @@ output "cluster_name" {
   description = "Cluster name"
   value       = var.cluster_name
 }
+
+output "talos_secrets" {
+  description = "Talos machine secrets bundle for disaster recovery"
+  value       = talos_machine_secrets.cluster.machine_secrets
+  sensitive   = true
+}

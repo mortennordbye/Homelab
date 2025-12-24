@@ -34,7 +34,7 @@ resource "helm_release" "cilium" {
 # Wait for CRD registration
 resource "time_sleep" "wait_for_cilium_crds" {
   depends_on      = [helm_release.cilium]
-  create_duration = "120s"
+  create_duration = "60s"
 }
 
 # Apply manifests via kubectl (provider timing issue workaround)

@@ -4,7 +4,7 @@ terraform {
   required_providers {
     proxmox = {
       source  = "bpg/proxmox"
-      version = "0.84.0"
+      version = "0.90.0"
     }
     talos = {
       source  = "siderolabs/talos"
@@ -12,15 +12,15 @@ terraform {
     }
     helm = {
       source  = "hashicorp/helm"
-      version = "~> 2.16"
+      version = "~> 3.1"
     }
     time = {
       source  = "hashicorp/time"
-      version = "~> 0.12"
+      version = "~> 0.13"
     }
     local = {
       source  = "hashicorp/local"
-      version = "~> 2.5"
+      version = "~> 2.6"
     }
     null = {
       source  = "hashicorp/null"
@@ -42,7 +42,7 @@ provider "proxmox" {
 }
 
 provider "helm" {
-  kubernetes {
+  kubernetes = {
     config_path = "${path.module}/kubeconfig"
   }
 }
