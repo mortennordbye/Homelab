@@ -6,21 +6,12 @@ commonAnnotations:
 
 resources:
   - namespace.yaml
-  - cloudflare-token-secret.yaml
+  # - cloudflare-token-secret.yaml
   - certificates/bigd-no.yaml
   - certificates/local-bigd-no.yaml
   - certificates/nordbye-it.yml
   - issuers/letsencrypt-prod.yaml
   - reference-grant.yaml
-
-patches:
-  - target:
-      kind: ExternalSecret
-      name: cloudflare-token-secret
-    patch: |-
-      - op: replace
-        path: /metadata/annotations/argocd.argoproj.io~1sync-wave
-        value: "0"
 
 namespace: cert-manager
 # kubectl create secret generic cloudflare-token-secret --from-literal=cloudflare-token=YOUR_TOKEN -n cert-manager
