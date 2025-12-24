@@ -1,6 +1,8 @@
 # Talos Kubernetes Cluster
 
-## Deploy
+## Getting Started
+
+### Deploy
 
 ```bash
 export TF_VAR_proxmox_ssh_password='Password'
@@ -8,7 +10,122 @@ terraform init
 terraform apply
 ```
 
-## Upgrade
+### Access
+
+```bash
+# Talos
+terraform output -raw talosconfig > talosconfig
+export TALOSCONFIG=./talosconfig
+talosctl --endpoints 10.3.10.30 --nodes 10.3.10.30 health
+
+# Kubernetes
+export KUBECONFIG=./kubeconfig
+kubectl get nodes
+
+# ArgoCD: https://10.3.10.100 (admin)
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d
+```
+
+## Cluster Operations
+
+### Scale Up (Add Nodes)
+
+Add node to `terraform.tfvars`:
+
+```hcl
+nodes = {
+  # ... existing nodes ...
+  "talos-worker-04" = {
+    proxmox_node = "hyper1"
+    ip           = "10.3.10.37"
+    mac_address  = "BC:24:11:2E:C8:06"
+    vmid         = 806
+    cpu_cores    = 4
+    memory_mb    = 6144
+    disk_size_gb = 40
+    datastore    = "local-lvm"
+    node_type    = "worker"
+  }
+}
+```
+
+```bash
+terraform apply
+```
+
+Node automatically joins the cluster.
+
+### Scale Down (Remove Nodes)
+
+```bash
+# Drain workloads
+kubectl drain talos-worker-04 --ignore-daemonsets --delete-emptydir-data
+
+# Delete from Kubernetes
+kubectl delete node talos-worker-04
+```
+
+Remove node from `terraform.tfvars`, then:
+
+```bash
+terraform apply
+```
+
+### Migrate VM to Different Node
+
+Edit `terraform.tfvars` and change `proxmox_node`:
+
+```hcl
+nodes = {
+  "talos-ctrl-01" = {
+    proxmox_node = "hyper2"  # Changed from hyper1
+    # ... rest unchanged
+  }
+}
+```
+
+```bash
+terraform apply
+```
+
+Terraform will live migrate the VM to the new node. No downtime if shared storage is used.
+
+## Resource Management
+
+### Resize Disk
+
+Edit `disk_size_gb` in `terraform.tfvars` (increase only):
+
+```bash
+terraform apply
+```
+
+Talos automatically detects and uses the expanded disk space.
+
+### Change CPU or Memory
+
+Edit `cpu_cores` or `memory_mb` in `terraform.tfvars`:
+
+```bash
+terraform apply
+```
+
+**Note:** CPU changes apply immediately. Memory changes require node reboot:
+
+```bash
+# Drain workloads
+kubectl drain talos-worker-01 --ignore-daemonsets --delete-emptydir-data
+
+# Reboot node
+talosctl --endpoints 10.3.10.34 --nodes 10.3.10.34 reboot
+
+# Wait for node to be ready, then uncordon
+kubectl uncordon talos-worker-01
+```
+
+## Upgrades
+
+### Talos Upgrade
 
 **Important:** Upgrade Talos first, then Kubernetes. Two applies required: enable flags → apply → disable flags → apply.
 
@@ -40,7 +157,9 @@ enable_talos_upgrade = false
 terraform apply
 ```
 
-**Step 3: Kubernetes Upgrade**
+### Kubernetes Upgrade
+
+**Step 1: Kubernetes Upgrade**
 
 Edit `terraform.tfvars`:
 
@@ -54,7 +173,7 @@ enable_kubernetes_upgrade = true
 terraform apply
 ```
 
-**Step 4: Disable Kubernetes Upgrade Flag**
+**Step 2: Disable Kubernetes Upgrade Flag**
 
 Edit `terraform.tfvars`:
 
@@ -71,7 +190,7 @@ terraform apply
 - Talos: https://github.com/siderolabs/talos/releases
 - Kubernetes: https://kubernetes.io/releases/
 
-## Update Apps
+### Update Apps
 
 Edit values:
 
@@ -80,30 +199,11 @@ Edit values:
 
 ArgoCD syncs automatically.
 
-## Migrate VM to New Node
+## Certificate Management
 
-Edit `terraform.tfvars` and change `proxmox_node`:
+### Check Expiration
 
-```hcl
-nodes = {
-  "talos-ctrl-01" = {
-    proxmox_node = "hyper2"  # Changed from hyper1
-    # ... rest unchanged
-  }
-}
-```
-
-```bash
-terraform apply
-```
-
-Terraform will live migrate the VM to the new node. No downtime if shared storage is used.
-
-## Certificate Renewal
-
-Client certificates in talosconfig and kubeconfig expire after 1 year. Renew before expiration. Server certificates rotate automatically on node reboot/upgrade.
-
-**Check expiration:**
+Client certificates in talosconfig and kubeconfig expire after 1 year. Server certificates rotate automatically on node reboot/upgrade.
 
 ```bash
 # Talosconfig
@@ -113,7 +213,9 @@ grep "crt:" ./talosconfig | head -1 | awk '{print $2}' | base64 -d | openssl x50
 grep "client-certificate-data:" ./kubeconfig | awk '{print $2}' | base64 -d | openssl x509 -noout -enddate
 ```
 
-**Renew talosconfig (before expiration):**
+### Renew Certificates (Before Expiration)
+
+**Renew talosconfig:**
 
 ```bash
 # Get config from Terraform state
@@ -123,17 +225,15 @@ terraform output -raw talosconfig > talosconfig
 talosctl --talosconfig=./talosconfig -n 10.3.10.30 config new talosconfig-new --roles os:admin --crt-ttl 8760h
 ```
 
-**Renew kubeconfig (before expiration):**
+**Renew kubeconfig:**
 
 ```bash
 talosctl --talosconfig=./talosconfig --endpoints 10.3.10.30 kubeconfig ./kubeconfig --nodes 10.3.10.30 --force
 ```
 
-## Certificate Recovery (After Expiration)
+### Certificate Recovery (After Expiration)
 
 If certificates expire, recreate them using the secrets stored in Terraform state.
-
-**Export secrets and generate new configs:**
 
 ```bash
 # Convert Terraform secrets to talosctl format
@@ -154,19 +254,3 @@ rm -f machine-secrets.yaml controlplane.yaml worker.yaml
 ```
 
 The `convert-secrets.sh` script extracts machine secrets from Terraform state and converts them to the format expected by talosctl.
-
-## Access
-
-```bash
-# Talos
-terraform output -raw talosconfig > talosconfig
-export TALOSCONFIG=./talosconfig
-talosctl --endpoints 10.3.10.30 --nodes 10.3.10.30 health
-
-# Kubernetes
-export KUBECONFIG=./kubeconfig
-kubectl get nodes
-
-# ArgoCD: https://10.3.10.100 (admin)
-kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d
-```
