@@ -1,0 +1,83 @@
+proxmox_endpoint     = "https://proxmox.example.com:8006"
+proxmox_api_token    = "user@pve!token=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+proxmox_insecure     = true
+proxmox_ssh_username = "root"
+
+cluster_name    = "genesis"
+cluster_vip     = "10.0.0.30"
+network_gateway = "10.0.0.1"
+
+talos_version      = "v1.11.6" # Latest: v1.11.6 | Previous: v1.10.8
+kubernetes_version = "v1.34.0" # Latest: v1.34.2 | Previous: v1.33.6
+
+enable_talos_upgrade      = false
+enable_kubernetes_upgrade = false
+
+nodes = {
+  "genesis-ctrl-01" = {
+    proxmox_node = "pve1"
+    ip           = "10.0.0.31"
+    mac_address  = "BC:24:11:2E:C8:00"
+    vmid         = 131
+    cpu_cores    = 2
+    memory_mb    = 4096
+    disk_size_gb = 10
+    datastore    = "local-lvm"
+    node_type    = "controlplane"
+  }
+  "genesis-ctrl-02" = {
+    proxmox_node = "pve1"
+    ip           = "10.0.0.32"
+    mac_address  = "BC:24:11:2E:C8:01"
+    vmid         = 132
+    cpu_cores    = 2
+    memory_mb    = 4096
+    disk_size_gb = 10
+    datastore    = "local-lvm"
+    node_type    = "controlplane"
+  }
+  "genesis-ctrl-03" = {
+    proxmox_node = "pve2"
+    ip           = "10.0.0.33"
+    mac_address  = "BC:24:11:2E:C8:02"
+    vmid         = 133
+    cpu_cores    = 2
+    memory_mb    = 4096
+    disk_size_gb = 10
+    datastore    = "local-lvm"
+    node_type    = "controlplane"
+  }
+  "genesis-worker-01" = {
+    proxmox_node = "pve1"
+    ip           = "10.0.0.34"
+    mac_address  = "BC:24:11:2E:C8:03"
+    vmid         = 134
+    cpu_cores    = 4
+    memory_mb    = 6144
+    disk_size_gb = 40
+    datastore    = "local-lvm"
+    node_type    = "worker"
+  }
+  "genesis-worker-02" = {
+    proxmox_node = "pve2"
+    ip           = "10.0.0.35"
+    mac_address  = "BC:24:11:2E:C8:04"
+    vmid         = 135
+    cpu_cores    = 4
+    memory_mb    = 6144
+    disk_size_gb = 40
+    datastore    = "local-lvm"
+    node_type    = "worker"
+  }
+  "genesis-worker-03" = {
+    proxmox_node = "pve2"
+    ip           = "10.0.0.36"
+    mac_address  = "BC:24:11:2E:C8:05"
+    vmid         = 136
+    cpu_cores    = 4
+    memory_mb    = 6144
+    disk_size_gb = 40
+    datastore    = "local-lvm"
+    node_type    = "worker"
+  }
+}
