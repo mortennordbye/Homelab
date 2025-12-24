@@ -9,7 +9,6 @@ spec:
       kind: Gateway
       name: traefik-gateway-public
       namespace: traefik
-      sectionName: bigd-no
   hostnames:
     - omni-tools.bigd.no
   rules:

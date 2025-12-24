@@ -9,7 +9,6 @@ spec:
       kind: Gateway
       name: traefik-gateway-public
       namespace: traefik
-      sectionName: bigd-no
   hostnames:
     - tautulli.bigd.no
   rules:
@@ -35,7 +34,6 @@ spec:
       kind: Gateway
       name: traefik-gateway-public
       namespace: traefik
-      sectionName: bigd-no
   hostnames:
     - overseerr.bigd.no
   rules:
