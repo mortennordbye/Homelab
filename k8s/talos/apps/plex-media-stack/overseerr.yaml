@@ -31,7 +31,7 @@ metadata:
   name: overseerr
   namespace: plex-media-stack
 spec:
-  replicas: 0
+  replicas: 1
   strategy:
     type: Recreate
   selector:
