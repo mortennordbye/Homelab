@@ -4,7 +4,8 @@ kind: Kustomization
 namespace: kube-system
 
 resources:
-  - ippool.yaml
+  - l2-announcement-policy.yaml
+  - loadbalancer-ippool.yaml
 
 helmCharts:
   - name: cilium

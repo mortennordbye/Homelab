@@ -3,7 +3,8 @@ kind: Kustomization
 
 resources:
   - namespace.yaml
-  - project-homelab.yaml
+  - project-apps.yaml
+  - project-infra.yaml
   - apps.yaml
   - infra.yaml
 

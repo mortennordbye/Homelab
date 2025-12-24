@@ -22,7 +22,7 @@ talosctl --endpoints 10.3.10.30 --nodes 10.3.10.30 health
 export KUBECONFIG=./kubeconfig
 kubectl get nodes
 
-# ArgoCD: https://10.3.10.100 (admin)
+# ArgoCD (username: admin)
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d
 ```
 
@@ -189,15 +189,6 @@ terraform apply
 
 - Talos: https://github.com/siderolabs/talos/releases
 - Kubernetes: https://kubernetes.io/releases/
-
-### Update Apps
-
-Edit values:
-
-- `k8s/talos/infra/cilium/values.yaml`
-- `k8s/talos/infra/argocd/values.yaml`
-
-ArgoCD syncs automatically.
 
 ## Certificate Management
 
