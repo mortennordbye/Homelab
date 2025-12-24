@@ -88,7 +88,6 @@ spec:
             timeoutSeconds: 5
             successThreshold: 1
             failureThreshold: 3
-            failureThreshold: 3
       volumes:
         - name: config
           persistentVolumeClaim:
