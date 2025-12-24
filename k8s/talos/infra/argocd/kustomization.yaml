@@ -8,7 +8,6 @@ resources:
   - apps.yaml
   - infra.yaml
 
-
 namespace: argocd
 
 helmCharts:
@@ -17,5 +16,5 @@ helmCharts:
     includeCRDs: true
     namespace: argocd
     version: 9.1.7
-    releaseName: argo-cd
+    releaseName: argocd
     valuesFile: ./values.yaml
