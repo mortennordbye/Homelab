@@ -67,19 +67,28 @@ spec:
             - name: downloads
               mountPath: /downloads
               readOnly: true
+          startupProbe:
+            httpGet:
+              path: /health
+              port: 6767
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 30
           livenessProbe:
             httpGet:
               path: /health
               port: 6767
-            initialDelaySeconds: 60
-            timeoutSeconds: 10
+            periodSeconds: 30
+            timeoutSeconds: 5
             failureThreshold: 3
           readinessProbe:
             httpGet:
               path: /health
               port: 6767
-            initialDelaySeconds: 30
-            timeoutSeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
             failureThreshold: 3
       volumes:
         - name: config
