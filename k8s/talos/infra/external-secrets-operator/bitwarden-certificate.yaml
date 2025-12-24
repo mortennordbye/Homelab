@@ -18,5 +18,5 @@ spec:
     size: 2048
   issuerRef:
     name: bitwarden-certificate-issuer
-    kind: ClusterIssuer
+    kind: Issuer
     group: cert-manager.io
