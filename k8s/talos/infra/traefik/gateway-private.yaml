@@ -10,13 +10,13 @@ spec:
   listeners:
     - name: web
       protocol: HTTP
-      port: 8000
+      port: 8001
       allowedRoutes:
         namespaces:
           from: All
     - name: local-bigd-no
       protocol: HTTPS
-      port: 8443
+      port: 8444
       hostname: "*.local.bigd.no"
       allowedRoutes:
         namespaces:

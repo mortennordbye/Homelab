@@ -36,6 +36,18 @@ ports:
     protocol: TCP
     expose:
       default: true
+  web-private:
+    port: 8001
+    exposedPort: 80
+    protocol: TCP
+    expose:
+      default: true
+  websecure-private:
+    port: 8444
+    exposedPort: 443
+    protocol: TCP
+    expose:
+      default: true
 
 service:
   enabled: false
