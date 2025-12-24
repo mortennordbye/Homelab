@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 commonAnnotations:
-  argocd.argoproj.io/sync-wave: "-1"
+  argocd.argoproj.io/sync-wave: "-2"
 
 resources:
   - namespace.yaml
@@ -12,6 +12,15 @@ resources:
   - certificates/nordbye-it.yml
   - issuers/letsencrypt-prod.yaml
   - reference-grant.yaml
+
+patches:
+  - target:
+      kind: ExternalSecret
+      name: cloudflare-token-secret
+    patch: |-
+      - op: replace
+        path: /metadata/annotations/argocd.argoproj.io~1sync-wave
+        value: "0"
 
 namespace: cert-manager
 # kubectl create secret generic cloudflare-token-secret --from-literal=cloudflare-token=YOUR_TOKEN -n cert-manager
