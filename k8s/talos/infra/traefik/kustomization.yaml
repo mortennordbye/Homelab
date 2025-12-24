@@ -10,7 +10,7 @@ resources:
   - gateway-private.yaml
   - service-public.yaml
   - service-private.yaml
-  - http-redirect.yaml
+  - middleware/redirect-https.yaml
 
 helmCharts:
   - name: traefik

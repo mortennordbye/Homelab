@@ -40,3 +40,9 @@ spec:
             kind: Secret
             name: nordbye-it-tls
             namespace: cert-manager
+  infrastructure:
+    parametersRef:
+      group: traefik.io
+      kind: Middleware
+      name: redirect-to-https
+      namespace: traefik
