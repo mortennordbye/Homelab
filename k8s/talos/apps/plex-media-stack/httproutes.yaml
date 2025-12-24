@@ -7,10 +7,10 @@ spec:
   parentRefs:
     - group: gateway.networking.k8s.io
       kind: Gateway
-      name: traefik-gateway-public
+      name: traefik-gateway-private
       namespace: traefik
   hostnames:
-    - tautulli.bigd.no
+    - tautulli.local.bigd.no
   rules:
     - backendRefs:
         - group: ""
