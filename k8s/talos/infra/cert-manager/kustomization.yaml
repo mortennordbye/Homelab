@@ -13,15 +13,6 @@ resources:
   - issuers/letsencrypt-prod.yaml
   - reference-grant.yaml
 
-patches:
-  - target:
-      kind: ExternalSecret
-      name: cloudflare-token-secret
-    patch: |-
-      - op: replace
-        path: /metadata/annotations/argocd.argoproj.io~1sync-wave
-        value: "1"
-
 namespace: cert-manager
 # kubectl create secret generic cloudflare-token-secret --from-literal=cloudflare-token=YOUR_TOKEN -n cert-manager
 helmCharts:
