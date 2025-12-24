@@ -9,31 +9,57 @@
 Thumbs.db
 .*.swp
 *~
+*.swo
+*.swnc
 .vscode/
 .idea/
 
 # Logs
 logs/
 *.log
+crash.log
+crash.*.log
 docker-compose.override.yml
 
-# Terraform & Ansible
+# Terraform
 *.tfstate
 *.tfstate.*
 *.tfvars
 *.tfvars.json
+*.auto.tfvars
+*.tfplan
 .terraform/
+.terraform.lock.hcl
+.terraform.tfstate.lock.info
 backend.conf
 backend.hcl
-*.tfplan
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
 
+# Ansible
 vault_passaword.txt
 .ansible
+
+# Talos & Kubernetes (sensitive credentials)
+talosconfig
+kubeconfig
+machine-secrets.yaml
+controlplane.yaml
+worker.yaml
+
+# Backup & Temporary Files
+*.backup
+*.bak
+*.tmp
+tmp/
 
 # Archives
 *.zip
 *.tar.gz
 *.tgz
+
 # Application folders
 arr-stack/
 qbittorrent-vpn/
