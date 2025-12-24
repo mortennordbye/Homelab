@@ -9,7 +9,6 @@ spec:
       kind: Gateway
       name: traefik-gateway-public
       namespace: traefik
-      sectionName: nordbye-it
   hostnames:
     - stage.nordbye.it
   rules:
