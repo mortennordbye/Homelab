@@ -169,6 +169,13 @@ data "talos_client_configuration" "cluster" {
   endpoints            = [for node in var.nodes : node.ip]
 }
 
+resource "local_sensitive_file" "talosconfig" {
+  depends_on      = [talos_machine_bootstrap.cluster]
+  content         = data.talos_client_configuration.cluster.talos_config
+  filename        = "${path.module}/talosconfig"
+  file_permission = "0600"
+}
+
 resource "talos_cluster_kubeconfig" "cluster" {
   depends_on = [talos_machine_bootstrap.cluster]
 
