@@ -7,7 +7,7 @@ spec:
   parentRefs:
     - group: gateway.networking.k8s.io
       kind: Gateway
-      name: traefik-gateway
+      name: traefik-gateway-public
       namespace: traefik
       sectionName: bigd-no
   hostnames:
