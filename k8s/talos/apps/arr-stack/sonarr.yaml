@@ -65,29 +65,6 @@ spec:
             - name: downloads
               mountPath: /downloads
               readOnly: true
-          startupProbe:
-            httpGet:
-              path: /health
-              port: 8989
-            initialDelaySeconds: 30
-            periodSeconds: 15
-            timeoutSeconds: 30
-            failureThreshold: 60
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: 8989
-            periodSeconds: 60
-            timeoutSeconds: 30
-            failureThreshold: 5
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: 8989
-            periodSeconds: 20
-            timeoutSeconds: 30
-            successThreshold: 1
-            failureThreshold: 5
       volumes:
         - name: config
           persistentVolumeClaim:
