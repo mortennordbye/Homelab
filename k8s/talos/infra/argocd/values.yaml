@@ -10,6 +10,18 @@ configs:
   cm:
     kustomize.buildOptions: "--enable-helm"
     exec.enabled: "true"
+    accounts.mnordbye: apiKey, login
+  rbac:
+    policy.csv: |
+      p, role:admin-mnordbye, applications, *, */*, allow
+      p, role:admin-mnordbye, clusters, *, *, allow
+      p, role:admin-mnordbye, repositories, *, *, allow
+      p, role:admin-mnordbye, logs, *, *, allow
+      p, role:admin-mnordbye, exec, *, */*, allow
+      p, role:admin-mnordbye, projects, *, *, allow
+      g, mnordbye, role:admin-mnordbye
+  secret:
+    createSecret: false
 
 server:
   replicas: 1
