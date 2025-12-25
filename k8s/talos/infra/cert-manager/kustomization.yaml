@@ -6,7 +6,7 @@ commonAnnotations:
 
 resources:
   - namespace.yaml
-  - cloudflare-token-secret.yaml
+#  - cloudflare-token-secret.yaml
   - certificates/bigd-no.yaml
   - certificates/local-bigd-no.yaml
   - certificates/nordbye-it.yml
