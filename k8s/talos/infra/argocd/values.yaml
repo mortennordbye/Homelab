@@ -19,6 +19,13 @@ server:
       io.cilium/lb-ipam-ips: "10.3.10.100"
   ingress:
     enabled: false
+  httproute:
+    enabled: true
+    parentRefs:
+      - name: traefik-gateway-private
+        namespace: traefik
+    hostnames:
+      - argocd.local.bigd.no
 
 dex:
   enabled: false
