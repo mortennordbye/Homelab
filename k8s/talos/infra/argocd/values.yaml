@@ -22,7 +22,9 @@ server:
   httproute:
     enabled: true
     parentRefs:
-      - name: traefik-gateway-private
+      - group: gateway.networking.k8s.io
+        kind: Gateway
+        name: traefik-gateway-private
         namespace: traefik
     hostnames:
       - argocd.local.bigd.no
