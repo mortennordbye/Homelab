@@ -7,7 +7,6 @@ resources:
   - project-infra.yaml
   - apps.yaml
   - infra.yaml
-  - argocd-secret-external.yaml
 
 namespace: argocd
 
