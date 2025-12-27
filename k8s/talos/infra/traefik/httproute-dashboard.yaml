@@ -21,3 +21,4 @@ spec:
           kind: TraefikService
           name: api@internal
           port: 80
+          weight: 1
