@@ -4,10 +4,9 @@ metadata:
   name: traefik-private
   namespace: traefik
   annotations:
-    traefik.io/service-type: LoadBalancer
+    lbipam.cilium.io/ips: "10.3.10.102"
 spec:
   type: LoadBalancer
-  loadBalancerIP: 10.3.10.102
   selector:
     app.kubernetes.io/name: traefik
   ports:
