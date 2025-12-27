@@ -120,5 +120,5 @@ spec:
             claimName: prowlarr-config
         - name: torrents
           nfs:
-            server: 10.3.10.5
-            path: /volume1/DockerNFS/torrents
+            server: nas.local.bigd.no
+            path: /volume1/shared-data/media/torrents
