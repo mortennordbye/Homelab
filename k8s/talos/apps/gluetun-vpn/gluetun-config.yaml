@@ -7,7 +7,11 @@ data:
   VPN_SERVICE_PROVIDER: "private internet access"
   VPN_TYPE: "openvpn"
   SERVER_REGIONS: "Switzerland"
+  # Allow cluster pod network and service network for internal communication
   FIREWALL_OUTBOUND_SUBNETS: "10.0.0.0/8"
   # Allow incoming connections for qBittorrent (8080) and Prowlarr (9696)
   FIREWALL_INPUT_PORTS: "8080,9696"
+  # Preserve Kubernetes DNS resolution
+  DNS_KEEP_NAMESERVER: "on"
+  DOT: "off"
   TZ: "Europe/Oslo"

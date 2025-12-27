@@ -16,10 +16,11 @@ spec:
       labels:
         app: gluetun
     spec:
-      containers:
-        # Gluetun VPN container
+      initContainers:
+        # Gluetun VPN - runs as sidecar with restartPolicy: Always (K8s 1.29+)
         - name: gluetun
           image: qmcgaw/gluetun:v3.41.0
+          restartPolicy: Always
           securityContext:
             capabilities:
               add:
@@ -66,21 +67,10 @@ spec:
             timeoutSeconds: 5
             failureThreshold: 3
 
+      containers:
         # qBittorrent - torrent client
         - name: qbittorrent
           image: ghcr.io/linuxserver/qbittorrent:5.1.0
-          lifecycle:
-            postStart:
-              exec:
-                command:
-                  - sh
-                  - -c
-                  - |
-                    echo "Waiting for VPN connection..."
-                    until wget -q -O- http://127.0.0.1:8000/v1/publicip/ip 2>/dev/null | grep -q '"public_ip"'; do
-                      sleep 2
-                    done
-                    echo "VPN is ready!"
           ports:
             - containerPort: 8080
               name: http
@@ -114,18 +104,6 @@ spec:
         # Prowlarr - indexer manager
         - name: prowlarr
           image: ghcr.io/linuxserver/prowlarr:2.3.0
-          lifecycle:
-            postStart:
-              exec:
-                command:
-                  - sh
-                  - -c
-                  - |
-                    echo "Waiting for VPN connection..."
-                    until wget -q -O- http://127.0.0.1:8000/v1/publicip/ip 2>/dev/null | grep -q '"public_ip"'; do
-                      sleep 2
-                    done
-                    echo "VPN is ready!"
           ports:
             - containerPort: 9696
               name: http
