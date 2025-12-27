@@ -39,18 +39,20 @@ spec:
               memory: "512Mi"
               cpu: "500m"
           livenessProbe:
-            httpGet:
-              path: /v1/publicip/ip
-              port: 8000
+            exec:
+              command:
+                - /gluetun-entrypoint
+                - healthcheck
             initialDelaySeconds: 90
             periodSeconds: 60
-            timeoutSeconds: 15
-            failureThreshold: 5
+            timeoutSeconds: 10
+            failureThreshold: 3
           readinessProbe:
-            httpGet:
-              path: /v1/publicip/ip
-              port: 8000
-            initialDelaySeconds: 60
+            exec:
+              command:
+                - /gluetun-entrypoint
+                - healthcheck
+            initialDelaySeconds: 30
             periodSeconds: 30
-            timeoutSeconds: 15
-            failureThreshold: 5
+            timeoutSeconds: 10
+            failureThreshold: 3
