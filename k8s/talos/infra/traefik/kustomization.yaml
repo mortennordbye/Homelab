@@ -10,6 +10,7 @@ resources:
   - gateway-private.yaml
   - service-public.yaml
   - service-private.yaml
+  - httproute-dashboard.yaml
 
 helmCharts:
   - name: traefik
