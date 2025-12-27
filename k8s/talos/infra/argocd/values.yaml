@@ -16,7 +16,7 @@ server:
   service:
     type: LoadBalancer
     annotations:
-      io.cilium/lb-ipam-ips: "10.3.10.100"
+      lbipam.cilium.io/ips: "10.3.10.100"
   ingress:
     enabled: false
 
