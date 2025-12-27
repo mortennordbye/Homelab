@@ -16,3 +16,4 @@ spec:
         - group: traefik.io
           kind: TraefikService
           name: api@internal
+          port: 80
