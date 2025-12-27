@@ -12,7 +12,11 @@ spec:
   hostnames:
     - gluetun.local.bigd.no
   rules:
-    - backendRefs:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
         - group: ""
           kind: Service
           name: gluetun
