@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gluetun-config
+  namespace: gluetun-vpn
+data:
+  VPN_SERVICE_PROVIDER: "private internet access"
+  VPN_TYPE: "openvpn"
+  SERVER_REGIONS: "Switzerland"
+  FIREWALL_OUTBOUND_SUBNETS: "10.0.0.0/8"
+  TZ: "Europe/Oslo"
