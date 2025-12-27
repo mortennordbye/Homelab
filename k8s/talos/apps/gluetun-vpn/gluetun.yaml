@@ -40,12 +40,20 @@ spec:
             limits:
               memory: "512Mi"
               cpu: "500m"
+          startupProbe:
+            exec:
+              command:
+                - /gluetun-entrypoint
+                - healthcheck
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 20
           livenessProbe:
             exec:
               command:
                 - /gluetun-entrypoint
                 - healthcheck
-            initialDelaySeconds: 90
             periodSeconds: 60
             timeoutSeconds: 10
             failureThreshold: 3
@@ -54,9 +62,8 @@ spec:
               command:
                 - /gluetun-entrypoint
                 - healthcheck
-            initialDelaySeconds: 30
-            periodSeconds: 30
-            timeoutSeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
             failureThreshold: 3
 
         # qBittorrent - torrent client
@@ -79,11 +86,17 @@ spec:
               mountPath: /config
             - name: torrents
               mountPath: /torrents
+          startupProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 12
           readinessProbe:
             httpGet:
               path: /
               port: 8080
-            initialDelaySeconds: 90
             periodSeconds: 10
 
         # Prowlarr - indexer manager
@@ -102,11 +115,17 @@ spec:
           volumeMounts:
             - name: prowlarr-config
               mountPath: /config
+          startupProbe:
+            httpGet:
+              path: /ping
+              port: 9696
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 12
           readinessProbe:
             httpGet:
               path: /ping
               port: 9696
-            initialDelaySeconds: 90
             periodSeconds: 10
 
       volumes:
