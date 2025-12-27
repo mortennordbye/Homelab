@@ -12,7 +12,11 @@ spec:
   hostnames:
     - traefik.local.bigd.no
   rules:
-    - backendRefs:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
         - group: traefik.io
           kind: TraefikService
           name: api@internal
