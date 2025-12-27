@@ -16,6 +16,7 @@ spec:
         app: gluetun
     spec:
       containers:
+        # Gluetun VPN container
         - name: gluetun
           image: qmcgaw/gluetun:v3.41.0
           securityContext:
@@ -56,3 +57,88 @@ spec:
             periodSeconds: 30
             timeoutSeconds: 10
             failureThreshold: 3
+
+        # Test application - nginx showing IP info
+        - name: test-app
+          image: nginx:alpine
+          ports:
+            - containerPort: 80
+              name: http
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /usr/share/nginx/html/index.html
+              subPath: index.html
+          # Fail-safe: If Gluetun dies, this container should not have network access
+          readinessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - |
+                  # Check if VPN is running
+                  if ! pgrep -x openvpn > /dev/null; then
+                    echo "VPN not running!"
+                    exit 1
+                  fi
+                  # Check nginx is responding
+                  wget -q -O- http://localhost/ > /dev/null
+            initialDelaySeconds: 30
+            periodSeconds: 30
+
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: test-vpn-html
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: test-vpn-html
+  namespace: gluetun-vpn
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>VPN Test Service</title>
+        <style>
+            body { font-family: Arial; margin: 40px; }
+            .info { background: #f0f0f0; padding: 20px; border-radius: 5px; margin: 20px 0; }
+            button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+        </style>
+        <script>
+            async function checkIP() {
+                document.getElementById('ip').textContent = 'Loading...';
+                document.getElementById('location').textContent = 'Loading...';
+                try {
+                    const response = await fetch('https://api.ipify.org?format=json');
+                    const data = await response.json();
+                    document.getElementById('ip').textContent = data.ip;
+
+                    const response2 = await fetch('http://ip-api.com/json/' + data.ip);
+                    const geo = await response2.json();
+                    document.getElementById('location').textContent =
+                        geo.country + ', ' + geo.city + ' (' + geo.isp + ')';
+                } catch (e) {
+                    document.getElementById('ip').textContent = 'Error: ' + e.message;
+                }
+            }
+            window.onload = checkIP;
+        </script>
+    </head>
+    <body>
+        <h1>🔒 Gluetun VPN Test Service</h1>
+        <div class="info">
+            <h2>Current Public IP:</h2>
+            <p id="ip">Loading...</p>
+            <h2>Location:</h2>
+            <p id="location">Loading...</p>
+            <p><small>This service routes ALL traffic through Gluetun VPN. If you see your home IP, the VPN is NOT working!</small></p>
+            <p><button onclick="checkIP()">🔄 Refresh IP Check</button></p>
+        </div>
+        <div class="info">
+            <h2>Gluetun Control API</h2>
+            <p><a href="https://gluetun.local.bigd.no" target="_blank">Open Gluetun Control Panel</a></p>
+        </div>
+    </body>
+    </html>
