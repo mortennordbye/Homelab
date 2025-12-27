@@ -16,8 +16,6 @@ spec:
       labels:
         app: gluetun
     spec:
-      # Share process namespace so containers can see each other's processes
-      shareProcessNamespace: true
       containers:
         # Gluetun VPN container
         - name: gluetun
