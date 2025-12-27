@@ -67,6 +67,9 @@ data "talos_machine_configuration" "controlplane" {
             } : null
           }]
         }
+        nodeLabels = {
+          "topology.kubernetes.io/zone" = each.value.proxmox_node
+        }
       }
       cluster = {
         allowSchedulingOnControlPlanes = true
@@ -106,6 +109,9 @@ data "talos_machine_configuration" "worker" {
             }]
             dhcp = false
           }]
+        }
+        nodeLabels = {
+          "topology.kubernetes.io/zone" = each.value.proxmox_node
         }
       }
       cluster = {

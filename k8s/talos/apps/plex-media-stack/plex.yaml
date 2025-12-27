@@ -42,6 +42,15 @@ spec:
       labels:
         app: plex
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: topology.kubernetes.io/zone
+                    operator: In
+                    values:
+                      - hyper1
       containers:
         - name: plex
           image: ghcr.io/linuxserver/plex:1.42.2
