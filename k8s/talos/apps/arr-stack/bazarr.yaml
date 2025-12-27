@@ -30,7 +30,7 @@ metadata:
   name: bazarr
   namespace: arr-stack
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: bazarr
