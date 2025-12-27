@@ -60,16 +60,36 @@ spec:
             timeoutSeconds: 10
             failureThreshold: 3
 
-        # Test application - nginx showing IP info
+        # Test application - simple HTTP server showing VPN IP
         - name: test-app
-          image: nginx:alpine
+          image: alpine:latest
+          command:
+            - sh
+            - -c
+            - |
+              apk add --no-cache curl busybox-extras
+              mkdir -p /www
+              cat > /www/index.html << 'EOF'
+              <!DOCTYPE html>
+              <html>
+              <head><title>VPN Test</title>
+              <style>body{font-family:Arial;margin:40px;background:#1a1a1a;color:#fff}.info{background:#2d2d2d;padding:20px;border-radius:5px;margin:20px 0;border:1px solid #444}.ip{font-size:24px;color:#4caf50;font-weight:bold}</style>
+              </head>
+              <body>
+              <h1>🔒 Gluetun VPN Test Service</h1>
+              <div class="info">
+              <h2>Current Public IP (via VPN):</h2>
+              <p class="ip"><!--#exec cmd="curl -s https://ifconfig.me" --></p>
+              <h3>Expected: 158.173.152.95 (Switzerland)</h3>
+              <p><small>This service routes ALL traffic through Gluetun VPN.</small></p>
+              </div>
+              </body>
+              </html>
+              EOF
+              httpd -f -p 80 -h /www
           ports:
             - containerPort: 80
               name: http
-          volumeMounts:
-            - name: nginx-config
-              mountPath: /usr/share/nginx/html/index.html
-              subPath: index.html
           readinessProbe:
             httpGet:
               path: /
@@ -78,60 +98,4 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 5
 
-      volumes:
-        - name: nginx-config
-          configMap:
-            name: test-vpn-html
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: test-vpn-html
-  namespace: gluetun-vpn
-data:
-  index.html: |
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>VPN Test Service</title>
-        <style>
-            body { font-family: Arial; margin: 40px; }
-            .info { background: #f0f0f0; padding: 20px; border-radius: 5px; margin: 20px 0; }
-            button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
-        </style>
-        <script>
-            async function checkIP() {
-                document.getElementById('ip').textContent = 'Loading...';
-                document.getElementById('location').textContent = 'Loading...';
-                try {
-                    const response = await fetch('https://api.ipify.org?format=json');
-                    const data = await response.json();
-                    document.getElementById('ip').textContent = data.ip;
-
-                    const response2 = await fetch('http://ip-api.com/json/' + data.ip);
-                    const geo = await response2.json();
-                    document.getElementById('location').textContent =
-                        geo.country + ', ' + geo.city + ' (' + geo.isp + ')';
-                } catch (e) {
-                    document.getElementById('ip').textContent = 'Error: ' + e.message;
-                }
-            }
-            window.onload = checkIP;
-        </script>
-    </head>
-    <body>
-        <h1>🔒 Gluetun VPN Test Service</h1>
-        <div class="info">
-            <h2>Current Public IP:</h2>
-            <p id="ip">Loading...</p>
-            <h2>Location:</h2>
-            <p id="location">Loading...</p>
-            <p><small>This service routes ALL traffic through Gluetun VPN. If you see your home IP, the VPN is NOT working!</small></p>
-            <p><button onclick="checkIP()">🔄 Refresh IP Check</button></p>
-        </div>
-        <div class="info">
-            <h2>Gluetun Control API</h2>
-            <p><a href="https://gluetun.local.bigd.no" target="_blank">Open Gluetun Control Panel</a></p>
-        </div>
-    </body>
-    </html>
+      volumes: []

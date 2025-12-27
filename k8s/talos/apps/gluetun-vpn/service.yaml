@@ -1,20 +1,6 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: gluetun
-  namespace: gluetun-vpn
-spec:
-  selector:
-    app: gluetun
-  ports:
-    - name: http-control
-      port: 8000
-      targetPort: 8000
-      protocol: TCP
----
-apiVersion: v1
-kind: Service
-metadata:
   name: test-vpn
   namespace: gluetun-vpn
 spec:
