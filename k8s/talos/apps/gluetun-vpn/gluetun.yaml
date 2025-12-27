@@ -70,22 +70,12 @@ spec:
             - name: nginx-config
               mountPath: /usr/share/nginx/html/index.html
               subPath: index.html
-          # Fail-safe: If Gluetun dies, this container should not have network access
           readinessProbe:
-            exec:
-              command:
-                - sh
-                - -c
-                - |
-                  # Check if VPN is running
-                  if ! pgrep -x openvpn > /dev/null; then
-                    echo "VPN not running!"
-                    exit 1
-                  fi
-                  # Check nginx is responding
-                  wget -q -O- http://localhost/ > /dev/null
-            initialDelaySeconds: 30
-            periodSeconds: 30
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
 
       volumes:
         - name: nginx-config
