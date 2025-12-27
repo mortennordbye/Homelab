@@ -60,30 +60,28 @@ spec:
             timeoutSeconds: 10
             failureThreshold: 3
 
-        # Test application - simple HTTP server showing VPN IP
+        # Test application - simple busybox web server
         - name: test-app
-          image: alpine:latest
+          image: busybox:latest
           command:
             - sh
             - -c
             - |
-              apk add --no-cache curl busybox-extras
-              mkdir -p /www
+              mkdir -p /www/cgi-bin
+              cat > /www/cgi-bin/ip << 'EOF'
+              #!/bin/sh
+              echo "Content-Type: text/plain"
+              echo ""
+              wget -qO- https://ifconfig.me
+              EOF
+              chmod +x /www/cgi-bin/ip
               cat > /www/index.html << 'EOF'
               <!DOCTYPE html>
               <html>
               <head><title>VPN Test</title>
-              <style>body{font-family:Arial;margin:40px;background:#1a1a1a;color:#fff}.info{background:#2d2d2d;padding:20px;border-radius:5px;margin:20px 0;border:1px solid #444}.ip{font-size:24px;color:#4caf50;font-weight:bold}</style>
+              <meta http-equiv="refresh" content="0;url=/cgi-bin/ip">
               </head>
-              <body>
-              <h1>🔒 Gluetun VPN Test Service</h1>
-              <div class="info">
-              <h2>Current Public IP (via VPN):</h2>
-              <p class="ip"><!--#exec cmd="curl -s https://ifconfig.me" --></p>
-              <h3>Expected: 158.173.152.95 (Switzerland)</h3>
-              <p><small>This service routes ALL traffic through Gluetun VPN.</small></p>
-              </div>
-              </body>
+              <body>Checking VPN IP...</body>
               </html>
               EOF
               httpd -f -p 80 -h /www
@@ -94,7 +92,7 @@ spec:
             httpGet:
               path: /
               port: 80
-            initialDelaySeconds: 60
+            initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
 
