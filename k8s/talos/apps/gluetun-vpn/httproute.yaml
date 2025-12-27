@@ -12,11 +12,9 @@ spec:
   hostnames:
     - gluetun.local.bigd.no
   rules:
-    - matches:
-        - path:
-            type: PathPrefix
-            value: /
-      backendRefs:
-        - name: gluetun
+    - backendRefs:
+        - group: ""
+          kind: Service
+          name: gluetun
           port: 8000
           weight: 1
