@@ -7,7 +7,6 @@ deployment:
 
 api:
   dashboard: true
-  insecure: true
 
 providers:
   kubernetesGateway:
