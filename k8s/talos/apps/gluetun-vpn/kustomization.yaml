@@ -5,6 +5,7 @@ resources:
   - namespace.yaml
   - pia-secret.yaml
   - gluetun-config.yaml
+  - pvcs.yaml
   - service.yaml
   - gluetun.yaml
   - httproute.yaml

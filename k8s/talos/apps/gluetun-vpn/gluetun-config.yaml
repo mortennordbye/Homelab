@@ -8,8 +8,6 @@ data:
   VPN_TYPE: "openvpn"
   SERVER_REGIONS: "Switzerland"
   FIREWALL_OUTBOUND_SUBNETS: "10.0.0.0/8"
-  # Allow incoming connections on port 80 for nginx (and later qBittorrent, Prowlarr etc)
-  FIREWALL_INPUT_PORTS: "80,8000"
-  # HTTP control server address
-  HTTP_CONTROL_SERVER_ADDRESS: ":8000"
+  # Allow incoming connections for qBittorrent (8080) and Prowlarr (9696)
+  FIREWALL_INPUT_PORTS: "8080,9696"
   TZ: "Europe/Oslo"

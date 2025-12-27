@@ -60,40 +60,64 @@ spec:
             timeoutSeconds: 10
             failureThreshold: 3
 
-        # Test application - simple busybox web server
-        - name: test-app
-          image: busybox:latest
-          command:
-            - sh
-            - -c
-            - |
-              mkdir -p /www/cgi-bin
-              cat > /www/cgi-bin/ip << 'EOF'
-              #!/bin/sh
-              echo "Content-Type: text/plain"
-              echo ""
-              wget -qO- https://ifconfig.me
-              EOF
-              chmod +x /www/cgi-bin/ip
-              cat > /www/index.html << 'EOF'
-              <!DOCTYPE html>
-              <html>
-              <head><title>VPN Test</title>
-              <meta http-equiv="refresh" content="0;url=/cgi-bin/ip">
-              </head>
-              <body>Checking VPN IP...</body>
-              </html>
-              EOF
-              httpd -f -p 80 -h /www
+        # qBittorrent - torrent client
+        - name: qbittorrent
+          image: ghcr.io/linuxserver/qbittorrent:4.6.7
           ports:
-            - containerPort: 80
+            - containerPort: 8080
               name: http
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "Europe/Oslo"
+            - name: WEBUI_PORT
+              value: "8080"
+          volumeMounts:
+            - name: qbittorrent-config
+              mountPath: /config
+            - name: torrents
+              mountPath: /torrents
           readinessProbe:
             httpGet:
               path: /
-              port: 80
-            initialDelaySeconds: 10
+              port: 8080
+            initialDelaySeconds: 90
             periodSeconds: 10
-            timeoutSeconds: 5
 
-      volumes: []
+        # Prowlarr - indexer manager
+        - name: prowlarr
+          image: ghcr.io/linuxserver/prowlarr:1.26.3
+          ports:
+            - containerPort: 9696
+              name: http
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "Europe/Oslo"
+          volumeMounts:
+            - name: prowlarr-config
+              mountPath: /config
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: 9696
+            initialDelaySeconds: 90
+            periodSeconds: 10
+
+      volumes:
+        - name: qbittorrent-config
+          persistentVolumeClaim:
+            claimName: qbittorrent-config
+        - name: prowlarr-config
+          persistentVolumeClaim:
+            claimName: prowlarr-config
+        - name: torrents
+          nfs:
+            server: 10.3.10.5
+            path: /volume1/DockerNFS/torrents

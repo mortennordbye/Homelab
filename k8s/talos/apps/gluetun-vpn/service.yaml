@@ -1,12 +1,25 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: test-vpn
+  name: qbittorrent
   namespace: gluetun-vpn
 spec:
   selector:
     app: gluetun
   ports:
     - name: http
-      port: 80
-      targetPort: 80
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prowlarr
+  namespace: gluetun-vpn
+spec:
+  selector:
+    app: gluetun
+  ports:
+    - name: http
+      port: 9696
+      targetPort: 9696
