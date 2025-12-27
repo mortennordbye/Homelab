@@ -74,8 +74,9 @@ spec:
             httpGet:
               path: /
               port: 80
-            initialDelaySeconds: 5
+            initialDelaySeconds: 60
             periodSeconds: 10
+            timeoutSeconds: 5
 
       volumes:
         - name: nginx-config
