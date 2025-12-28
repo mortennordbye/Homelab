@@ -3,6 +3,10 @@
 
 mode: daemonset
 
+# Image configuration (required in newer chart versions)
+image:
+  repository: otel/opentelemetry-collector-k8s
+
 presets:
   # Host metrics preset for CPU, memory, disk, network
   hostMetrics:
