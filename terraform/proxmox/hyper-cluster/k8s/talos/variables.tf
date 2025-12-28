@@ -35,7 +35,12 @@ variable "proxmox_iso_storage" {
 }
 
 variable "cluster_name" {
-  description = "Cluster name"
+  description = "Kubernetes cluster name"
+  type        = string
+}
+
+variable "proxmox_cluster_name" {
+  description = "Proxmox cluster name (for CSI topology region)"
   type        = string
 }
 

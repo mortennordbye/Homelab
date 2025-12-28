@@ -68,7 +68,8 @@ data "talos_machine_configuration" "controlplane" {
           }]
         }
         nodeLabels = {
-          "topology.kubernetes.io/zone" = each.value.proxmox_node
+          "topology.kubernetes.io/region" = var.proxmox_cluster_name
+          "topology.kubernetes.io/zone"   = each.value.proxmox_node
         }
       }
       cluster = {
@@ -111,7 +112,8 @@ data "talos_machine_configuration" "worker" {
           }]
         }
         nodeLabels = {
-          "topology.kubernetes.io/zone" = each.value.proxmox_node
+          "topology.kubernetes.io/region" = var.proxmox_cluster_name
+          "topology.kubernetes.io/zone"   = each.value.proxmox_node
         }
       }
       cluster = {
