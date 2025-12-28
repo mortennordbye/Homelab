@@ -39,6 +39,16 @@ spec:
       labels:
         app: cleanuparr
     spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              preference:
+                matchExpressions:
+                  - key: topology.kubernetes.io/zone
+                    operator: In
+                    values:
+                      - hyper1
       containers:
         - name: cleanuparr
           image: ghcr.io/cleanuparr/cleanuparr:1.0.1

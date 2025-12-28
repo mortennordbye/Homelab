@@ -39,6 +39,16 @@ spec:
       labels:
         app: flaresolverr
     spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              preference:
+                matchExpressions:
+                  - key: topology.kubernetes.io/zone
+                    operator: In
+                    values:
+                      - hyper1
       containers:
         - name: flaresolverr
           image: ghcr.io/flaresolverr/flaresolverr:v3.4.6

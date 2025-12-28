@@ -39,6 +39,16 @@ spec:
       labels:
         app: bazarr
     spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              preference:
+                matchExpressions:
+                  - key: topology.kubernetes.io/zone
+                    operator: In
+                    values:
+                      - hyper1
       containers:
         - name: bazarr
           image: ghcr.io/linuxserver/bazarr:1.5.3
