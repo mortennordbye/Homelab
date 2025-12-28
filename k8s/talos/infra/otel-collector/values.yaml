@@ -4,8 +4,9 @@
 mode: daemonset
 
 # Image configuration (required in newer chart versions)
+# Use contrib image for prometheusremotewrite exporter
 image:
-  repository: otel/opentelemetry-collector-k8s
+  repository: otel/opentelemetry-collector-contrib
 
 presets:
   # Host metrics preset for CPU, memory, disk, network
