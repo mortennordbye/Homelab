@@ -7,14 +7,23 @@ metadata:
     argocd.argoproj.io/sync-wave: "2"
 spec:
   parentRefs:
-    - name: internal-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: internal-gateway
       namespace: traefik
   hostnames:
     - "prometheus.local.bigd.no"
   rules:
-    - backendRefs:
-        - name: kube-prometheus-stack-prometheus
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - group: ""
+          kind: Service
+          name: kube-prometheus-stack-prometheus
           port: 9090
+          weight: 1
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
@@ -25,11 +34,20 @@ metadata:
     argocd.argoproj.io/sync-wave: "2"
 spec:
   parentRefs:
-    - name: internal-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: internal-gateway
       namespace: traefik
   hostnames:
     - "grafana.local.bigd.no"
   rules:
-    - backendRefs:
-        - name: kube-prometheus-stack-grafana
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - group: ""
+          kind: Service
+          name: kube-prometheus-stack-grafana
           port: 80
+          weight: 1
