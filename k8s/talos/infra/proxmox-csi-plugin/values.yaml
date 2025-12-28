@@ -13,8 +13,7 @@ tolerations:
 
 node:
   kubeletDir: /var/lib/kubelet
-  nodeSelector:
-    node.cloudprovider.kubernetes.io/platform: nocloud
+
 
   tolerations:
     - operator: Exists
