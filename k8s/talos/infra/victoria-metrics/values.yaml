@@ -77,6 +77,6 @@ kubeControllerManager:
 kubeProxy:
   enabled: false
 
-# Operator not needed since OTel handles scraping
+# Operator required for VMSingle CRD
 victoria-metrics-operator:
-  enabled: false
+  enabled: true
