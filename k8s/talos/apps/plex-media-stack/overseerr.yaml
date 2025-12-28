@@ -6,7 +6,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: syno-nfs
+  storageClassName: proxmox-local
   resources:
     requests:
       storage: 1Gi
@@ -42,6 +42,15 @@ spec:
       labels:
         app: overseerr
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: topology.kubernetes.io/zone
+                    operator: In
+                    values:
+                      - hyper1
       containers:
         - name: overseerr
           image: ghcr.io/linuxserver/overseerr:1.34.0

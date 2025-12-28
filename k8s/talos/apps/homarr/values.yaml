@@ -12,8 +12,18 @@ envSecrets:
 persistence:
   homarrDatabase:
     enabled: true
-    storageClassName: syno-nfs
+    storageClassName: proxmox-local
     size: "1Gi"
+
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: topology.kubernetes.io/zone
+              operator: In
+              values:
+                - hyper1
 
 rbac:
   enabled: true

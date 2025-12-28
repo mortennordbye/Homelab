@@ -6,7 +6,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: syno-nfs
+  storageClassName: proxmox-local
   resources:
     requests:
       storage: 1Gi
@@ -42,6 +42,15 @@ spec:
       labels:
         app: tautulli
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: topology.kubernetes.io/zone
+                    operator: In
+                    values:
+                      - hyper1
       containers:
         - name: tautulli
           image: ghcr.io/linuxserver/tautulli:2.16.0

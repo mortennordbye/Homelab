@@ -16,6 +16,15 @@ spec:
       labels:
         app: audiobookshelf
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: topology.kubernetes.io/zone
+                    operator: In
+                    values:
+                      - hyper1
       securityContext:
         fsGroup: 1000
       containers:

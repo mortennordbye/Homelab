@@ -6,7 +6,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: syno-nfs
+  storageClassName: proxmox-local
   resources:
     requests:
       storage: 5Gi
