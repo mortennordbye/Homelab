@@ -7,6 +7,7 @@ commonAnnotations:
 resources:
   - namespace.yaml
   - httproutes.yaml
+  - grafana-admin-secret.yaml
 
 helmCharts:
   - name: victoria-metrics-k8s-stack
