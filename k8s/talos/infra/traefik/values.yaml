@@ -11,6 +11,7 @@ api:
 providers:
   kubernetesGateway:
     enabled: true
+    experimentalChannel: true
   kubernetesCRD:
     enabled: true
     allowCrossNamespace: true
