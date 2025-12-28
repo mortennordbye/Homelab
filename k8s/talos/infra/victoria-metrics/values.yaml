@@ -33,7 +33,7 @@ alertmanager:
 grafana:
   enabled: true
   adminUser: admin
-  adminPassword: admin #temorary - change after first login
+  adminPassword: admin #temorary
   persistence:
     enabled: true
     storageClassName: syno-nfs
