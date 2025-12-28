@@ -83,23 +83,29 @@ resources:
     cpu: 100m
     memory: 128Mi
 
-# Enable metrics port for Prometheus scraping (no hostPort needed)
+# Enable metrics port for internal monitoring
 ports:
   metrics:
     enabled: true
-    hostPort: null
+  # Disable hostPorts for all receiver ports (PodSecurity compliance)
   otlp:
-    hostPort: null
+    enabled: true
+    hostPort: 0
   otlp-http:
-    hostPort: null
+    enabled: true
+    hostPort: 0
   jaeger-compact:
-    hostPort: null
+    enabled: true
+    hostPort: 0
   jaeger-thrift:
-    hostPort: null
+    enabled: true
+    hostPort: 0
   jaeger-grpc:
-    hostPort: null
+    enabled: true
+    hostPort: 0
   zipkin:
-    hostPort: null
+    enabled: true
+    hostPort: 0
 
 # Service account with necessary permissions
 serviceAccount:
