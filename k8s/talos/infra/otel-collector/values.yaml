@@ -1,0 +1,104 @@
+## OpenTelemetry Collector Configuration
+## Collecting host metrics and sending to Prometheus
+
+mode: daemonset
+
+presets:
+  # Host metrics preset for CPU, memory, disk, network
+  hostMetrics:
+    enabled: true
+
+  # Kubernetes attributes processor
+  kubernetesAttributes:
+    enabled: true
+    extractAllPodLabels: false
+    extractAllPodAnnotations: false
+
+config:
+  receivers:
+    # Override prometheus receiver scrape interval
+    prometheus:
+      config:
+        scrape_configs:
+          - job_name: "otel-collector"
+            scrape_interval: 30s
+            static_configs:
+              - targets: ["${env:MY_POD_IP}:8888"]
+
+  processors:
+    # Batch processor
+    batch:
+      send_batch_size: 1000
+      timeout: 10s
+
+    # Memory limiter (using defaults from chart)
+    memory_limiter:
+      check_interval: 5s
+      limit_percentage: 80
+      spike_limit_percentage: 25
+
+    # Resource processor to add cluster info
+    resource:
+      attributes:
+        - key: cluster.name
+          value: genesis
+          action: upsert
+
+  exporters:
+    # Prometheus remote write exporter
+    prometheusremotewrite:
+      endpoint: http://kube-prometheus-stack-prometheus:9090/api/v1/write
+      tls:
+        insecure: true
+
+  service:
+    pipelines:
+      # Metrics pipeline - hostmetrics receiver added by preset
+      metrics:
+        receivers: [hostmetrics, otlp, prometheus]
+        processors: [memory_limiter, k8sattributes, resource, batch]
+        exporters: [prometheusremotewrite]
+      # Keep default trace/log pipelines but with debug exporter
+      traces:
+        receivers: [otlp]
+        processors: [memory_limiter, k8sattributes, batch]
+        exporters: [debug]
+      logs:
+        receivers: [otlp]
+        processors: [memory_limiter, k8sattributes, batch]
+        exporters: [debug]
+
+# Enable GOMEMLIMIT for better memory management
+useGOMEMLIMIT: true
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+# Enable metrics port for Prometheus scraping
+ports:
+  metrics:
+    enabled: true
+
+# Service account with necessary permissions
+serviceAccount:
+  create: true
+
+# Pod security context for host metrics
+podSecurityContext:
+  runAsUser: 0
+  runAsGroup: 0
+
+# Host network access for accurate host metrics
+hostNetwork: true
+
+# Tolerations to run on all nodes including control plane
+tolerations:
+  - effect: NoSchedule
+    operator: Exists
+  - effect: NoExecute
+    operator: Exists
