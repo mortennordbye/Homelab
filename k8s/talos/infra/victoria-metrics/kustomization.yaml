@@ -7,12 +7,11 @@ commonAnnotations:
 resources:
   - namespace.yaml
   - httproutes.yaml
-  - grafana-admin-secret.yaml
 
 helmCharts:
-  - name: victoria-metrics-k8s-stack
+  - name: victoria-metrics-single
     repo: https://victoriametrics.github.io/helm-charts
     namespace: victoria-metrics
-    version: 0.66.1
-    releaseName: vm-stack
+    version: 0.27.0
+    releaseName: vmsingle
     valuesFile: ./values.yaml
