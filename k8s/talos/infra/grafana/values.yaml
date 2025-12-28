@@ -1,10 +1,9 @@
 # Grafana configuration
 
-adminUser: admin
-adminPassword: admin
-
-envFromSecrets:
-  - name: grafana-admin-credentials
+admin:
+  existingSecret: grafana-admin-credentials
+  userKey: admin-user
+  passwordKey: admin-password
 
 persistence:
   enabled: true
