@@ -50,11 +50,12 @@ config:
           action: upsert
 
   exporters:
-    # Prometheus remote write exporter
-    prometheusremotewrite:
-      endpoint: http://kube-prometheus-stack-prometheus:9090/api/v1/write
-      tls:
-        insecure: true
+    # Prometheus exporter - exposes metrics for scraping
+    prometheus:
+      endpoint: "${env:MY_POD_IP}:9090"
+      namespace: otel
+      const_labels:
+        cluster: genesis
 
   service:
     pipelines:
@@ -62,7 +63,7 @@ config:
       metrics:
         receivers: [hostmetrics, otlp, prometheus]
         processors: [memory_limiter, k8sattributes, resource, batch]
-        exporters: [prometheusremotewrite]
+        exporters: [prometheus]
       # Keep default trace/log pipelines but with debug exporter
       traces:
         receivers: [otlp]
@@ -88,6 +89,12 @@ resources:
 ports:
   metrics:
     enabled: true
+  # Prometheus exporter port for scraping
+  prometheus:
+    enabled: true
+    containerPort: 9090
+    servicePort: 9090
+    protocol: TCP
   # Disable hostPorts for all receiver ports (PodSecurity compliance)
   otlp:
     enabled: true
@@ -111,6 +118,13 @@ ports:
 # Service account with necessary permissions
 serviceAccount:
   create: true
+
+# Enable ServiceMonitor for Prometheus Operator
+serviceMonitor:
+  enabled: true
+  metricsEndpoints:
+    - port: prometheus
+      interval: 30s
 
 # Pod security context for host metrics
 podSecurityContext:
