@@ -6,10 +6,10 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: syno-nfs
+  storageClassName: proxmox-local
   resources:
     requests:
-      storage: 2Gi
+      storage: 5Gi
 ---
 apiVersion: v1
 kind: Service
@@ -30,7 +30,7 @@ metadata:
   name: radarr
   namespace: arr-stack
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: radarr
