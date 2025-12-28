@@ -10,6 +10,7 @@ parameters:
   storage: local-lvm
   cache: writethrough
   ssd: "true"
+  backup: "true"
 provisioner: csi.proxmox.sinextra.dev
 allowVolumeExpansion: true
 reclaimPolicy: Delete

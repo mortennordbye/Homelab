@@ -8,6 +8,6 @@ metadata:
 driver: csi.proxmox.sinextra.dev
 deletionPolicy: Delete
 parameters:
-  # Snapshots will be created in the same zone as the source volume
-  # Uncomment to force specific zone:
-  # zone: hyper1
+  # Copy snapshots to hyper2 nodes for geo-redundancy
+  # If omitted, snapshots stay on same node as source volume
+  zone: hyper2
