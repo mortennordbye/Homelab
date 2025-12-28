@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+commonAnnotations:
+  argocd.argoproj.io/sync-wave: "2"
+
+resources:
+  - namespace.yaml
+  - httproutes.yaml
+
+helmCharts:
+  - name: victoria-metrics-k8s-stack
+    repo: https://victoriametrics.github.io/helm-charts
+    namespace: victoria-metrics
+    version: 0.66.1
+    releaseName: vm-stack
+    valuesFile: ./values.yaml

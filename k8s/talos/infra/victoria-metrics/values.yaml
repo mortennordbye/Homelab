@@ -1,0 +1,80 @@
+# Minimal VictoriaMetrics K8s Stack - OTel handles scraping
+
+vmsingle:
+  enabled: true
+  spec:
+    retentionPeriod: "12"
+    replicaCount: 1
+    storage:
+      accessModes:
+        - ReadWriteOnce
+      storageClassName: syno-nfs
+      resources:
+        requests:
+          storage: 50Gi
+
+vmcluster:
+  enabled: false
+
+# OTel Collector handles all scraping
+vmagent:
+  enabled: false
+
+# Using Grafana's built-in alerting
+vmalert:
+  enabled: false
+
+vmauth:
+  enabled: false
+
+alertmanager:
+  enabled: false
+
+grafana:
+  enabled: true
+  persistence:
+    enabled: true
+    storageClassName: syno-nfs
+    size: 10Gi
+  sidecar:
+    dashboards:
+      enabled: true
+    datasources:
+      enabled: true
+
+defaultDashboards:
+  enabled: false
+
+defaultRules:
+  create: false
+
+# OTel Collector scrapes these directly
+prometheus-node-exporter:
+  enabled: false
+
+kube-state-metrics:
+  enabled: false
+
+kubelet:
+  enabled: true
+
+kubeApiServer:
+  enabled: true
+
+coreDns:
+  enabled: true
+
+kubeEtcd:
+  enabled: false
+
+kubeScheduler:
+  enabled: false
+
+kubeControllerManager:
+  enabled: false
+
+kubeProxy:
+  enabled: false
+
+victoria-metrics-operator:
+  enabled: true

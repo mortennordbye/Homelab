@@ -1,0 +1,50 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: grafana
+  namespace: victoria-metrics
+spec:
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: traefik-gateway-private
+      namespace: traefik
+  hostnames:
+    - grafana.local.bigd.no
+  rules:
+    - backendRefs:
+        - group: ""
+          kind: Service
+          name: vm-stack-grafana
+          port: 80
+          weight: 1
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: victoriametrics
+  namespace: victoria-metrics
+spec:
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: traefik-gateway-private
+      namespace: traefik
+  hostnames:
+    - victoriametrics.local.bigd.no
+  rules:
+    - backendRefs:
+        - group: ""
+          kind: Service
+          name: vm-stack-victoria-metrics-k8s-stack-vmsingle
+          port: 8429
+          weight: 1
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
