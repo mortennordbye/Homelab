@@ -17,6 +17,10 @@ snapshotsEnabled: true
 
 deployNodeAgent: true
 
+kubectl:
+  image:
+    tag: "1.33.4"
+
 nodeAgent:
   tolerations:
     - operator: Exists
