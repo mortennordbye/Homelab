@@ -1,13 +1,13 @@
 replicaCount: 1
 
 nfs:
-  server: "10.3.10.10"
+  server: "nas.local.bigd.no"
   path: "/volume1/k8s-volumes/talos"
 
 storageClass:
   create: true
   name: syno-nfs
-  defaultClass: true
+  defaultClass: false
   allowVolumeExpansion: true
   reclaimPolicy: Delete
   archiveOnDelete: true
