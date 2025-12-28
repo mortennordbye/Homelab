@@ -10,7 +10,6 @@ resources:
   - namespace.yaml
   - config-secret.yaml
   - storageclass.yaml
-  - volumesnapshotclass.yaml
 
 namespace: csi-proxmox
 
