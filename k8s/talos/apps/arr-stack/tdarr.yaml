@@ -6,10 +6,10 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: syno-nfs
+  storageClassName: proxmox-local
   resources:
     requests:
-      storage: 5Gi
+      storage: 10Gi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -19,10 +19,10 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: syno-nfs
+  storageClassName: proxmox-local
   resources:
     requests:
-      storage: 2Gi
+      storage: 5Gi
 ---
 apiVersion: v1
 kind: Service
