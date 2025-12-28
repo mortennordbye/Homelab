@@ -1,12 +1,9 @@
 # Grafana configuration
 
-# Administrator username (not from secret)
-adminUser: mnordbye
-
-# Use an existing secret for the admin password only
+# Use an existing secret for admin credentials
 admin:
-  existingSecret: grafana-admin-password
-  userKey: ""
+  existingSecret: grafana-admin-credentials
+  userKey: admin-user
   passwordKey: admin-password
 
 persistence:
