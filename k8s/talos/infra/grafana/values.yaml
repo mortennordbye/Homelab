@@ -1,9 +1,10 @@
 # Grafana configuration
 
-admin:
-  existingSecret: grafana-admin-credentials
-  userKey: admin-user
-  passwordKey: admin-password
+adminUser: admin
+adminPassword: admin
+
+envFromSecrets:
+  - name: grafana-admin-credentials
 
 persistence:
   enabled: true
@@ -34,7 +35,3 @@ dashboardProviders:
           path: /var/lib/grafana/dashboards/default
 
 dashboards: {}
-
-# Enable Grafana's built-in alerting
-alerting:
-  enabled: true
