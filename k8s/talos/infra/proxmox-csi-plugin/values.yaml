@@ -14,7 +14,6 @@ tolerations:
 node:
   kubeletDir: /var/lib/kubelet
 
-
   tolerations:
     - operator: Exists
 
@@ -68,4 +67,5 @@ nodeRegistrar:
 options:
   enableCapacity: true
 
-logVerbosityLevel: 5
+# Increase log verbosity for troubleshooting (default: 5, max: 10)
+logVerbosityLevel: 10
