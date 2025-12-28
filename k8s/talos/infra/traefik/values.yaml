@@ -80,3 +80,7 @@ logs:
     level: INFO
   access:
     enabled: true
+
+experimental:
+  kubernetesGateway:
+    enabled: true
