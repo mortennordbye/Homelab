@@ -1,14 +1,20 @@
 # Grafana configuration
 
+# Admin user configuration
+adminUser: mnordbye
+
+# Use an existing secret for the admin password
 admin:
   existingSecret: grafana-admin-credentials
-  userKey: admin-user
   passwordKey: admin-password
 
 persistence:
   enabled: true
   storageClassName: syno-nfs
   size: 10Gi
+  type: pvc
+  accessModes:
+    - ReadWriteOnce
 
 datasources:
   datasources.yaml:
@@ -34,3 +40,8 @@ dashboardProviders:
           path: /var/lib/grafana/dashboards/default
 
 dashboards: {}
+
+# Grafana's primary configuration
+grafana.ini:
+  server:
+    domain: grafana.local.bigd.no

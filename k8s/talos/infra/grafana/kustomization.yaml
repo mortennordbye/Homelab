@@ -7,7 +7,7 @@ commonAnnotations:
 resources:
   - namespace.yaml
   - httproutes.yaml
-  - grafana-admin-secret.yaml
+  - grafana-admin-password-secret.yaml
 
 helmCharts:
   - name: grafana
