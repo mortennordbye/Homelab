@@ -55,14 +55,15 @@ prometheus-node-exporter:
 kube-state-metrics:
   enabled: false
 
+# Disable all K8s component scraping - OTel handles this
 kubelet:
-  enabled: true
+  enabled: false
 
 kubeApiServer:
-  enabled: true
+  enabled: false
 
 coreDns:
-  enabled: true
+  enabled: false
 
 kubeEtcd:
   enabled: false
@@ -76,5 +77,6 @@ kubeControllerManager:
 kubeProxy:
   enabled: false
 
+# Operator not needed since OTel handles scraping
 victoria-metrics-operator:
-  enabled: true
+  enabled: false
