@@ -24,6 +24,8 @@ kubectl:
 nodeAgent:
   tolerations:
     - operator: Exists
+  nodeSelector:
+    topology.kubernetes.io/zone: hyper1
   podVolumePath: /var/lib/kubelet/pods
   extraVolumes:
     - name: nfs-backup-storage
