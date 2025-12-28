@@ -83,10 +83,23 @@ resources:
     cpu: 100m
     memory: 128Mi
 
-# Enable metrics port for Prometheus scraping
+# Enable metrics port for Prometheus scraping (no hostPort needed)
 ports:
   metrics:
     enabled: true
+    hostPort: null
+  otlp:
+    hostPort: null
+  otlp-http:
+    hostPort: null
+  jaeger-compact:
+    hostPort: null
+  jaeger-thrift:
+    hostPort: null
+  jaeger-grpc:
+    hostPort: null
+  zipkin:
+    hostPort: null
 
 # Service account with necessary permissions
 serviceAccount:
@@ -97,8 +110,8 @@ podSecurityContext:
   runAsUser: 0
   runAsGroup: 0
 
-# Host network access for accurate host metrics
-hostNetwork: true
+# Host network not required for pushing metrics
+hostNetwork: false
 
 # Tolerations to run on all nodes including control plane
 tolerations:
