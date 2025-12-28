@@ -1,0 +1,46 @@
+---
+configuration:
+  backupStorageLocation:
+    - name: default
+      provider: velero.io/kopia
+      bucket: velero-backups
+      default: true
+      config:
+        path: /velero-backups
+  volumeSnapshotLocation:
+    - name: default
+      provider: csi
+
+  defaultVolumesToFsBackup: true
+
+snapshotsEnabled: true
+
+deployNodeAgent: true
+
+nodeAgent:
+  tolerations:
+    - operator: Exists
+  podVolumePath: /var/lib/kubelet/pods
+  extraVolumes:
+    - name: nfs-backup-storage
+      nfs:
+        server: nas.local.bigd.no
+        path: /volume1/k8s-volumes/talos/velero-backups
+  extraVolumeMounts:
+    - name: nfs-backup-storage
+      mountPath: /velero-backups
+
+schedules:
+  daily-volume-backup:
+    disabled: false
+    schedule: "0 2 * * *"
+    useOwnerReferencesInBackup: false
+    template:
+      ttl: "720h"
+      includedNamespaces:
+        - arr-stack
+      includeClusterResources: false
+      snapshotVolumes: true
+      includedResources:
+        - persistentvolumeclaims
+        - persistentvolumes
