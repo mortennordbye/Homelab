@@ -1,0 +1,72 @@
+---
+existingConfigSecret: proxmox-csi-plugin
+
+replicaCount: 1
+priorityClassName: system-cluster-critical
+
+nodeSelector:
+  node-role.kubernetes.io/control-plane: ""
+
+tolerations:
+  - key: node-role.kubernetes.io/control-plane
+    effect: NoSchedule
+
+node:
+  kubeletDir: /var/lib/kubelet
+  nodeSelector:
+    node.cloudprovider.kubernetes.io/platform: nocloud
+
+  tolerations:
+    - operator: Exists
+
+controller:
+  plugin:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 32Mi
+      limits:
+        memory: 128Mi
+
+  attacher:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 16Mi
+
+  provisioner:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 16Mi
+
+  resizer:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 16Mi
+
+  snapshotter:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 16Mi
+
+nodePlugin:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 32Mi
+    limits:
+      memory: 128Mi
+
+nodeRegistrar:
+  resources:
+    requests:
+      cpu: 10m
+      memory: 16Mi
+
+options:
+  enableCapacity: true
+
+logVerbosityLevel: 5

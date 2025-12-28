@@ -1,0 +1,23 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Sync wave annotation to ensure proper ordering
+commonAnnotations:
+  argocd.argoproj.io/sync-wave: "0"
+
+resources:
+  - namespace.yaml
+  - config-secret.yaml
+  - storageclass.yaml
+
+namespace: csi-proxmox
+
+helmCharts:
+  - name: proxmox-csi-plugin
+    repo: oci://ghcr.io/sergelogvinov/charts
+    namespace: csi-proxmox
+    version: 0.5.3
+    releaseName: proxmox-csi-plugin
+    valuesFile: ./values.yaml
+    includeCRDs: true
