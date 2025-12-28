@@ -30,7 +30,7 @@ metadata:
   name: sonarr
   namespace: arr-stack
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: sonarr
