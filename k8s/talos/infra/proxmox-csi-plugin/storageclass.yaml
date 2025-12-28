@@ -14,10 +14,5 @@ provisioner: csi.proxmox.sinextra.dev
 allowVolumeExpansion: true
 reclaimPolicy: Delete
 volumeBindingMode: WaitForFirstConsumer
-allowedTopologies:
-  - matchLabelExpressions:
-      - key: topology.kubernetes.io/zone
-        values:
-          - hyper1
 
 ---
