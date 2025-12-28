@@ -10,3 +10,4 @@ resources:
   - tautulli.yaml
   - overseerr.yaml
   - httproutes.yaml
+  - tcproute.yaml

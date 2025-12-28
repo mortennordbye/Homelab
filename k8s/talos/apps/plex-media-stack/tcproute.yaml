@@ -1,0 +1,19 @@
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: TCPRoute
+metadata:
+  name: plex-tcp
+  namespace: plex-media-stack
+spec:
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: traefik-gateway-public
+      namespace: traefik
+      sectionName: plex-tcp
+  rules:
+    - backendRefs:
+        - group: ""
+          kind: Service
+          name: plex
+          port: 32400
+          weight: 1
