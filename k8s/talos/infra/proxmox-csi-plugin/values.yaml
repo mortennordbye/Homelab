@@ -45,6 +45,7 @@ controller:
         memory: 16Mi
 
   snapshotter:
+    enabled: true
     resources:
       requests:
         cpu: 10m

@@ -1,0 +1,13 @@
+---
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnapshotClass
+metadata:
+  name: proxmox-snapshot
+  labels:
+    velero.io/csi-volumesnapshot-class: "true"
+driver: csi.proxmox.sinextra.dev
+deletionPolicy: Delete
+parameters:
+  # Snapshots will be created in the same zone as the source volume
+  # Uncomment to force specific zone:
+  # zone: hyper1
