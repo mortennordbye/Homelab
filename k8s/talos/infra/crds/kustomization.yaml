@@ -6,4 +6,3 @@ commonAnnotations:
 
 resources:
   - https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/experimental-install.yaml
-  - https://raw.githubusercontent.com/VictoriaMetrics/helm-charts/master/charts/victoria-metrics-operator/crd.yaml

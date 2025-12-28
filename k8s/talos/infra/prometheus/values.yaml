@@ -1,0 +1,95 @@
+## Minimal kube-prometheus-stack configuration
+## OTel Collector will handle all metric collection
+
+## Prometheus configuration - storage only
+prometheus:
+  prometheusSpec:
+    retention: 7d
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: syno-nfs
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 20Gi
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        memory: 1Gi
+    # Enable remote write for OTel
+    enableRemoteWriteReceiver: true
+
+## Grafana configuration
+grafana:
+  enabled: true
+
+  # Use ExternalSecret for admin credentials
+  admin:
+    existingSecret: grafana-admin-credentials
+    userKey: admin-user
+    passwordKey: admin-password
+
+  persistence:
+    enabled: true
+    storageClassName: syno-nfs
+    size: 10Gi
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 512Mi
+
+  # Grafana configuration
+  grafana.ini:
+    server:
+      domain: grafana.local.bigd.no
+
+## Disable all scrapers - OTel will handle collection
+alertmanager:
+  enabled: false
+
+nodeExporter:
+  enabled: false
+
+kubeStateMetrics:
+  enabled: false
+
+## Prometheus operator
+prometheusOperator:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
+
+## Disable monitoring of k8s components since OTel handles it
+kubeApiServer:
+  enabled: false
+
+kubelet:
+  enabled: false
+
+kubeControllerManager:
+  enabled: false
+
+coreDns:
+  enabled: false
+
+kubeEtcd:
+  enabled: false
+
+kubeScheduler:
+  enabled: false
+
+kubeProxy:
+  enabled: false
+
+## Minimal default rules
+defaultRules:
+  create: false
