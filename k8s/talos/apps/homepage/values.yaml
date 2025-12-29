@@ -79,6 +79,10 @@ config:
             icon: unifi.png
             href: https://10.3.10.1
             description: Network controller
+        - Cloudflare:
+            icon: cloudflare.png
+            href: https://dash.cloudflare.com/
+            description: DNS and CDN
 
     - Media Management:
         - Plex:
@@ -208,25 +212,19 @@ config:
     mode: cluster
 
   settings:
-    title: Genesis Homelab
-    favicon: https://kubernetes.io/images/favicon.png
+    title: 🌿 Eden
+    favicon: https://em-content.zobj.net/source/apple/391/herb_1f33f.png
     theme: dark
-    color: gray
+    color: emerald
     headerStyle: boxed
     layout:
-      Monitoring:
-        style: row
-        columns: 3
       Network:
         style: row
         columns: 3
+      Public Sites:
+        style: row
+        columns: 3
       Media Management:
-        style: row
-        columns: 3
-      Public Services:
-        style: row
-        columns: 3
-      Portfolio:
         style: row
         columns: 3
       Infrastructure:
@@ -235,3 +233,6 @@ config:
       Torrent Sites:
         style: row
         columns: 4
+      Monitoring:
+        style: row
+        columns: 3
