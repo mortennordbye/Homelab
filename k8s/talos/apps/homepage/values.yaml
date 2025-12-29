@@ -37,6 +37,10 @@ env:
   - name: HOMEPAGE_ALLOWED_HOSTS
     value: hub.bigd.no
 
+envFrom:
+  - secretRef:
+      name: homepage-api-keys
+
 # Persistence for logs only
 persistence:
   logs:
@@ -109,10 +113,18 @@ config:
             icon: radarr.png
             href: https://radarr.local.bigd.no
             description: Movie management
+            widget:
+              type: radarr
+              url: https://radarr.local.bigd.no
+              key: { { HOMEPAGE_VAR_RADARR_API_KEY } }
         - Sonarr:
             icon: sonarr.png
             href: https://sonarr.local.bigd.no
             description: TV show management
+            widget:
+              type: sonarr
+              url: https://sonarr.local.bigd.no
+              key: { { HOMEPAGE_VAR_SONARR_API_KEY } }
         - Prowlarr:
             icon: prowlarr.png
             href: https://prowlarr.local.bigd.no
@@ -213,6 +225,8 @@ config:
 
   settings:
     title: Eden
+    showTitle: true
+    hideVersion: true
     favicon: https://em-content.zobj.net/source/apple/391/herb_1f33f.png
     theme: dark
     color: slate

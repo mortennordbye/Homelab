@@ -6,6 +6,7 @@ namespace: homepage
 resources:
   - namespace.yaml
   - httproute.yaml
+  - secrets.yaml
 
 helmCharts:
   - name: homepage
