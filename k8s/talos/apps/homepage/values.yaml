@@ -56,20 +56,6 @@ config:
               href: https://www.notion.so
 
   services:
-    - Monitoring:
-        - Prometheus:
-            icon: prometheus.png
-            href: http://prometheus.local.bigd.no
-            description: Metrics database
-        - Grafana:
-            icon: grafana.png
-            href: https://grafana.local.bigd.no
-            description: Dashboards
-        - Tautulli:
-            icon: tautulli.png
-            href: https://tautulli.local.bigd.no
-            description: Plex monitoring
-
     - Network:
         - Traefik:
             icon: traefik.png
@@ -83,36 +69,6 @@ config:
             icon: cloudflare.png
             href: https://dash.cloudflare.com/
             description: DNS and CDN
-
-    - Media Management:
-        - Plex:
-            icon: plex.png
-            href: https://plex.local.bigd.no
-            description: Media server
-        - Radarr:
-            icon: radarr.png
-            href: https://radarr.local.bigd.no
-            description: Movie management
-        - Sonarr:
-            icon: sonarr.png
-            href: https://sonarr.local.bigd.no
-            description: TV show management
-        - Prowlarr:
-            icon: prowlarr.png
-            href: https://prowlarr.local.bigd.no
-            description: Indexer manager
-        - Bazarr:
-            icon: bazarr.png
-            href: https://bazarr.local.bigd.no
-            description: Subtitle management
-        - qBittorrent:
-            icon: qbittorrent.png
-            href: https://qbittorrent.local.bigd.no
-            description: Torrent client
-        - FlareSolverr:
-            icon: flaresolverr.png
-            href: https://flaresolverr.local.bigd.no
-            description: Cloudflare bypass
 
     - Public Sites:
         - Audiobookshelf:
@@ -143,6 +99,36 @@ config:
             icon: mdi-web-clock
             href: https://stage.nordbye.it
             description: Staging environment
+
+    - Media Management:
+        - Plex:
+            icon: plex.png
+            href: https://plex.local.bigd.no
+            description: Media server
+        - Radarr:
+            icon: radarr.png
+            href: https://radarr.local.bigd.no
+            description: Movie management
+        - Sonarr:
+            icon: sonarr.png
+            href: https://sonarr.local.bigd.no
+            description: TV show management
+        - Prowlarr:
+            icon: prowlarr.png
+            href: https://prowlarr.local.bigd.no
+            description: Indexer manager
+        - Bazarr:
+            icon: bazarr.png
+            href: https://bazarr.local.bigd.no
+            description: Subtitle management
+        - qBittorrent:
+            icon: qbittorrent.png
+            href: https://qbittorrent.local.bigd.no
+            description: Torrent client
+        - FlareSolverr:
+            icon: flaresolverr.png
+            href: https://flaresolverr.local.bigd.no
+            description: Cloudflare bypass
 
     - Infrastructure:
         - Proxmox Hyper1:
@@ -184,6 +170,20 @@ config:
             href: https://www.torrentleech.org/torrents/top/index/added/-1%20day/orderby/completed/order/desc
             description: TorrentLeech tracker
 
+    - Monitoring:
+        - Prometheus:
+            icon: prometheus.png
+            href: http://prometheus.local.bigd.no
+            description: Metrics database
+        - Grafana:
+            icon: grafana.png
+            href: https://grafana.local.bigd.no
+            description: Dashboards
+        - Tautulli:
+            icon: tautulli.png
+            href: https://tautulli.local.bigd.no
+            description: Plex monitoring
+
   widgets:
     - kubernetes:
         cluster:
@@ -212,10 +212,10 @@ config:
     mode: cluster
 
   settings:
-    title: 🌿 Eden
+    title: Eden
     favicon: https://em-content.zobj.net/source/apple/391/herb_1f33f.png
     theme: dark
-    color: emerald
+    color: slate
     headerStyle: boxed
     layout:
       Network:
