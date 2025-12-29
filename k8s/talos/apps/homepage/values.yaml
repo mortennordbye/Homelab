@@ -116,7 +116,7 @@ config:
             widget:
               type: radarr
               url: https://radarr.local.bigd.no
-              key: { { HOMEPAGE_VAR_RADARR_API_KEY } }
+              key: "${RADARR_API_KEY}"
         - Sonarr:
             icon: sonarr.png
             href: https://sonarr.local.bigd.no
@@ -124,7 +124,7 @@ config:
             widget:
               type: sonarr
               url: https://sonarr.local.bigd.no
-              key: { { HOMEPAGE_VAR_SONARR_API_KEY } }
+              key: "${SONARR_API_KEY}"
         - Prowlarr:
             icon: prowlarr.png
             href: https://prowlarr.local.bigd.no
