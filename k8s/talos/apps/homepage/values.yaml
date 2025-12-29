@@ -35,7 +35,7 @@ resources:
 # Environment variables
 env:
   - name: HOMEPAGE_ALLOWED_HOSTS
-    value: home.bigd.no
+    value: hub.bigd.no
 
 # Persistence for logs only
 persistence:
@@ -47,13 +47,13 @@ persistence:
 # Configuration
 config:
   bookmarks:
-    - Developer:
-        - GitHub:
+    - Resources:
+        - GitHub Homelab:
             - icon: github.png
-              href: https://github.com
-        - Kubernetes:
-            - icon: kubernetes.png
-              href: https://kubernetes.io
+              href: https://github.com/mortennordbye/Homelab
+        - Notion:
+            - icon: notion.png
+              href: https://www.notion.so
 
   services:
     - Monitoring:
@@ -65,20 +65,26 @@ config:
             icon: grafana.png
             href: https://grafana.local.bigd.no
             description: Dashboards
-        - VictoriaMetrics:
-            icon: victoriametrics.png
-            href: https://victoriametrics.local.bigd.no
-            description: Time-series database
-        - Traefik:
-            icon: traefik.png
-            href: https://traefik.local.bigd.no/dashboard/
-            description: Ingress controller
         - Tautulli:
             icon: tautulli.png
             href: https://tautulli.local.bigd.no
             description: Plex monitoring
 
+    - Network:
+        - Traefik:
+            icon: traefik.png
+            href: https://traefik.local.bigd.no/dashboard/
+            description: Ingress controller
+        - UniFi Network:
+            icon: unifi.png
+            href: https://10.3.10.1
+            description: Network controller
+
     - Media Management:
+        - Plex:
+            icon: plex.png
+            href: https://plex.local.bigd.no
+            description: Media server
         - Radarr:
             icon: radarr.png
             href: https://radarr.local.bigd.no
@@ -104,7 +110,7 @@ config:
             href: https://flaresolverr.local.bigd.no
             description: Cloudflare bypass
 
-    - Public Services:
+    - Public Sites:
         - Audiobookshelf:
             icon: audiobookshelf.png
             href: https://audiobookshelf.bigd.no
@@ -121,12 +127,6 @@ config:
             icon: mdi-tools
             href: https://omni-tools.bigd.no
             description: Utility tools
-        - Hub:
-            icon: mdi-hub
-            href: https://hub.bigd.no
-            description: Application hub
-
-    - Portfolio:
         - Portfolio (Production):
             icon: mdi-web
             href: https://nordbye.it
@@ -139,6 +139,46 @@ config:
             icon: mdi-web-clock
             href: https://stage.nordbye.it
             description: Staging environment
+
+    - Infrastructure:
+        - Proxmox Hyper1:
+            icon: proxmox.png
+            href: https://hyper1.local.bigd.no:8006/
+            description: Hypervisor 1
+        - Proxmox Hyper2:
+            icon: proxmox.png
+            href: https://hyper2.local.bigd.no:8006/
+            description: Hypervisor 2
+        - Proxmox Backup:
+            icon: proxmox.png
+            href: https://pbs.local.bigd.no:8007/
+            description: Backup server
+        - Synology NAS:
+            icon: synology.png
+            href: https://nas.local.bigd.no:5001/
+            description: Network storage
+        - Home Assistant:
+            icon: home-assistant.png
+            href: http://homeassistant.local:8123/
+            description: Home automation
+
+    - Torrent Sites:
+        - IPTorrents:
+            icon: mdi-download
+            href: https://iptorrents.com/t
+            description: IPTorrents tracker
+        - Norbits:
+            icon: mdi-download
+            href: https://norbits.net/
+            description: Norbits tracker
+        - TorrentDay:
+            icon: mdi-download
+            href: https://www.torrentday.com/t?q=&qf=&free=on#torrents
+            description: TorrentDay tracker
+        - TorrentLeech:
+            icon: mdi-download
+            href: https://www.torrentleech.org/torrents/top/index/added/-1%20day/orderby/completed/order/desc
+            description: TorrentLeech tracker
 
   widgets:
     - kubernetes:
@@ -171,10 +211,13 @@ config:
     title: Genesis Homelab
     favicon: https://kubernetes.io/images/favicon.png
     theme: dark
-    color: slate
+    color: gray
     headerStyle: boxed
     layout:
       Monitoring:
+        style: row
+        columns: 3
+      Network:
         style: row
         columns: 3
       Media Management:
@@ -186,3 +229,9 @@ config:
       Portfolio:
         style: row
         columns: 3
+      Infrastructure:
+        style: row
+        columns: 3
+      Torrent Sites:
+        style: row
+        columns: 4

@@ -12,7 +12,7 @@ spec:
       name: traefik-gateway-public
       namespace: traefik
   hostnames:
-    - "home.bigd.no"
+    - "hub.bigd.no"
   rules:
     - matches:
         - path:
