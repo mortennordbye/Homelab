@@ -75,10 +75,6 @@ config:
             description: DNS and CDN
 
     - Public Sites:
-        - Audiobookshelf:
-            icon: audiobookshelf.png
-            href: https://audiobookshelf.bigd.no
-            description: Audiobook library
         - Overseerr:
             icon: overseerr.png
             href: https://overseerr.bigd.no
@@ -87,6 +83,10 @@ config:
               type: overseerr
               url: http://overseerr.plex-media-stack:5055
               key: "{{HOMEPAGE_VAR_OVERSEERR_API_KEY}}"
+        - Audiobookshelf:
+            icon: audiobookshelf.png
+            href: https://audiobookshelf.bigd.no
+            description: Audiobook library
         - IT Tools:
             icon: si-tools
             href: https://it-tools.bigd.no
@@ -109,10 +109,6 @@ config:
             description: Staging environment
 
     - Media Management:
-        - Plex:
-            icon: plex.png
-            href: https://plex.local.bigd.no
-            description: Media server
         - Radarr:
             icon: radarr.png
             href: https://radarr.local.bigd.no
@@ -145,6 +141,10 @@ config:
               type: bazarr
               url: http://bazarr.arr-stack:6767
               key: "{{HOMEPAGE_VAR_BAZARR_API_KEY}}"
+        - Plex:
+            icon: plex.png
+            href: https://plex.local.bigd.no
+            description: Media server
         - qBittorrent:
             icon: qbittorrent.png
             href: https://qbittorrent.local.bigd.no
@@ -256,13 +256,13 @@ config:
         columns: 3
       Infrastructure:
         style: row
-        columns: 5
+        columns: 3
       Public Sites:
         style: row
-        columns: 4
+        columns: 3
       Media Management:
         style: row
-        columns: 4
+        columns: 3
       Torrent Sites:
         style: row
         columns: 4
