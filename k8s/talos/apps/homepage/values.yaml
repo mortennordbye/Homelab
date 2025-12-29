@@ -83,6 +83,10 @@ config:
             icon: overseerr.png
             href: https://overseerr.bigd.no
             description: Media requests
+            widget:
+              type: overseerr
+              url: http://overseerr.plex-media-stack:5055
+              key: "{{HOMEPAGE_VAR_OVERSEERR_API_KEY}}"
         - IT Tools:
             icon: si-tools
             href: https://it-tools.bigd.no
@@ -129,10 +133,18 @@ config:
             icon: prowlarr.png
             href: https://prowlarr.local.bigd.no
             description: Indexer manager
+            widget:
+              type: prowlarr
+              url: http://prowlarr.gluetun-vpn:9696
+              key: "{{HOMEPAGE_VAR_PROWLARR_API_KEY}}"
         - Bazarr:
             icon: bazarr.png
             href: https://bazarr.local.bigd.no
             description: Subtitle management
+            widget:
+              type: bazarr
+              url: http://bazarr.arr-stack:6767
+              key: "{{HOMEPAGE_VAR_BAZARR_API_KEY}}"
         - qBittorrent:
             icon: qbittorrent.png
             href: https://qbittorrent.local.bigd.no
