@@ -243,6 +243,12 @@ config:
     theme: dark
     color: slate
     headerStyle: boxed
+    background:
+      image: https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdnb.artstation.com%2Fp%2Fassets%2Fimages%2Fimages%2F044%2F912%2F457%2Flarge%2Fshan-jiang-wechatimg559s.jpg%3F1641470678&f=1&nofb=1&ipt=a6d14061d7aaee0187984ab30f3cf13f1ba0fc2dd3f53159f71102db8d44aa78
+      blur: sm
+      saturate: 50
+      brightness: 50
+      opacity: 50
     layout:
       Network:
         style: row
