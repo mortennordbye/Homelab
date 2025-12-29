@@ -249,19 +249,20 @@ config:
       saturate: 100
       brightness: 75
       opacity: 80
+      cardBlur: md
     layout:
       Network:
         style: row
         columns: 3
-      Public Sites:
-        style: row
-        columns: 3
-      Media Management:
-        style: row
-        columns: 3
       Infrastructure:
         style: row
-        columns: 3
+        columns: 5
+      Public Sites:
+        style: row
+        columns: 4
+      Media Management:
+        style: row
+        columns: 4
       Torrent Sites:
         style: row
         columns: 4
