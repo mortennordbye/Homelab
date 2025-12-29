@@ -6,7 +6,7 @@ commonAnnotations:
 
 resources:
   - namespace.yaml
-#  - cloudflare-token-secret.yaml
+  - cloudflare-token-secret.yaml
   - certificates/bigd-no.yaml
   - certificates/local-bigd-no.yaml
   - certificates/nordbye-it.yml
@@ -14,7 +14,6 @@ resources:
   - reference-grant.yaml
 
 namespace: cert-manager
-# kubectl create secret generic cloudflare-token-secret --from-literal=cloudflare-token=YOUR_TOKEN -n cert-manager
 helmCharts:
   - name: cert-manager
     repo: https://charts.jetstack.io
