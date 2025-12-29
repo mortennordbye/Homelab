@@ -211,10 +211,10 @@ config:
   widgets:
     - kubernetes:
         cluster:
-          show: false
-          cpu: false
-          memory: false
-          showLabel: false
+          show: true
+          cpu: true
+          memory: true
+          showLabel: true
         nodes:
           show: true
           cpu: true
