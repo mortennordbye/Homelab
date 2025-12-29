@@ -252,20 +252,14 @@ config:
       cardBlur: md
     layout:
       Network:
-        style: row
-        columns: 3
+        style: list
       Infrastructure:
-        style: row
-        columns: 3
+        style: list
       Public Sites:
-        style: row
-        columns: 3
+        style: list
       Media Management:
-        style: row
-        columns: 3
+        style: list
       Torrent Sites:
-        style: row
-        columns: 4
+        style: list
       Monitoring:
-        style: row
-        columns: 3
+        style: list
