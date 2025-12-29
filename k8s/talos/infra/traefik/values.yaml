@@ -69,12 +69,6 @@ ports:
 service:
   enabled: false
 
-ingressRoute:
-  dashboard:
-    enabled: true
-    entryPoints: ["websecure"]
-    matchRule: Host(`traefik.local.bigd.no`)
-
 logs:
   general:
     level: INFO
