@@ -27,6 +27,13 @@ terraform {
       version = "~> 3.2"
     }
   }
+
+  backend "azurerm" {
+    resource_group_name  = "rg-tfstate-homelab"
+    storage_account_name = "sttfstatemvnhomelab"
+    container_name       = "tfstate"
+    key                  = "proxmox/hyper-cluster/talos-genesis.tfstate"
+  }
 }
 
 provider "proxmox" {

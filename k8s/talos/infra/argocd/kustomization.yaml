@@ -5,9 +5,9 @@ resources:
   - namespace.yaml
   - project-apps.yaml
   - project-infra.yaml
-  - apps.yaml
+#  - apps.yaml
   - infra.yaml
-#- httproute.yaml
+#  - httproute.yaml
 namespace: argocd
 
 helmCharts:
