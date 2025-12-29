@@ -1,0 +1,185 @@
+## Homepage Configuration
+## Modern application dashboard
+
+image:
+  repository: ghcr.io/gethomepage/homepage
+  tag: latest
+
+# Enable Kubernetes integration for service discovery
+enableRbac: true
+
+serviceAccount:
+  create: true
+  name: homepage
+
+# Ingress disabled - using Gateway API HTTPRoute
+ingress:
+  main:
+    enabled: false
+
+# Service configuration
+service:
+  main:
+    ports:
+      http:
+        port: 3000
+
+# Resources
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    memory: 512Mi
+
+# Storage for config
+persistence:
+  config:
+    enabled: true
+    type: configMap
+    name: homepage-config
+    mountPath: /app/config
+    readOnly: true
+
+# Configuration
+config:
+  bookmarks:
+    - Developer:
+        - GitHub:
+            - icon: github.png
+              href: https://github.com
+        - Kubernetes:
+            - icon: kubernetes.png
+              href: https://kubernetes.io
+  
+  services:
+    - Monitoring:
+        - Prometheus:
+            icon: prometheus.png
+            href: http://prometheus.local.bigd.no
+            description: Metrics database
+        - Grafana:
+            icon: grafana.png
+            href: https://grafana.local.bigd.no
+            description: Dashboards
+        - VictoriaMetrics:
+            icon: victoriametrics.png
+            href: https://victoriametrics.local.bigd.no
+            description: Time-series database
+        - Traefik:
+            icon: traefik.png
+            href: https://traefik.local.bigd.no/dashboard/
+            description: Ingress controller
+        - Tautulli:
+            icon: tautulli.png
+            href: https://tautulli.local.bigd.no
+            description: Plex monitoring
+    
+    - Media Management:
+        - Radarr:
+            icon: radarr.png
+            href: https://radarr.local.bigd.no
+            description: Movie management
+        - Sonarr:
+            icon: sonarr.png
+            href: https://sonarr.local.bigd.no
+            description: TV show management
+        - Prowlarr:
+            icon: prowlarr.png
+            href: https://prowlarr.local.bigd.no
+            description: Indexer manager
+        - Bazarr:
+            icon: bazarr.png
+            href: https://bazarr.local.bigd.no
+            description: Subtitle management
+        - qBittorrent:
+            icon: qbittorrent.png
+            href: https://qbittorrent.local.bigd.no
+            description: Torrent client
+        - FlareSolverr:
+            icon: flaresolverr.png
+            href: https://flaresolverr.local.bigd.no
+            description: Cloudflare bypass
+    
+    - Public Services:
+        - Audiobookshelf:
+            icon: audiobookshelf.png
+            href: https://audiobookshelf.bigd.no
+            description: Audiobook library
+        - Overseerr:
+            icon: overseerr.png
+            href: https://overseerr.bigd.no
+            description: Media requests
+        - IT Tools:
+            icon: si-tools
+            href: https://it-tools.bigd.no
+            description: Developer tools
+        - Omni Tools:
+            icon: mdi-tools
+            href: https://omni-tools.bigd.no
+            description: Utility tools
+        - Hub:
+            icon: mdi-hub
+            href: https://hub.bigd.no
+            description: Application hub
+    
+    - Portfolio:
+        - Portfolio (Production):
+            icon: mdi-web
+            href: https://nordbye.it
+            description: Main portfolio site
+        - Portfolio (WWW):
+            icon: mdi-web
+            href: https://www.nordbye.it
+            description: Portfolio mirror
+        - Portfolio (Staging):
+            icon: mdi-web-clock
+            href: https://stage.nordbye.it
+            description: Staging environment
+  
+  widgets:
+    - kubernetes:
+        cluster:
+          show: true
+          cpu: true
+          memory: true
+          showLabel: true
+        nodes:
+          show: true
+          cpu: true
+          memory: true
+          showLabel: true
+    
+    - resources:
+        cpu: true
+        memory: true
+        disk: /
+    
+    - datetime:
+        text_size: xl
+        format:
+          timeStyle: short
+          dateStyle: short
+  
+  kubernetes:
+    mode: cluster
+  
+  settings:
+    title: Genesis Homelab
+    favicon: https://kubernetes.io/images/favicon.png
+    theme: dark
+    color: slate
+    headerStyle: boxed
+    layout:
+      Monitoring:
+        style: row
+        columns: 3
+      Media Management:
+        style: row
+        columns: 3
+      Public Services:
+        style: row
+        columns: 3
+      Portfolio:
+        style: row
+        columns: 3
