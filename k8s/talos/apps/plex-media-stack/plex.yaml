@@ -16,7 +16,10 @@ kind: Service
 metadata:
   name: plex
   namespace: plex-media-stack
+  annotations:
+    lbipam.cilium.io/ips: "10.3.10.103"
 spec:
+  type: LoadBalancer
   selector:
     app: plex
   ports:
@@ -24,6 +27,34 @@ spec:
       protocol: TCP
       port: 32400
       targetPort: 32400
+    - name: plex-roku
+      protocol: TCP
+      port: 8324
+      targetPort: 8324
+    - name: plex-dlna
+      protocol: TCP
+      port: 32469
+      targetPort: 32469
+    - name: plex-upnp
+      protocol: UDP
+      port: 1900
+      targetPort: 1900
+    - name: plex-gdm-1
+      protocol: UDP
+      port: 32410
+      targetPort: 32410
+    - name: plex-gdm-2
+      protocol: UDP
+      port: 32412
+      targetPort: 32412
+    - name: plex-gdm-3
+      protocol: UDP
+      port: 32413
+      targetPort: 32413
+    - name: plex-gdm-4
+      protocol: UDP
+      port: 32414
+      targetPort: 32414
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -63,10 +94,33 @@ spec:
               value: "Europe/Oslo"
             - name: VERSION
               value: "docker"
+            - name: ADVERTISE_IP
+              value: "http://84.212.143.165:32400/"
           ports:
             - containerPort: 32400
               name: plex
               protocol: TCP
+            - containerPort: 8324
+              name: plex-roku
+              protocol: TCP
+            - containerPort: 32469
+              name: plex-dlna
+              protocol: TCP
+            - containerPort: 1900
+              name: plex-upnp
+              protocol: UDP
+            - containerPort: 32410
+              name: plex-gdm-1
+              protocol: UDP
+            - containerPort: 32412
+              name: plex-gdm-2
+              protocol: UDP
+            - containerPort: 32413
+              name: plex-gdm-3
+              protocol: UDP
+            - containerPort: 32414
+              name: plex-gdm-4
+              protocol: UDP
           volumeMounts:
             - name: config
               mountPath: /config

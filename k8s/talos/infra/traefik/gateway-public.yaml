@@ -40,9 +40,3 @@ spec:
             kind: Secret
             name: nordbye-it-tls
             namespace: cert-manager
-    - name: plex-tcp
-      protocol: TCP
-      port: 32400
-      allowedRoutes:
-        namespaces:
-          from: All

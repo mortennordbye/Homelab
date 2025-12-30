@@ -47,28 +47,3 @@ spec:
         - path:
             type: PathPrefix
             value: /
----
-apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
-metadata:
-  name: plex
-  namespace: plex-media-stack
-spec:
-  parentRefs:
-    - group: gateway.networking.k8s.io
-      kind: Gateway
-      name: traefik-gateway-private
-      namespace: traefik
-  hostnames:
-    - plex.local.bigd.no
-  rules:
-    - backendRefs:
-        - group: ""
-          kind: Service
-          name: plex
-          port: 32400
-          weight: 1
-      matches:
-        - path:
-            type: PathPrefix
-            value: /
