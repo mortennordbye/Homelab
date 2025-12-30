@@ -3,10 +3,13 @@ kind: Kustomization
 
 namespace: monitoring
 
-helmCharts:
-  - name: opentelemetry-collector
-    repo: https://open-telemetry.github.io/opentelemetry-helm-charts
-    version: 0.142.1
-    releaseName: otel-collector
-    namespace: monitoring
-    valuesFile: values.yaml
+commonAnnotations:
+  argocd.argoproj.io/sync-options: Prune=false
+# Disabled - uncomment to re-enable
+# helmCharts:
+#   - name: opentelemetry-collector
+#     repo: https://open-telemetry.github.io/opentelemetry-helm-charts
+#     version: 0.142.1
+#     releaseName: otel-collector
+#     namespace: monitoring
+#     valuesFile: values.yaml
