@@ -1,7 +1,7 @@
 ## Minimal kube-prometheus-stack configuration
-## OTel Collector will handle all metric collection
+## Basic monitoring with minimal resource usage
 
-## Prometheus configuration - storage only
+## Prometheus configuration
 prometheus:
   prometheusSpec:
     retention: 7d
@@ -19,8 +19,9 @@ prometheus:
         memory: 256Mi
       limits:
         memory: 1Gi
-    # Enable remote write for OTel
-    enableRemoteWriteReceiver: true
+    # Scrape interval for minimal load
+    scrapeInterval: 30s
+    evaluationInterval: 30s
 
 ## Grafana configuration
 grafana:
@@ -53,11 +54,12 @@ grafana:
 alertmanager:
   enabled: false
 
+## Enable basic exporters
 nodeExporter:
-  enabled: false
+  enabled: true
 
 kubeStateMetrics:
-  enabled: false
+  enabled: true
 
 ## Prometheus operator
 prometheusOperator:
@@ -68,18 +70,18 @@ prometheusOperator:
     limits:
       memory: 256Mi
 
-## Disable monitoring of k8s components since OTel handles it
+## Minimal monitoring of k8s components
 kubeApiServer:
   enabled: false
 
 kubelet:
-  enabled: false
+  enabled: true
 
 kubeControllerManager:
   enabled: false
 
 coreDns:
-  enabled: false
+  enabled: true
 
 kubeEtcd:
   enabled: false
@@ -88,8 +90,32 @@ kubeScheduler:
   enabled: false
 
 kubeProxy:
-  enabled: false
+  enabled: true
 
-## Minimal default rules
+## Basic alerting rules
 defaultRules:
-  create: false
+  create: true
+  rules:
+    alertmanager: false
+    etcd: false
+    configReloaders: false
+    general: true
+    k8s: true
+    kubeApiserverAvailability: false
+    kubeApiserverSlos: false
+    kubelet: true
+    kubeProxy: false
+    kubePrometheusGeneral: true
+    kubePrometheusNodeRecording: true
+    kubernetesApps: true
+    kubernetesResources: true
+    kubernetesStorage: true
+    kubernetesSystem: true
+    kubeScheduler: false
+    kubeStateMetrics: true
+    network: true
+    node: true
+    nodeExporterAlerting: true
+    nodeExporterRecording: true
+    prometheus: true
+    prometheusOperator: true
