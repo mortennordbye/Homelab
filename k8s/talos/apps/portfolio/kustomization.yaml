@@ -9,3 +9,5 @@ resources:
   - deployment.yaml
   - httproute.yaml
   - service.yaml
+  - ciliumnetworkpolicy.yaml
+
