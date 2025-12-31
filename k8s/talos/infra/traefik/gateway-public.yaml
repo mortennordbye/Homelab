@@ -30,6 +30,19 @@ spec:
     - name: nordbye-it
       protocol: HTTPS
       port: 8443
+      hostname: "nordbye.it"
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        certificateRefs:
+          - group: ""
+            kind: Secret
+            name: nordbye-it-tls
+            namespace: cert-manager
+    - name: nordbye-it-wildcard
+      protocol: HTTPS
+      port: 8443
       hostname: "*.nordbye.it"
       allowedRoutes:
         namespaces:
