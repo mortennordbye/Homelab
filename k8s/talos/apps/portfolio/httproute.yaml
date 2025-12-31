@@ -11,6 +11,7 @@ spec:
       namespace: traefik
   hostnames:
     - nordbye.it
+    - www.nordbye.it
   rules:
     - backendRefs:
         - group: ""

@@ -24,7 +24,7 @@ spec:
         runAsGroup: 101
       containers:
         - name: portfolio
-          image: ghcr.io/mortennordbye/portfolio:latest
+          image: ghcr.io/mortennordbye/portfolio:prod
           imagePullPolicy: Always
           ports:
             - name: http
@@ -43,7 +43,7 @@ spec:
               mountPath: /var/cache/nginx
           resources:
             requests: { cpu: 50m, memory: 64Mi }
-            limits:   { cpu: 200m, memory: 256Mi }
+            limits: { cpu: 200m, memory: 256Mi }
           livenessProbe:
             httpGet:
               path: /healthz
