@@ -1,0 +1,6 @@
+traefik: true
+gatewayAPI: false
+gatewayAPIExperimental: true
+knative: false
+hub: false
+deleteOnUninstall: false
