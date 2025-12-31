@@ -149,6 +149,13 @@ config:
             icon: qbittorrent.png
             href: https://qbittorrent.local.bigd.no
             description: Torrent client
+            widget:
+              type: qbittorrent
+              url: https://qbittorrent.local.bigd.no
+              username: "{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}"
+              password: "{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}"
+              enableLeechProgress: true
+              enableLeechSize: true
         - FlareSolverr:
             icon: flaresolverr.png
             href: https://flaresolverr.local.bigd.no
