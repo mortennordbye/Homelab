@@ -115,7 +115,7 @@ config:
             description: Movie management
             widget:
               type: radarr
-              url: http://radarr.arr-stack:7878
+              url: https://radarr.local.bigd.no
               key: "{{HOMEPAGE_VAR_RADARR_API_KEY}}"
         - Sonarr:
             icon: sonarr.png
@@ -123,7 +123,7 @@ config:
             description: TV show management
             widget:
               type: sonarr
-              url: http://sonarr.arr-stack:8989
+              url: https://sonarr.local.bigd.no
               key: "{{HOMEPAGE_VAR_SONARR_API_KEY}}"
         - Prowlarr:
             icon: prowlarr.png
@@ -131,7 +131,7 @@ config:
             description: Indexer manager
             widget:
               type: prowlarr
-              url: http://prowlarr.gluetun-vpn:9696
+              url: https://prowlarr.local.bigd.no
               key: "{{HOMEPAGE_VAR_PROWLARR_API_KEY}}"
         - Bazarr:
             icon: bazarr.png
@@ -139,7 +139,7 @@ config:
             description: Subtitle management
             widget:
               type: bazarr
-              url: http://bazarr.arr-stack:6767
+              url: https://bazarr.local.bigd.no
               key: "{{HOMEPAGE_VAR_BAZARR_API_KEY}}"
         - Plex:
             icon: plex.png
