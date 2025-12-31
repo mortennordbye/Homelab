@@ -1,0 +1,32 @@
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: homepage-basicauth
+  namespace: homepage
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: bitwarden-secretsmanager
+  target:
+    name: homepage-basicauth
+    creationPolicy: Owner
+  data:
+    - secretKey: users
+      remoteRef:
+        key: 8c1b2e1b-ccf9-43e7-8e2c-b3c400fd76d4
+        conversionStrategy: Default
+        decodingStrategy: None
+        metadataPolicy: None
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: homepage-basicauth
+  namespace: homepage
+spec:
+  basicAuth:
+    secret: homepage-basicauth
