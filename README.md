@@ -1,6 +1,12 @@
-# Homelab Infrastructure
+# Eden - Homelab Infrastructure
 
-My home infrastructure managed as code using GitOps principles.
+My personal lab environment for experimenting with infrastructure and hosting self-hosted services. Professionally, I work with these technologies daily, but the homelab gives me freedom to explore ideas and patterns that don't always fit production constraints. This is where curiosity meets practicality—testing new tools, solving real problems at home, and yes, occasionally breaking things in the pursuit of learning.
+
+The repository is public by design. Transparency keeps me honest about following best practices, even when it's just for fun.
+
+Want to learn more about me or what I work with? Visit [nordbye.it](https://nordbye.it)
+
+Feel free to send me a DM, open a pull request, or steal code from here—the goal is to learn and make connections.
 
 ## Network Overview
 
@@ -35,29 +41,48 @@ graph TD
     end
     SW --> HA_Box
 
-    %% Kubernetes Cluster
-    subgraph Cluster["☸️ Genesis Cluster - Proxmox VE"]
+    %% Proxmox Cluster
+    subgraph HyperCluster["🖥️ Hyper-cluster - Proxmox VE"]
         direction TB
 
-        subgraph H1["⚙️ Hyper1"]
+        subgraph H1["⚙️ Hyper1 - Proxmox Node"]
             direction TB
             C1["🎛️ genesis-ctrl-01"]
             C2["🎛️ genesis-ctrl-02"]
             W1["⚡ genesis-worker-01"]
         end
 
-        subgraph H2["⚙️ Hyper2"]
+        subgraph H2["⚙️ Hyper2 - Proxmox Node"]
             direction TB
             C3["🎛️ genesis-ctrl-03"]
             W2["⚡ genesis-worker-02"]
             W3["⚡ genesis-worker-03"]
         end
-    end
-    SW --> Cluster
 
-    %% IoT Devices
+        K8S["☸️ Genesis - Talos Kubernetes Cluster"]
+        C1 -.-> K8S
+        C2 -.-> K8S
+        C3 -.-> K8S
+        W1 -.-> K8S
+        W2 -.-> K8S
+        W3 -.-> K8S
+    end
+    SW --> HyperCluster
+
+    %% Access Point
+    AP["📡 UniFi U6+<br/><i>WiFi 6 AP</i>"]
+    SW --> AP
+
+    %% IoT & Smart Home Devices
     HUE["💡 Hue Bridge Pro"]
-    SW --> HUE
+    ZBT["📶 Nabu Casa ZBT-2<br/><i>Zigbee</i>"]
+    BLE["🔵 M5Stack Atom Lite<br/><i>Bluetooth</i>"]
+    CAM["📹 UniFi G6 Instant"]
+
+    SW --> HUE <--> HA_Box
+    AP --> BLE <--> HA_Box
+    AP --> CAM <--> HA_Box
+    HA_Box --> ZBT
 ```
 
 ## Hardware
