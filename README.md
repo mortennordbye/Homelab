@@ -1,127 +1,102 @@
-# My Homelab: A GitOps-Powered Infrastructure
+# Homelab Infrastructure
 
-Welcome to my homelab repository! This is the central hub for my entire home infrastructure, managed as code. This project showcases a modern, cloud-native approach to self-hosting, leveraging enterprise-grade tools and practices. It serves as a testament to my skills in automation, containerization, orchestration, and CI/CD.
+My home infrastructure managed as code using GitOps principles.
 
-## Key Features
+## Network Overview
 
-*   **Fully Automated with GitOps:** The entire state of the Kubernetes cluster is defined in this repository and managed by ArgoCD. Any change to the Git repository is automatically reflected in the cluster.
-*   **Infrastructure as Code (IaC):** Servers are provisioned and configured using Ansible, ensuring consistency and repeatability.
-*   **High-Availability Kubernetes Cluster:** A 3-master, 3-worker k3s cluster provides a resilient platform for applications.
-*   **Secure Secret Management:** External Secrets Operator integrates with Bitwarden to securely manage secrets without storing them in Git.
-*   **Automated CI/CD:** GitHub Actions are used to validate and deploy changes to the ArgoCD control plane.
-*   **Comprehensive Monitoring:** The `kube-prometheus-stack` provides in-depth monitoring and alerting for the cluster and applications.
-*   **Automatic DNS Management:** The `bind_zone_manager` Ansible role automates DNS zone file updates.
-*   **Containerized Services:** Both Kubernetes and Docker Compose are used to run a variety of self-hosted services.
+```mermaid
+graph TD
+    %% Monochrome Professional Styling
+    classDef default fill:#2c3e50,stroke:#34495e,stroke-width:2px,color:#fff;
+    classDef internet fill:#34495e,stroke:#2c3e50,stroke-width:3px,color:#fff;
+    classDef subgraphStyle fill:#ecf0f1,stroke:#95a5a6,stroke-width:2px,color:#2c3e50;
 
-## Architecture
+    %% Network Core
+    WEB(("☁️<br/>Internet")):::internet
+    MDM["📶 Telia Modem<br/><i>Coax</i>"]
+    UCG["🌐 UniFi Gateway<br/><i>Router</i>"]
+    SW["🔗 UniFi Switch<br/><i>8-Port PoE</i>"]
 
-The homelab is built on a Proxmox VE server, with virtual machines running Ubuntu Server. The core of the application platform is a k3s Kubernetes cluster, but some services also run in Docker on dedicated VMs.
+    WEB --> MDM
+    MDM --> UCG
+    UCG --> SW
 
-### High-Level Overview
+    %% Storage
+    subgraph NAS["💿 Synology DS1522+"]
+        direction TB
+        PBS["💾 Proxmox Backup Server"]
+    end
+    SW --> NAS
 
-```
-+-----------------------------------------------------------------+
-|                                                                 |
-|                            Proxmox VE                           |
-|                                                                 |
-+-----------------------------------------------------------------+
-|                                                                 |
-|  +-----------------+  +-----------------+  +-----------------+  |
-|  |   k3s Master 1  |  |   k3s Master 2  |  |   k3s Master 3  |  |
-|  +-----------------+  +-----------------+  +-----------------+  |
-|                                                                 |
-|  +-----------------+  +-----------------+  +-----------------+  |
-|  |   k3s Worker 1  |  |   k3s Worker 2  |  |   k3s Worker 3  |  |
-|  +-----------------+  +-----------------+  +-----------------+  |
-|                                                                 |
-|  +-----------------+                                            |
-|  |  Docker Host VM |                                            |
-|  +-----------------+                                            |
-|                                                                 |
-+-----------------------------------------------------------------+
-```
+    %% Home Automation
+    subgraph HA_Box["🏡 Home Assistant"]
+        direction TB
+        AGH["🚫 AdGuard Home"]
+    end
+    SW --> HA_Box
 
-### GitOps Workflow
+    %% Kubernetes Cluster
+    subgraph Cluster["☸️ Genesis Cluster - Proxmox VE"]
+        direction TB
 
-The Kubernetes cluster is managed entirely through a GitOps workflow with ArgoCD.
+        subgraph H1["⚙️ Hyper1"]
+            direction TB
+            C1["🎛️ genesis-ctrl-01"]
+            C2["🎛️ genesis-ctrl-02"]
+            W1["⚡ genesis-worker-01"]
+        end
 
-```
-+----------+     +----------------+     +----------------+     +----------+
-|          |     |                |     |                |     |          |
-| Developer|---->|   Git Push     |---->|  GitHub Actions|---->|  ArgoCD  |
-|          |     | (This Repo)    |     | (Apply CRDs)   |     |          |
-+----------+     +----------------+     +----------------+     +----------+
-                                                                    |
-                                                                    |
-                                                                    v
-                                                         +-------------------+
-                                                         |                   |
-                                                         |   k3s Cluster     |
-                                                         | (Syncs with Git)  |
-                                                         |                   |
-                                                         +-------------------+
+        subgraph H2["⚙️ Hyper2"]
+            direction TB
+            C3["🎛️ genesis-ctrl-03"]
+            W2["⚡ genesis-worker-02"]
+            W3["⚡ genesis-worker-03"]
+        end
+    end
+    SW --> Cluster
+
+    %% IoT Devices
+    HUE["💡 Hue Bridge Pro"]
+    SW --> HUE
 ```
 
-1.  **Commit & Push:** I make changes to the Kubernetes manifests, Helm values, or ArgoCD applications in this repository.
-2.  **CI Pipeline:** A GitHub Actions workflow is triggered on push, which applies the ArgoCD `Application` and `ApplicationSet` resources to the cluster.
-3.  **ArgoCD Sync:** ArgoCD detects the changes and syncs the state of the cluster to match the Git repository. This includes deploying Helm charts, applying manifests, and ensuring all resources are in the desired state.
-4.  **Self-Healing:** ArgoCD continuously monitors the cluster for any manual changes or "drift" and automatically reverts them to the state defined in Git.
+## Hardware
 
-## Technologies Used
+### Compute Nodes
 
-This project utilizes a wide range of technologies:
+| Node   | Model                        | CPU                                     | RAM   | Storage |
+| ------ | ---------------------------- | --------------------------------------- | ----- | ------- |
+| Hyper1 | Lenovo ThinkCentre M920 Tiny | Intel Core i7-8700T (6C/12T @ 2.40 GHz) | 32 GB | 1 TB    |
+| Hyper2 | Lenovo ThinkCentre M920q     | Intel Core i5-8500T (6C/6T @ 2.10 GHz)  | 32 GB | 1 TB    |
 
-*   **Virtualization:** Proxmox VE
-*   **Operating System:** Ubuntu Server
-*   **Configuration Management:** Ansible
-*   **Containerization:** Docker, Docker Compose
-*   **Orchestration:** k3s (a lightweight Kubernetes distribution)
-*   **GitOps:** ArgoCD
-*   **CI/CD:** GitHub Actions
-*   **Ingress & Networking:** Traefik, MetalLB
-*   **Service Mesh:** (Not currently implemented, but a future goal)
-*   **Monitoring & Alerting:** Prometheus, Grafana, Alertmanager, Gatus
-*   **Log Management:** (Not currently implemented)
-*   **Security:** Cert-Manager (for TLS certificates), External Secrets Operator
-*   **Secrets Backend:** Bitwarden
-*   **DNS:** BIND9 (managed by Ansible)
-*   **Applications:** Home Assistant, Nginx Proxy Manager, Portainer, Plex, Servarr stack, OwnCloud, and many more.
+### Storage
 
-## Repository Structure
+| Device | Model            | Capacity        | Details                        |
+| ------ | ---------------- | --------------- | ------------------------------ |
+| NAS    | Synology DS1522+ | 3 × 20TB (60TB) | SHR, Btrfs, 2 × 1TB NVMe cache |
 
-*   `ansible/`: Contains Ansible playbooks and roles for server configuration.
-    *   `playbooks/`: High-level playbooks for tasks like bootstrapping servers.
-    *   `roles/`: Reusable Ansible roles for specific configurations.
-*   `containers/`: Docker Compose configurations for services running outside of Kubernetes.
-*   `k8s/`: All Kubernetes-related configurations.
-    *   `argo/`: ArgoCD `Application` and `ApplicationSet` definitions.
-    *   `clusters/k3sa/`: Cluster-specific configurations.
-        *   `helm-values/`: Overrides for Helm charts.
-        *   `manifests/`: Raw Kubernetes manifests.
+### Network Equipment
 
-## How to Replicate
+| Device       | Model               | Type           |
+| ------------ | ------------------- | -------------- |
+| Router       | UniFi Cloud Gateway | Gateway/Router |
+| Switch       | UniFi Lite 8 PoE    | Managed Switch |
+| Access Point | UniFi U6+           | WiFi 6 AP      |
+| Modem        | Telia               | Cable Modem    |
 
-While this repository is tailored to my specific hardware and needs, it can be adapted for your own homelab. You would need:
+### IoT & Smart Home
 
-1.  A server capable of running Proxmox VE.
-2.  A domain name for your services.
-3.  A Bitwarden instance for secret management.
-4.  A GitHub account for the GitOps workflow.
+#### Home Assistant Server
 
-The general steps would be:
+| Component | Model                       | CPU        | RAM | Network         |
+| --------- | --------------------------- | ---------- | --- | --------------- |
+| Hardware  | Topton N100 Fanless Mini PC | Intel N100 | TBD | 4 × 2.5G i226-V |
 
-1.  Fork this repository.
-2.  Set up your Proxmox server and create virtual machines.
-3.  Use the Ansible playbooks to configure your VMs.
-4.  Install k3s on your cluster nodes.
-5.  Install ArgoCD in your cluster.
-6.  Configure the ArgoCD applications in `k8s/argo/` to point to your forked repository.
-7.  Set up GitHub Actions secrets to allow the CI pipeline to connect to your cluster.
+#### Devices
 
-## Disclaimer
-
-This is a personal project and is under continuous development. While I strive for best practices, some configurations may be specific to my environment.
-
-## License
-
-This project is licensed under the Apache-2.0 license  License. See the `LICENSE` file for details.
+| Device                  | Type               | Purpose                    |
+| ----------------------- | ------------------ | -------------------------- |
+| Philips Hue Bridge Pro  | Smart Lighting Hub | Lighting control           |
+| Nabu Casa Connect ZBT-2 | Zigbee Coordinator | Zigbee device coordination |
+| M5Stack Atom Lite       | Bluetooth Proxy    | Bluetooth range extension  |
+| UniFi G6 Instant        | Security Camera    | Indoor surveillance        |
