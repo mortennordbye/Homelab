@@ -1,6 +1,6 @@
 # Eden - Homelab Infrastructure
 
-My personal lab environment for experimenting with infrastructure and hosting self-hosted services. Professionally, I work with these technologies daily, but the homelab gives me freedom to explore ideas and patterns that don't always fit production constraints. This is where curiosity meets practicality—testing new tools, solving real problems at home, and yes, occasionally breaking things in the pursuit of learning.
+My personal lab environment for experimenting with infrastructure and hosting self-hosted services. Professionally, I work with these technologies daily, but the homelab gives me freedom to explore ideas and patterns that don't always fit production constraints. This is where curiosity meets practicality, testing new tools, solving real problems at home, and yes, occasionally breaking things in the pursuit of learning.
 
 The repository is public by design. Transparency keeps me honest about following best practices, even when it's just for fun.
 
@@ -83,6 +83,53 @@ graph TD
     AP --> BLE <--> HA_Box
     AP --> CAM <--> HA_Box
     HA_Box --> ZBT
+```
+
+## Kubernetes Application Stack
+
+```mermaid
+graph TB
+    %% Monochrome Professional Styling
+    classDef default fill:#2c3e50,stroke:#34495e,stroke-width:2px,color:#fff;
+
+    %% GitOps Layer
+    REPO["📦 GitHub Repository"]
+    ARGO["🔄 ArgoCD"]
+
+    REPO --> ARGO
+
+    %% Infrastructure Layer
+    subgraph INFRA["🔧 Infrastructure"]
+        direction TB
+        ARGOCD["🔄 argocd"]
+        CILIUM["🕸️ cilium"]
+        TRAEFIK["🚪 traefik"]
+        CERT["🔒 cert-manager"]
+        PROM["📊 kube-prometheus-stack"]
+        METRICS["📈 metrics-server"]
+        OTEL["📡 otel-collector"]
+        CSI["💾 proxmox-csi-plugin"]
+        NFS["📁 syno-nfs-prov"]
+        ESO["🔐 external-secrets-operator"]
+        CRDS["📦 crds"]
+    end
+
+    %% Application Layer
+    subgraph APPS["📱 Applications"]
+        direction TB
+        PLEX["🎬 plex-media-stack"]
+        ARR["📚 arr-stack"]
+        AUDIO["🎧 audiobookshelf"]
+        PORTFOLIO["💼 portfolio"]
+        PORTFOLIOS["💼 portfolio-stage"]
+        HOME["🏠 homepage"]
+        TOOLS["🔧 it-tools"]
+        OMNI["🔧 omni-tools"]
+        VPN["🔒 gluetun-vpn"]
+    end
+
+    ARGO --> INFRA
+    ARGO --> APPS
 ```
 
 ## Hardware
