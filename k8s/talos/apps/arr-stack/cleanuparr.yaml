@@ -50,7 +50,7 @@ spec:
                       - hyper1
       containers:
         - name: cleanuparr
-          image: ghcr.io/cleanuparr/cleanuparr:1.0.1
+          image: ghcr.io/cleanuparr/cleanuparr:2.5.0
           ports:
             - containerPort: 5030
               name: http

@@ -50,7 +50,7 @@ spec:
                       - hyper1
       containers:
         - name: huntarr
-          image: ghcr.io/plexguide/huntarr:1.0.0
+          image: ghcr.io/plexguide/huntarr:8.2.11
           ports:
             - containerPort: 7879
               name: http
