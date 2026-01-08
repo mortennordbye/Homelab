@@ -82,6 +82,10 @@ spec:
                     operator: In
                     values:
                       - hyper1
+      securityContext:
+        supplementalGroups:
+          - 44
+          - 109
       containers:
         - name: plex
           image: ghcr.io/linuxserver/plex:1.42.2
@@ -121,8 +125,6 @@ spec:
             - containerPort: 32414
               name: plex-gdm-4
               protocol: UDP
-          securityContext:
-            privileged: true
           volumeMounts:
             - name: dri
               mountPath: /dev/dri
