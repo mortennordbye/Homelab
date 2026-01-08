@@ -175,4 +175,5 @@ spec:
             path: /volume1/shared-data/media/youtube
             readOnly: true
         - name: transcode
-          emptyDir: {}
+          emptyDir:
+            sizeLimit: 35Gi
