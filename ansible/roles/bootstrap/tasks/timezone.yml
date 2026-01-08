@@ -1,5 +1,0 @@
----
-- name: Ensure system timezone is {{ bootstrap_timezone }}
-  ansible.builtin.timezone:
-    name: "{{ bootstrap_timezone }}"
-  when: bootstrap_set_timezone | bool

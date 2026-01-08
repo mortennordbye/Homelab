@@ -1,6 +1,0 @@
-- name: Bootstrap servers
-  hosts: all
-  become: true
-  roles:
-    - role: bootstrap
-    - role: prometheus.prometheus.node_exporter

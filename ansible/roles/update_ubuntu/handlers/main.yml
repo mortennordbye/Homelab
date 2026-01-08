@@ -1,7 +1,0 @@
----
-- name: Reboot if required
-  when: update_ubuntu_auto_reboot and reboot_required.stat.exists
-  tags: reboot
-  ansible.builtin.reboot:
-    msg: "{{ update_ubuntu_reboot_msg }}"
-    timeout: "{{ update_ubuntu_reboot_timeout }}"

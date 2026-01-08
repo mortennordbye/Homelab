@@ -1,7 +1,0 @@
-services:
-  portfolio:
-    container_name: portfolio
-    image: ${PORTFOLIO_IMAGE}
-    ports:
-      - "18080:80"
-    restart: unless-stopped

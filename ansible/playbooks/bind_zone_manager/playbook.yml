@@ -1,5 +1,0 @@
-- name: Configure BIND zones on DNS servers
-  hosts: all
-  become: true
-  roles:
-    - role: bind_zone_manager

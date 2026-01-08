@@ -1,6 +1,0 @@
-- name: Install optional/non-default packages
-  ansible.builtin.package:
-    name: "{{ bootstrap_optional_packages }}"
-    state: present
-  when: bootstrap_optional_packages | length > 0
-  tags: [optional_packages, bootstrap]
