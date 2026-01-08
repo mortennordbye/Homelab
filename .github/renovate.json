@@ -13,30 +13,30 @@
     "every weekend"
   ],
   "kubernetes": {
-    "fileMatch": [
-      "k8s/.*\\.ya?ml$"
+    "managerFilePatterns": [
+      "/k8s/.*\\.ya?ml$/"
     ]
   },
   "helm-values": {
-    "fileMatch": [
-      "k8s/.*/values\\.ya?ml$"
+    "managerFilePatterns": [
+      "/k8s/.*/values\\.ya?ml$/"
     ]
   },
   "kustomize": {
-    "fileMatch": [
-      "k8s/.*/kustomization\\.ya?ml$"
+    "managerFilePatterns": [
+      "/k8s/.*/kustomization\\.ya?ml$/"
     ]
   },
   "terraform": {
-    "fileMatch": [
-      "terraform/.*\\.tf$"
+    "managerFilePatterns": [
+      "/terraform/.*\\.tf$/"
     ]
   },
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": [
-        "\\.ya?ml$"
+      "managerFilePatterns": [
+        "/\\.ya?ml$/"
       ],
       "matchStrings": [
         "(?<currentValue>[\\w+\\.\\-]*)['\",;]*\\s*#\\s?renovate: (?<datasource>\\S+)=(?<depName>\\S+)\\s?(registry=(?<registryUrl>\\S+))?\\s?(versioning=(?<versioning>\\S+))?"
@@ -50,7 +50,10 @@
       ],
       "groupName": "GitHub Actions",
       "groupSlug": "github-actions",
-      "addLabels": ["dependencies", "github-actions"]
+      "addLabels": [
+        "dependencies",
+        "github-actions"
+      ]
     },
     {
       "matchDatasources": [
@@ -61,7 +64,10 @@
       ],
       "groupName": "Arr Stack",
       "groupSlug": "arr-stack",
-      "addLabels": ["dependencies", "arr-stack"]
+      "addLabels": [
+        "dependencies",
+        "arr-stack"
+      ]
     },
     {
       "matchDatasources": [
@@ -72,7 +78,10 @@
       ],
       "groupName": "Plex Media Stack",
       "groupSlug": "plex-stack",
-      "addLabels": ["dependencies", "plex"]
+      "addLabels": [
+        "dependencies",
+        "plex"
+      ]
     },
     {
       "matchDatasources": [
@@ -87,7 +96,9 @@
       "matchUpdateTypes": [
         "major"
       ],
-      "addLabels": ["major-update"],
+      "addLabels": [
+        "major-update"
+      ],
       "automerge": false
     },
     {
@@ -99,13 +110,17 @@
         "docker"
       ],
       "automerge": false,
-      "addLabels": ["minor-update"]
+      "addLabels": [
+        "minor-update"
+      ]
     },
     {
       "matchManagers": [
         "terraform"
       ],
-      "addLabels": ["terraform"],
+      "addLabels": [
+        "terraform"
+      ],
       "groupName": "Terraform"
     }
   ]
