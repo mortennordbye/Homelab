@@ -79,7 +79,7 @@ spec:
       containers:
         # qBittorrent - torrent client
         - name: qbittorrent
-          image: ghcr.io/linuxserver/qbittorrent:5.1.0
+          image: ghcr.io/linuxserver/qbittorrent:5.1.4
           ports:
             - containerPort: 8080
               name: http
