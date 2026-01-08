@@ -15,6 +15,6 @@ helmCharts:
     repo: https://charts.external-secrets.io/
     includeCRDs: true
     namespace: external-secrets
-    version: 1.2.0
+    version: 1.2.1
     releaseName: external-secrets-operator
     valuesFile: ./values.yaml
