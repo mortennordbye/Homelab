@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: omni-tools
-          image: iib0011/omni-tools:0.5
+          image: iib0011/omni-tools:0.6
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
