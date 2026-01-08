@@ -66,7 +66,7 @@ spec:
                       - hyper1
       containers:
         - name: tdarr
-          image: ghcr.io/haveagitgat/tdarr:2.30.01
+          image: ghcr.io/haveagitgat/tdarr:2.58.02
           ports:
             - containerPort: 8265
               name: http

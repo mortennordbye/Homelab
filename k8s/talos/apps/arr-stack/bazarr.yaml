@@ -50,7 +50,7 @@ spec:
                       - hyper1
       containers:
         - name: bazarr
-          image: ghcr.io/linuxserver/bazarr:1.5.3
+          image: ghcr.io/linuxserver/bazarr:1.5.4
           ports:
             - containerPort: 6767
               name: http
