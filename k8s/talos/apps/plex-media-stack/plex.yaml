@@ -176,4 +176,4 @@ spec:
             readOnly: true
         - name: transcode
           emptyDir:
-            sizeLimit: 15Gi
+            sizeLimit: 30Gi
