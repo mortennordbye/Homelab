@@ -12,6 +12,6 @@ helmCharts:
     repo: oci://ghcr.io/actions/actions-runner-controller-charts
     includeCRDs: true
     namespace: arc-runners
-    version: 0.13.0
+    version: 0.13.1
     releaseName: arc-runner-set
     valuesFile: ./values.yaml
