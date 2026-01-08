@@ -93,6 +93,15 @@
       "enabled": false
     },
     {
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchPackageNames": [
+        "ghcr.io/linuxserver/qbittorrent"
+      ],
+      "enabled": false
+    },
+    {
       "matchUpdateTypes": [
         "major"
       ],
