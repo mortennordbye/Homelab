@@ -82,10 +82,6 @@ spec:
                     operator: In
                     values:
                       - hyper1
-      securityContext:
-        supplementalGroups:
-          - 44
-          - 109
       containers:
         - name: plex
           image: ghcr.io/linuxserver/plex:1.42.2
@@ -179,5 +175,4 @@ spec:
             path: /volume1/shared-data/media/youtube
             readOnly: true
         - name: transcode
-          emptyDir:
-            sizeLimit: 40Gi
+          emptyDir: {}
