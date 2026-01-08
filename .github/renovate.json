@@ -2,18 +2,41 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended",
-    ":rebaseStalePrs"
+    ":rebaseStalePrs",
+    ":semanticCommits",
+    ":enablePreCommit"
   ],
+  "timezone": "Europe/Oslo",
+  "schedule": [
+    "after 10pm every weekday",
+    "before 5am every weekday",
+    "every weekend"
+  ],
+  "kubernetes": {
+    "fileMatch": [
+      "k8s/.*\\.ya?ml$"
+    ]
+  },
+  "helm-values": {
+    "fileMatch": [
+      "k8s/.*/values\\.ya?ml$"
+    ]
+  },
   "kustomize": {
-    "managerFilePatterns": [
-      "/(^|/)kustomization\\.ya?ml(\\.j2)?$/"
+    "fileMatch": [
+      "k8s/.*/kustomization\\.ya?ml$"
+    ]
+  },
+  "terraform": {
+    "fileMatch": [
+      "terraform/.*\\.tf$"
     ]
   },
   "customManagers": [
     {
       "customType": "regex",
-      "managerFilePatterns": [
-        "/\\.yaml$/"
+      "fileMatch": [
+        "\\.ya?ml$"
       ],
       "matchStrings": [
         "(?<currentValue>[\\w+\\.\\-]*)['\",;]*\\s*#\\s?renovate: (?<datasource>\\S+)=(?<depName>\\S+)\\s?(registry=(?<registryUrl>\\S+))?\\s?(versioning=(?<versioning>\\S+))?"
@@ -26,19 +49,64 @@
         "github-actions"
       ],
       "groupName": "GitHub Actions",
-      "groupSlug": "github-actions"
+      "groupSlug": "github-actions",
+      "addLabels": ["dependencies", "github-actions"]
+    },
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchFileNames": [
+        "k8s/talos/apps/arr-stack/**"
+      ],
+      "groupName": "Arr Stack",
+      "groupSlug": "arr-stack",
+      "addLabels": ["dependencies", "arr-stack"]
+    },
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchFileNames": [
+        "k8s/talos/apps/plex-media-stack/**"
+      ],
+      "groupName": "Plex Media Stack",
+      "groupSlug": "plex-stack",
+      "addLabels": ["dependencies", "plex"]
     },
     {
       "matchDatasources": [
         "docker"
       ],
       "matchPackageNames": [
-        "linuxserver/qbittorrent"
-      ],
-      "matchFileNames": [
-        "containers/compose/nodes/servarr/arr-stack/docker-compose.yaml"
+        "ghcr.io/mortennordbye/portfolio"
       ],
       "enabled": false
+    },
+    {
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "addLabels": ["major-update"],
+      "automerge": false
+    },
+    {
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "matchDatasources": [
+        "docker"
+      ],
+      "automerge": false,
+      "addLabels": ["minor-update"]
+    },
+    {
+      "matchManagers": [
+        "terraform"
+      ],
+      "addLabels": ["terraform"],
+      "groupName": "Terraform"
     }
   ]
 }
