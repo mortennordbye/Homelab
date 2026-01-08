@@ -121,7 +121,11 @@ spec:
             - containerPort: 32414
               name: plex-gdm-4
               protocol: UDP
+          securityContext:
+            privileged: true
           volumeMounts:
+            - name: dri
+              mountPath: /dev/dri
             - name: config
               mountPath: /config
             - name: media-series
@@ -151,6 +155,10 @@ spec:
             timeoutSeconds: 30
             failureThreshold: 10
       volumes:
+        - name: dri
+          hostPath:
+            path: /dev/dri
+            type: Directory
         - name: config
           persistentVolumeClaim:
             claimName: plex-config
@@ -176,4 +184,4 @@ spec:
             readOnly: true
         - name: transcode
           emptyDir:
-            sizeLimit: 30Gi
+            sizeLimit: 40Gi
