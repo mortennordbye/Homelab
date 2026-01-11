@@ -1,3 +1,8 @@
+image:
+  registry: ghcr.io
+  repository: mortennordbye/traefik
+  tag: sticky-sessions
+
 globalArguments:
   - "--global.checknewversion=false"
   - "--global.sendanonymoususage=false"
