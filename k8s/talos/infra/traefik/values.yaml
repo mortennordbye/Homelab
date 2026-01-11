@@ -1,3 +1,9 @@
+image:
+  registry: ghcr.io
+  repository: mortennordbye/traefik
+  tag: sticky-sessions
+  version: v3.3.0 # Required for Helm chart semver comparisons
+
 globalArguments:
   - "--global.checknewversion=false"
   - "--global.sendanonymoususage=false"
