@@ -13,4 +13,4 @@ resources:
 # tag in app.yaml; the logeverylift-cd Warehouse/promotion rewrites it to 0.0.N.
 images:
 - name: ghcr.io/mortennordbye/logeverylift
-  newTag: 0.0.87
+  newTag: 0.0.94
