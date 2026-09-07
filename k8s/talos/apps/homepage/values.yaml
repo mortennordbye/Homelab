@@ -139,6 +139,10 @@ config:
             icon: mdi-head-cog
             href: https://headroom.local.bigd.no
             description: Self-hosted Headroom instance
+        - Headroom (Demo):
+            icon: mdi-head-cog
+            href: https://headroom.nordbye.it
+            description: Public demo with fictional data
         - Mealie:
             icon: mealie.png
             href: https://mealie.bigd.no
@@ -159,6 +163,10 @@ config:
             icon: si-instagram
             href: https://gate.nordbye.it/healthz
             description: Public endpoint Meta fetches Reels from
+        - Trek:
+            icon: mdi-map-marker-path
+            href: https://trek.bigd.no
+            description: Travel planner
         - BigD:
             icon: mdi-web
             href: https://bigd.no
