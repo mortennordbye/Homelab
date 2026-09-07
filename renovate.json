@@ -292,14 +292,6 @@
       "enabled": false
     },
     {
-      "description": "Pin: the workout namespace is a scaled-to-zero rollback snapshot from the logeverylift cutover, not a running database. Upgrading it to 18 would rewrite the data into a format the stack it is a rollback for cannot read. Stays on 16 until the app is deleted — see BACKLOG.md.",
-      "matchDatasources": ["docker"],
-      "matchFileNames": ["k8s/talos/apps/workout/**"],
-      "matchPackageNames": ["postgres"],
-      "allowedVersions": "<17",
-      "addLabels": ["postgres", "pinned"]
-    },
-    {
       "description": "Disable: qbittorrent managed separately",
       "matchDatasources": ["docker"],
       "matchPackageNames": ["ghcr.io/linuxserver/qbittorrent"],

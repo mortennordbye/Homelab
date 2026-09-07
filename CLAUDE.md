@@ -161,8 +161,7 @@ Homelab infrastructure for a 6-node Proxmox cluster running a Talos Kubernetes c
 - **Storage:** Proxmox CSI for block, Synology NFS for shared volumes.
 - **Databases:** in-cluster Postgres 18 (`postgres:18-alpine`) backing logeverylift. Its PVC mounts at `/var/lib/postgresql`, not at `/var/lib/postgresql/data` — 18 keeps the cluster in a version-named subdirectory, and an initContainer chowns the NFS mount root so the non-root process can create it. See `docs/postgres-18-migration.md`.
 - **GitOps:** ArgoCD app-of-apps; root applications live in `k8s/talos/infra/argocd/{apps.yaml,infra.yaml}`.
-- **Apps shipped from this repo:** portfolio and blog (each stage + prod), headroom (+ headroom-demo), logeverylift, reelsmith, verksted, bigd, plex-media-stack, arr-stack, gluetun-vpn, audiobookshelf, mealie, home-assistant, homepage, it-tools, omni-tools, open-webui, ollama, workout. That is 22 ArgoCD `Application`s, one per directory under `k8s/talos/apps/`.
-- **Dormant:** `workout` is the pre-cutover version of logeverylift, scaled to 0 and kept only as a rollback. Its Postgres stays on 16 and is pinned in `renovate.json`. See `BACKLOG.md`.
+- **Apps shipped from this repo:** portfolio and blog (each stage + prod), headroom (+ headroom-demo), logeverylift, reelsmith, verksted, bigd, plex-media-stack, arr-stack, gluetun-vpn, audiobookshelf, mealie, home-assistant, homepage, it-tools, omni-tools, open-webui, ollama, trek. That is 22 ArgoCD `Application`s, one per directory under `k8s/talos/apps/`.
 
 ### Directory layout
 
