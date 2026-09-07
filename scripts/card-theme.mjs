@@ -9,10 +9,12 @@
 //      SVG is a document lying on the oak desk: full bleed, no border.
 //   2. Four materials and no others — warm near-black ground, oak, brass,
 //      warm off-white paper. Green is not a material.
-//   3. Green appears once per view as a lit point, and it is the dot on the
-//      end of the leader label. Never a fill, a border, a line or a glow.
-//   4. One lamp, upper left. Highlights on the top and left edges, the rake
-//      across the desk, shadow to the lower right. Nothing else emits.
+//   3. Green is the forest, not an accent. It is never a fill, a border, a
+//      line or a glow behind something. It arrives as light through the
+//      window and lands as the pin on a leader label.
+//   4. Two lights and no others: the warm key from the upper left at full
+//      strength, and the cool forest bounce from the right at about half,
+//      which is the rig in InlineGlobeScene.tsx. Nothing else emits.
 //
 // No sans anywhere: serif for display and prose, mono for labels and
 // measurements. The real faces are named first and picked up when installed;
@@ -39,8 +41,10 @@ export const DARK = {
   ink3: "#708373",
   lamp: "#65a16e",
   key: "#ffd49a",
+  bounce: "#6f9c72",
   litEdge: "rgba(255,212,154,0.11)",
   keyAlpha: 0.05,
+  bounceAlpha: 0.17,
   ruling: 0.1,
   grain: 0.16,
 };
@@ -60,8 +64,10 @@ export const LIGHT = {
   ink3: "#62523c",
   lamp: "#4d7d54",
   key: "#fff3dd",
+  bounce: "#6f9c72",
   litEdge: "rgba(255,255,255,0.55)",
   keyAlpha: 0.5,
+  bounceAlpha: 0.22,
   ruling: 0.13,
   grain: 0.1,
 };
@@ -83,12 +89,17 @@ export const engraved = (x, y, s, t, { fill, size = 10, anchor = "start" } = {})
 // Mono advances at 0.6em; engraved() tracks every character by a further 1.5.
 export const monoW = (s, size) => s.length * size * 0.6 + Math.max(0, s.length - 1) * 1.5;
 
-// A short brass rule that fades out to the right, with a mono label under it.
-// Two of these make two unrelated objects read as one instrument, which is the
-// whole reason both cards open with one.
-export const sectionLabel = (x, y, s, t, { width = 56 } = {}) => `
+// The leader label: a short brass rule fading out to the right, a mono caption
+// under it, and the lit point on the end. Two of these make two unrelated
+// objects read as one instrument, which is why both cards open with one.
+export const sectionLabel = (x, y, s, t, { width = 56, lit = true } = {}) => {
+  const dotX = x + monoW(s, 11) + 12;
+  return `
     <rect x="${x}" y="${y}" width="${width}" height="1.5" fill="url(#brassrule)"/>
-    ${engraved(x, y + 20, s, t, { fill: t.ink2, size: 11 })}`;
+    ${engraved(x, y + 20, s, t, { fill: t.ink2, size: 11 })}
+    <circle cx="${dotX.toFixed(1)}" cy="${y + 16}" r="11" fill="url(#halo)" opacity="${lit ? 1 : 0}"/>
+    <circle cx="${dotX.toFixed(1)}" cy="${y + 16}" r="3.2" fill="${lit ? t.lamp : t.ink3}"/>`;
+};
 
 // The house annotation device, and the only green in the view: a lit dot on
 // the thing being named, a hairline leading away from it, and a mono caption
@@ -140,6 +151,10 @@ export function sheet(t, w, h, inner, label, deskText = "") {
       <stop offset="0" stop-color="${t.key}" stop-opacity="${t.keyAlpha}"/>
       <stop offset="1" stop-color="${t.key}" stop-opacity="0"/>
     </radialGradient>
+    <radialGradient id="bounce" cx="1.02" cy="0.42" r="0.72">
+      <stop offset="0" stop-color="${t.bounce}" stop-opacity="${t.bounceAlpha}"/>
+      <stop offset="1" stop-color="${t.bounce}" stop-opacity="0"/>
+    </radialGradient>
     <linearGradient id="oak" x1="0" y1="0" x2="1" y2="0.6">
       <stop offset="0" stop-color="${t.oak}"/><stop offset="0.55" stop-color="${t.oakDeep}"/>
       <stop offset="1" stop-color="${t.oakDeep}"/>
@@ -168,6 +183,7 @@ export function sheet(t, w, h, inner, label, deskText = "") {
   </defs>
   <rect width="${w}" height="${h}" fill="url(#paper)"/>
   <rect width="${w}" height="${h}" fill="url(#key)"/>
+  <rect width="${w}" height="${h}" fill="url(#bounce)"/>
   <rect width="${w}" height="${h}" filter="url(#grain)" opacity="${t.grain}"/>
   <path d="M0 0.5 H${w} M0.5 0 V${h}" stroke="${t.litEdge}" stroke-width="1" fill="none"/>
   <g class="reveal">${inner}</g>

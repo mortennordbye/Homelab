@@ -16,7 +16,7 @@
 // Run locally:  node scripts/render-status-card.mjs
 
 import { readFileSync, writeFileSync } from "node:fs";
-import { DARK, DESK_H, LIGHT, MONO, SERIF, engraved, leader, monoW, sectionLabel, sheet, text } from "./card-theme.mjs";
+import { DARK, DESK_H, LIGHT, MONO, SERIF, engraved, monoW, sectionLabel, sheet, text } from "./card-theme.mjs";
 
 const W = 840;
 const M = 48;
@@ -113,16 +113,6 @@ function strip(t, x, y, w, history, now) {
   };
 }
 
-// The leader label: brass rule, mono caption, and the lit dot at the end of it.
-// That dot is the availability lamp and the only green in the view.
-function header(t, caption, lit) {
-  const dotX = M + monoW(caption, 11) + 12;
-  return `
-    ${sectionLabel(M, 36, caption, t)}
-    <circle cx="${dotX}" cy="52" r="11" fill="url(#halo)" opacity="${lit ? 1 : 0}"/>
-    <circle cx="${dotX}" cy="52" r="3.2" fill="${lit ? t.lamp : t.ink3}"/>`;
-}
-
 function render(t, s, now) {
   const nodes = s.nodes ?? {};
   const apps = s.gitops?.applications ?? {};
@@ -189,7 +179,7 @@ function render(t, s, now) {
   return {
     height,
     svg: `
-    ${header(t, stale ? "cluster · stale" : "cluster · live", !stale)}
+    ${sectionLabel(M, 36, stale ? "cluster · stale" : "cluster · live", t, { lit: !stale })}
     ${text(W - M, 56, `${s.versions?.talos ?? "—"} talos · ${s.versions?.kubernetes ?? "—"} kubernetes`, { size: 12, fill: t.ink3, font: MONO, anchor: "end" })}
     ${measurements}
     ${hairline(186)}
@@ -212,7 +202,7 @@ function renderUnreachable(t, s, now) {
   return {
     height: DOWN_H,
     svg: `
-    ${header(t, "cluster · unreachable", false)}
+    ${sectionLabel(M, 36, "cluster · unreachable", t, { lit: false })}
     ${text(M, 116, "No answer from the cluster", { size: 30, weight: 600, fill: t.ink, font: SERIF })}
     ${text(M, 144, s.lastSeen ? `Last seen ${ago(s.lastSeen, now)}. The numbers below are from then.` : "No earlier reading to fall back on.", { size: 15, fill: t.ink2, font: SERIF })}
     ${s.lastSeen ? text(M, 170, `${s.gitops?.applications?.synced ?? "—"}/${s.gitops?.applications?.total ?? "—"} applications synced · ${s.nodes?.ready ?? "—"}/${s.nodes?.total ?? "—"} nodes ready`, { size: 12, fill: t.ink3, font: MONO }) : ""}`,
