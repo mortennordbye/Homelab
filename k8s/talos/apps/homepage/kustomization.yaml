@@ -9,6 +9,7 @@ resources:
   - ciliumnetworkpolicy.yaml
   - interceptorroute.yaml
   - scaledobject.yaml
+  - custom-css.yaml
 
 helmCharts:
   - name: homepage

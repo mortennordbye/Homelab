@@ -1,0 +1,161 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage-custom-css
+  namespace: homepage
+data:
+  custom.css: |
+    /* Eden, dressed in the portfolio's materials.
+
+       Homepage resolves every bg-theme-* and text-theme-* utility through the
+       --color-50..900 triples its theme class defines, so replacing that ramp
+       retextures the whole dashboard at once and the rules below only have to
+       handle what a colour ramp cannot: the type, the lamp and the section label.
+
+       The rule book is portfolio/branding/ART-DIRECTION.md: four materials, one
+       lamp upper left, no card borders, no sans. Eden departs from it in one
+       place, and only because the brand already contains the departure. The
+       portfolio keeps green outside the window and spends it once per view as a
+       lit point. Eden is the garden on the other side of that window, so the
+       forest bounce the light rig already describes — dim and cool, from the
+       right — is let into the room, and the lit point recurs as the pin on every
+       section label. Same materials, same lamp, the green turned up. */
+
+    html.theme-slate {
+      --color-50: 249 251 249;
+      --color-100: 240 245 241;
+      --color-200: 233 235 233;  /* snow — headings */
+      --color-300: 161 173 163;  /* snow-2 — prose */
+      --color-400: 112 131 115;  /* snow-3 — labels */
+      --color-500: 62 85 66;     /* line-2 — divider */
+      --color-600: 42 56 44;     /* line — hairline */
+      --color-700: 25 31 26;     /* raised surface */
+      --color-800: 15 20 16;     /* anchor — page ground */
+      --color-900: 9 12 10;      /* deeper — sunken */
+      --color-logo-start: 192 153 85;
+      --color-logo-stop: 127 90 47;
+    }
+
+    :root {
+      --eden-brass: #7f5a2f;
+      --eden-copper: #c09955;
+      --eden-lamp: #65a16e;
+      --eden-lit: rgba(255, 212, 154, 0.11);
+      --eden-cast: 6px 16px 28px -18px rgba(0, 0, 0, 0.95);
+      --eden-serif: "Iowan Old Style", Georgia, "Times New Roman", serif;
+      --eden-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    }
+
+    /* No sans anywhere: serif for display and prose, mono for labels and
+       measurements. Manrope arrives on the body from next/font, so it takes an
+       override rather than a cascade. */
+    body, button, input, dialog, h1, h2, h3, .service-card, .bookmark {
+      font-family: var(--eden-serif) !important;
+    }
+
+    /* The room, and the garden it looks onto. Warm key from the upper left at
+       full strength, the cool forest bounce from the right at roughly half, which
+       is the rig in InlineGlobeScene.tsx expressed in two gradients. */
+    /* The rig goes on #__next, not on body: Next paints an opaque ground there
+       and anything behind it is never seen. */
+    html, body { background-color: #0f1410; }
+
+    #__next {
+      min-height: 100vh;
+      background-color: #0f1410;
+      background-image:
+        radial-gradient(58% 74% at 20% -8%, rgba(255, 212, 154, 0.17), transparent 60%),
+        radial-gradient(58% 96% at 106% 42%, rgba(111, 156, 114, 0.3), transparent 64%),
+        linear-gradient(180deg, #0f1410 0%, #090c0a 100%);
+      background-attachment: fixed;
+    }
+
+    /* Grain, so the ground reads as a material rather than as a flat fill. */
+    #page_wrapper::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.14;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    }
+
+    /* An evenly bordered box is lit from nowhere. A raised surface takes light on
+       its top and left edges and casts down and to the right. */
+    .service-card,
+    #bookmarks .bookmark > a {
+      border-radius: 3px !important;
+      border-top: 1px solid var(--eden-lit);
+      border-left: 1px solid var(--eden-lit);
+      box-shadow: var(--eden-cast) !important;
+      background-color: rgba(255, 255, 255, 0.025) !important;
+    }
+
+    /* Hover moves toward the garden rather than lighting the card up. */
+    .service-card:hover,
+    #bookmarks .bookmark > a:hover {
+      background-color: rgba(111, 156, 114, 0.07) !important;
+    }
+
+    /* The leader label: a short brass rule fading out to the right, a mono
+       caption under it, and the lit point on the end. It is the house annotation
+       device, and using it on every group is what makes one page out of a list of
+       unrelated services. */
+    .service-group-name {
+      position: relative;
+      padding-top: 15px;
+      margin-top: 8px;
+      font-family: var(--eden-mono) !important;
+      font-size: 0.7rem !important;
+      font-weight: 500;
+      letter-spacing: 0.19em;
+      text-transform: uppercase;
+    }
+
+    .service-group-name::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 56px;
+      height: 1.5px;
+      background: linear-gradient(90deg, var(--eden-brass), transparent);
+    }
+
+    .service-group-name::after {
+      content: "";
+      position: absolute;
+      top: -2.5px;
+      left: 62px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--eden-lamp);
+      box-shadow: 0 0 0 4px rgba(101, 161, 110, 0.16);
+    }
+
+    /* Mono is engraving: it carries the measurements under each service and never
+       a sentence. */
+    .service-block .font-thin,
+    .service-block .uppercase,
+    .service-block span,
+    #information-widgets .uppercase {
+      font-family: var(--eden-mono) !important;
+      letter-spacing: 0.08em;
+    }
+
+    /* Brass hairline instead of the two-pixel rule under the widgets. */
+    #information-widgets {
+      border-bottom: 1px solid transparent !important;
+      border-image: linear-gradient(90deg, rgba(127, 90, 47, 0.7), rgba(127, 90, 47, 0.06)) 1 !important;
+      padding-bottom: 18px;
+    }
+
+    /* Green is the live state and nothing else. */
+    .status-dot,
+    [class*="bg-emerald"],
+    [class*="bg-green"] {
+      background-color: var(--eden-lamp) !important;
+    }
