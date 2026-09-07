@@ -137,6 +137,16 @@ alertmanager:
       group_interval: 5m
       repeat_interval: 12h
       routes:
+        # reelsmith runs unattended with nobody else watching it, and its
+        # warning-tier alerts (queue starved, backup stale, a post stuck) are
+        # the whole point of gateway/monitoring.yaml: the failure mode they
+        # catch never shows up as a restart or a 500. Dropped at warning like
+        # every other app's, they are silent by construction, which is how
+        # ReelsmithQueueStarved and ReelsmithPostStuck both sat firing for
+        # days unseen. Route the namespace ahead of the severity filter below.
+        - matchers:
+            - namespace = "reelsmith"
+          receiver: discord
         # Only critical alerts reach Discord; everything else is dropped.
         - matchers:
             - severity = "critical"
