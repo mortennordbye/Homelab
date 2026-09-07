@@ -122,8 +122,12 @@ export function leader(x, y, caption, t, { dx = 34, dy = -26, size = 11 } = {}) 
 // Reveal is the only motion class the art direction allows for arriving
 // content: one direction, one element, around 240ms. The sweep, the blinking
 // dot and the self-drawing line that used to be here are named anti-references.
-const STYLE = `.reveal{animation:rise .24s cubic-bezier(.2,.7,.3,1) both}
-    @keyframes rise{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}`;
+//
+// No fill mode. With `both` the resting state is the keyframe's opacity 0, so
+// anything that never starts the animation — the card below the fold, an image
+// proxy taking a still — renders an empty sheet.
+const STYLE = `.reveal{animation:rise .24s cubic-bezier(.2,.7,.3,1)}
+    @keyframes rise{from{opacity:0;transform:translateY(4px)}}`;
 
 // The oak the document rests on. It appears low in the composition, catches
 // the rake light from the lamp, and it is the reason the card has a floor.

@@ -54,7 +54,7 @@ function meter(t, x, y, w, label, used, total, detail) {
   return `
     ${engraved(x, y, label, t, { fill: t.ink2, size: 11 })}
     ${text(x + w, y, `${(pct * 100).toFixed(1)}%`, { size: 12, fill: t.ink2, font: MONO, anchor: "end" })}
-    <rect x="${x}" y="${y + 10}" width="${w}" height="6" fill="${t.wood}"/>
+    <rect x="${x}" y="${y + 10}" width="${w}" height="6" fill="${t.well}"/>
     <rect x="${x}" y="${y + 10}" width="${fill.toFixed(1)}" height="6" fill="${t.brass}"/>
     ${text(x, y + 38, detail, { size: 12, fill: t.ink3, font: MONO })}`;
 }
