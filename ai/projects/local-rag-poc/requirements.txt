@@ -15,7 +15,7 @@ langchain-chroma==1.1.0
 # Vector store + parsers.
 # chromadb is pulled in transitively by langchain-chroma; pinning it directly
 # led to a resolver conflict (langchain-chroma 0.2.4 needs chromadb>=1.0.9).
-pypdf==6.16.2
+pypdf==6.17.0
 docx2txt==0.9
 
 # Sparse retrieval
