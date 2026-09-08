@@ -16,4 +16,4 @@ resources:
 # deployment.yaml.
 images:
 - name: ghcr.io/mortennordbye/homelab/portfolio
-  newTag: 0.0.134
+  newTag: 0.0.135
