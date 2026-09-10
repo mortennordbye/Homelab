@@ -1,0 +1,574 @@
+{
+  "generatedAt": "2026-09-10T11:45:15Z",
+  "build": "0.0.136",
+  "deployedAt": "2026-09-10T08:32:35Z",
+  "argocd": {
+    "sync": "Synced",
+    "health": "Healthy",
+    "syncedAt": "2026-09-10T08:31:35Z"
+  },
+  "nodes": {
+    "ready": 6,
+    "total": 6,
+    "list": [
+      {
+        "name": "genesis-ctrl-01",
+        "ready": true,
+        "role": "control-plane",
+        "schedulable": true
+      },
+      {
+        "name": "genesis-ctrl-02",
+        "ready": true,
+        "role": "control-plane",
+        "schedulable": true
+      },
+      {
+        "name": "genesis-ctrl-03",
+        "ready": true,
+        "role": "control-plane",
+        "schedulable": true
+      },
+      {
+        "name": "genesis-worker-01",
+        "ready": true,
+        "role": "worker",
+        "schedulable": true
+      },
+      {
+        "name": "genesis-worker-02",
+        "ready": true,
+        "role": "worker",
+        "schedulable": true
+      },
+      {
+        "name": "genesis-worker-03",
+        "ready": true,
+        "role": "worker",
+        "schedulable": true
+      }
+    ]
+  },
+  "versions": {
+    "kubernetes": "v1.35.7",
+    "talos": "v1.12.11"
+  },
+  "cert": {
+    "notAfter": "2026-11-24T10:46:20Z"
+  },
+  "gitops": {
+    "applications": {
+      "total": 44,
+      "synced": 44,
+      "healthy": 44,
+      "list": [
+        {
+          "name": "argo-rollouts",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "argocd",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "arr-stack",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "audiobookshelf",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "authentik",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "bigd",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "blog",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "blog-stage",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "cert-manager",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "cilium",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "crds",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "csi-driver-nfs",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "external-dns",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "external-secrets-operator",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "falco",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "gluetun-vpn",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "headroom",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "headroom-demo",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "home-assistant",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "homepage",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "it-tools",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "kargo",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "kargo-projects",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "keda",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "keda-http-add-on",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "kube-prometheus-stack",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "logeverylift",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "loki",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "mealie",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "metrics-server",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "ollama",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "omni-tools",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "open-webui",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "otel-collector",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "plex-media-stack",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "portfolio",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "portfolio-stage",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "proxmox-csi-plugin",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "reelsmith",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "reloader",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "tempo",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "traefik",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "trek",
+          "sync": "Synced",
+          "health": "Healthy"
+        },
+        {
+          "name": "verksted",
+          "sync": "Synced",
+          "health": "Healthy"
+        }
+      ]
+    },
+    "syncs24h": 5,
+    "syncs30d": 72,
+    "lastSync": {
+      "name": "cilium",
+      "at": "2026-09-10T08:34:46Z"
+    }
+  },
+  "apps": {
+    "scaledObjects": 14,
+    "sleepers": 10,
+    "asleep": 3,
+    "tiles": [
+      {
+        "name": "audiobookshelf",
+        "state": "awake"
+      },
+      {
+        "name": "blog-stage",
+        "state": "asleep"
+      },
+      {
+        "name": "headroom",
+        "state": "awake"
+      },
+      {
+        "name": "homepage",
+        "state": "awake"
+      },
+      {
+        "name": "it-tools",
+        "state": "awake"
+      },
+      {
+        "name": "ollama",
+        "state": "asleep"
+      },
+      {
+        "name": "omni-tools",
+        "state": "awake"
+      },
+      {
+        "name": "open-webui",
+        "state": "awake"
+      },
+      {
+        "name": "portfolio-stage",
+        "state": "asleep"
+      },
+      {
+        "name": "trek",
+        "state": "awake"
+      }
+    ]
+  },
+  "security": {
+    "secretsAtRuntime": 28,
+    "secretsInGit": 0,
+    "networkPolicies": 45,
+    "policyMode": "audit",
+    "syscalls24h": 3022975624,
+    "certs": {
+      "total": 8,
+      "nextExpiry": "2026-10-14T16:27:51Z",
+      "list": [
+        {
+          "name": "kargo-external-webhooks-server",
+          "daysLeft": 34
+        },
+        {
+          "name": "kargo-webhooks-server",
+          "daysLeft": 34
+        },
+        {
+          "name": "logeverylift-com",
+          "daysLeft": 52
+        },
+        {
+          "name": "bigd-no",
+          "daysLeft": 74
+        },
+        {
+          "name": "local-bigd-no",
+          "daysLeft": 74
+        },
+        {
+          "name": "nordbye-it",
+          "daysLeft": 74
+        },
+        {
+          "name": "bitwarden-bootstrap-certificate",
+          "daysLeft": 75
+        },
+        {
+          "name": "bitwarden-server-certificate",
+          "daysLeft": 75
+        }
+      ]
+    }
+  },
+  "resources": {
+    "cpu": {
+      "used": 1.35,
+      "allocatable": 33.7
+    },
+    "memory": {
+      "usedBytes": 23601909760,
+      "allocatableBytes": 71709413376
+    },
+    "podsRunning": 149,
+    "restarts24h": 1,
+    "images": 91,
+    "uptimeDays": 31.7,
+    "diskUsedPct": 62.5
+  },
+  "observability": {
+    "logBytes24h": 4528075773,
+    "alerts": {
+      "critical": 0,
+      "warning": 12
+    },
+    "requests24h": 20018,
+    "errors5xx24h": 0
+  },
+  "storage": {
+    "volumes": 28,
+    "claimedGiB": 217
+  },
+  "capacity": {
+    "cpuRequested": 7.6,
+    "cpuAllocatable": 33.7,
+    "memRequestedGi": 19,
+    "memAllocatableGi": 67,
+    "pods": 149,
+    "podCapacity": 660
+  },
+  "history": [
+    {
+      "d": "2026-08-12",
+      "ok": 288,
+      "total": 288
+    },
+    {
+      "d": "2026-08-13",
+      "ok": 288,
+      "total": 288
+    },
+    {
+      "d": "2026-08-14",
+      "ok": 287,
+      "total": 288
+    },
+    {
+      "d": "2026-08-15",
+      "ok": 288,
+      "total": 288
+    },
+    {
+      "d": "2026-08-16",
+      "ok": 287,
+      "total": 288
+    },
+    {
+      "d": "2026-08-17",
+      "ok": 288,
+      "total": 288
+    },
+    {
+      "d": "2026-08-18",
+      "ok": 288,
+      "total": 288
+    },
+    {
+      "d": "2026-08-19",
+      "ok": 288,
+      "total": 288
+    },
+    {
+      "d": "2026-08-20",
+      "ok": 288,
+      "total": 288
+    },
+    {
+      "d": "2026-08-21",
+      "ok": 288,
+      "total": 288
+    },
+    {
+      "d": "2026-08-22",
+      "ok": 288,
+      "total": 288
+    },
+    {
+      "d": "2026-08-23",
+      "ok": 288,
+      "total": 288
+    },
+    {
+      "d": "2026-08-24",
+      "ok": 289,
+      "total": 289
+    },
+    {
+      "d": "2026-08-25",
+      "ok": 288,
+      "total": 288
+    },
+    {
+      "d": "2026-08-26",
+      "ok": 288,
+      "total": 288
+    },
+    {
+      "d": "2026-08-27",
+      "ok": 288,
+      "total": 288
+    },
+    {
+      "d": "2026-08-28",
+      "ok": 288,
+      "total": 288
+    },
+    {
+      "d": "2026-08-29",
+      "ok": 288,
+      "total": 288
+    },
+    {
+      "d": "2026-08-30",
+      "ok": 288,
+      "total": 288
+    },
+    {
+      "d": "2026-08-31",
+      "ok": 287,
+      "total": 288
+    },
+    {
+      "d": "2026-09-01",
+      "ok": 286,
+      "total": 288
+    },
+    {
+      "d": "2026-09-02",
+      "ok": 288,
+      "total": 288
+    },
+    {
+      "d": "2026-09-03",
+      "ok": 288,
+      "total": 288
+    },
+    {
+      "d": "2026-09-04",
+      "ok": 286,
+      "total": 288
+    },
+    {
+      "d": "2026-09-05",
+      "ok": 288,
+      "total": 288
+    },
+    {
+      "d": "2026-09-06",
+      "ok": 288,
+      "total": 288
+    },
+    {
+      "d": "2026-09-07",
+      "ok": 288,
+      "total": 288
+    },
+    {
+      "d": "2026-09-08",
+      "ok": 288,
+      "total": 288
+    },
+    {
+      "d": "2026-09-09",
+      "ok": 288,
+      "total": 288
+    },
+    {
+      "d": "2026-09-10",
+      "ok": 142,
+      "total": 142
+    }
+  ]
+}
