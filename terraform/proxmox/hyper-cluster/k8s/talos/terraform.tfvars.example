@@ -14,8 +14,8 @@ network_gateway      = "10.0.10.1"      # Network gateway IP
 # Renovate tracks these two so a lagging fleet shows up on the dependency
 # dashboard instead of going unnoticed. It opens a PR; it never automerges one.
 # A fleet upgrade is a maintenance window with an etcd snapshot taken first.
-talos_version      = "v1.11.6" # renovate: github-releases=siderolabs/talos
-kubernetes_version = "v1.34.0" # renovate: github-releases=kubernetes/kubernetes
+talos_version      = "v1.13.8" # renovate: github-releases=siderolabs/talos
+kubernetes_version = "v1.36.3" # renovate: github-releases=kubernetes/kubernetes
 
 # Upgrade Flags
 enable_talos_upgrade      = false
