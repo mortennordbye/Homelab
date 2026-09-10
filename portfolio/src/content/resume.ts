@@ -9,6 +9,12 @@ import {
 
 const certsRaw: Cert[] = [
   {
+    title: "Microsoft Certified: DevOps Engineer Expert",
+    issuer: "Microsoft",
+    date: "Sep 2026",
+    credentialId: "F8616ED44F1AA2F4",
+  },
+  {
     title: "GitHub Actions Certification",
     issuer: "GitHub (Microsoft)",
     date: "Jul 2026",
