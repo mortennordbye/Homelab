@@ -96,13 +96,14 @@ export function Hero() {
             {site.hero.sub}
           </p>
 
-          {/* The two certifications are card stock set down on the desk. The
+          {/* The certifications are card stock set down on the desk. The
               other two lines are claims rather than objects, so they are set as
               plain type beside them — four sheets of paper in a row is louder
               than one lamp allows. */}
           <div className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-3">
             <Tag variant="paper">CKA</Tag>
             <Tag variant="paper">AZ-305</Tag>
+            <Tag variant="paper">AZ-400</Tag>
             <span className="font-mono text-xs tracking-wide text-fg-3">
               4+ yrs production cloud
             </span>

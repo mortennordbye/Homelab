@@ -131,6 +131,12 @@ const jsonLd = {
     },
     {
       "@type": "EducationalOccupationalCredential",
+      name: "Microsoft Certified: DevOps Engineer Expert (AZ-400)",
+      credentialCategory: "certification",
+      recognizedBy: { "@type": "Organization", name: "Microsoft" },
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
       name: "Microsoft Certified: Azure Solutions Architect Expert (AZ-305)",
       credentialCategory: "certification",
       recognizedBy: { "@type": "Organization", name: "Microsoft" },
